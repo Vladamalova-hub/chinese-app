@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>HSK 4 | Китайский тренажер</title>
+    <title>HSK | Китайский тренажер</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -705,7 +706,7 @@
             cursor: default;
         }
 
-        /* Задание на рисование */
+        /* Задание на рисование - ИСПРАВЛЕНО ДЛЯ ТЕЛЕФОНА */
         .drawing-section {
             background: white;
             border-radius: 16px;
@@ -727,6 +728,23 @@
             color: #8B0000;
             margin: 20px 0;
             font-weight: 600;
+        }
+
+        .drawing-hint {
+            font-size: 48px;
+            color: #8B0000;
+            margin: 20px 0;
+            padding: 20px;
+            background: #FFF5F5;
+            border-radius: 16px;
+            border: 2px solid #FFE4E1;
+            animation: hintPulse 0.5s ease;
+        }
+
+        @keyframes hintPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
 
         .stroke-demo {
@@ -751,13 +769,14 @@
 
         .drawing-canvas-container {
             position: relative;
-            width: 250px;
-            height: 250px;
-            margin: 20px auto;
+            width: 280px;
+            height: 280px;
+            margin: 10px auto;
             border: 3px solid #FFE4E1;
             border-radius: 16px;
             background: white;
             overflow: hidden;
+            touch-action: none;
         }
 
         .drawing-canvas {
@@ -766,24 +785,29 @@
             display: block;
             touch-action: none;
             cursor: crosshair;
+            background: white;
         }
 
         .drawing-controls {
             display: flex;
             gap: 10px;
             justify-content: center;
-            margin: 15px 0;
+            margin: 20px 0;
+            flex-wrap: wrap;
         }
 
         .drawing-btn {
-            padding: 12px 20px;
+            padding: 14px 24px;
             background: white;
             border: 2px solid #FFE4E1;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 16px;
+            font-weight: 500;
             cursor: pointer;
             color: #8B0000;
             transition: 0.2s;
+            min-width: 100px;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .drawing-btn.primary {
@@ -792,8 +816,20 @@
             border-color: #8B0000;
         }
 
+        .drawing-btn.hint {
+            background: #FFE4E1;
+            color: #8B0000;
+            border-color: #8B0000;
+        }
+
         .drawing-btn:active {
             transform: scale(0.95);
+        }
+
+        .hint-timer {
+            color: #8B0000;
+            font-size: 14px;
+            margin: 5px 0;
         }
 
         .feedback-overlay {
@@ -1123,7 +1159,7 @@
         // СИСТЕМА АВТОРИЗАЦИИ
         // ============================================
         
-        // Хранилище пользователей (в реальном приложении должно быть на сервере)
+        // Хранилище пользователей
         let users = {};
         let currentUser = null;
         
@@ -1218,7 +1254,6 @@
         // ВСЕ ВАШИ СЛОВА HSK 4
         // ============================================
         
-
          const wordsData = [
             // 1. ЕДА И НАПИТКИ (listId: 1, 20 слов)
             { id: 1, characters: "干杯", pinyin: "gān bēi", translation: "чокаться / до дна", example: "我们来干杯！", exampleTranslation: "Давайте чокнемся!", listId: 1, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
@@ -1929,11 +1964,14 @@
         let studyQueue = [];
         let currentIndex = 0;
         let studyBlockId = 1;
+        
+        // Переменные для рисования
         let canvas = null;
         let ctx = null;
         let isDrawing = false;
         let lastX = 0;
         let lastY = 0;
+        let hintTimeout = null;
 
         // ============================================
         // ФУНКЦИИ ДЛЯ РАБОТЫ С ПРОГРЕССОМ
@@ -2322,6 +2360,7 @@
             }
         };
 
+        // Функция для демонстрации рисования
         function showDrawingDemo(word) {
             document.getElementById('card-content').innerHTML = `
                 <div class="drawing-section">
@@ -2337,50 +2376,65 @@
             `;
         }
 
+        // Функция для практики рисования с кнопкой подсказки
         function showDrawingPractice(word) {
             let html = `
                 <div class="drawing-section">
                     <div class="drawing-title">✍️ Напишите иероглиф</div>
                     <div class="drawing-translation">${word.translation}</div>
                     
+                    <div id="hint-container" style="min-height: 80px; margin: 10px 0;"></div>
+                    
                     <div class="drawing-canvas-container">
-                        <canvas id="drawing-canvas" class="drawing-canvas" width="250" height="250"></canvas>
+                        <canvas id="drawing-canvas" class="drawing-canvas" width="280" height="280"></canvas>
                     </div>
                     
                     <div class="drawing-controls">
-                        <button class="drawing-btn" onclick="clearCanvas()">Очистить</button>
-                        <button class="drawing-btn primary" onclick="checkDrawing('${word.characters}', '${word.id}')">Проверить</button>
+                        <button class="drawing-btn hint" onclick="showHint('${word.characters}')">🔍 Подсказка</button>
+                        <button class="drawing-btn" onclick="clearCanvas()">🗑 Очистить</button>
+                        <button class="drawing-btn primary" onclick="checkDrawing('${word.characters}', '${word.id}')">✓ Проверить</button>
                     </div>
                 </div>
             `;
             
             document.getElementById('card-content').innerHTML = html;
             
+            // Инициализация canvas после добавления в DOM
             setTimeout(() => {
                 initCanvas();
             }, 100);
         }
 
+        // Функция инициализации canvas
         function initCanvas() {
             canvas = document.getElementById('drawing-canvas');
             if (!canvas) return;
             
             ctx = canvas.getContext('2d');
+            
+            // Настройки рисования
             ctx.strokeStyle = '#8B0000';
             ctx.lineWidth = 8;
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
             
+            // Обработчики для мыши
             canvas.addEventListener('mousedown', startDrawing);
             canvas.addEventListener('mousemove', draw);
             canvas.addEventListener('mouseup', stopDrawing);
             canvas.addEventListener('mouseleave', stopDrawing);
-            canvas.addEventListener('touchstart', handleTouchStart);
-            canvas.addEventListener('touchmove', handleTouchMove);
+            
+            // Обработчики для touch (телефон)
+            canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
+            canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
             canvas.addEventListener('touchend', stopDrawing);
+            canvas.addEventListener('touchcancel', stopDrawing);
         }
 
         function startDrawing(e) {
+            e.preventDefault();
             isDrawing = true;
             const pos = getCanvasCoordinates(e);
             lastX = pos.x;
@@ -2404,7 +2458,8 @@
             lastY = currentY;
         }
 
-        function stopDrawing() {
+        function stopDrawing(e) {
+            e.preventDefault();
             isDrawing = false;
             ctx.closePath();
         }
@@ -2436,15 +2491,47 @@
                 clientY = e.clientY;
             }
             
-            const x = (clientX - rect.left) * scaleX;
-            const y = (clientY - rect.top) * scaleY;
+            // Проверка границ
+            let x = (clientX - rect.left) * scaleX;
+            let y = (clientY - rect.top) * scaleY;
+            
+            x = Math.max(0, Math.min(canvas.width, x));
+            y = Math.max(0, Math.min(canvas.height, y));
             
             return { x, y };
         }
 
+        // Функция очистки canvas
         window.clearCanvas = function() {
             if (!ctx || !canvas) return;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        };
+
+        // Функция показа подсказки на 5 секунд
+        window.showHint = function(characters) {
+            const hintContainer = document.getElementById('hint-container');
+            if (!hintContainer) return;
+            
+            // Очищаем предыдущий таймер
+            if (hintTimeout) {
+                clearTimeout(hintTimeout);
+            }
+            
+            // Показываем иероглиф
+            hintContainer.innerHTML = `
+                <div class="drawing-hint">
+                    ${characters}
+                </div>
+                <div class="hint-timer">Подсказка исчезнет через 5 секунд</div>
+            `;
+            
+            // Убираем через 5 секунд
+            hintTimeout = setTimeout(() => {
+                hintContainer.innerHTML = '';
+                hintTimeout = null;
+            }, 5000);
         };
 
         window.nextDrawingStep = function(wordId) {
