@@ -183,6 +183,56 @@
             100% { transform: scale(1); }
         }
 
+        /* Кольцевая диаграмма */
+        .progress-circle {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+        }
+
+        .progress-circle svg {
+            width: 120px;
+            height: 120px;
+            transform: rotate(-90deg);
+        }
+
+        .progress-circle circle {
+            fill: none;
+            stroke-width: 8;
+            stroke-linecap: round;
+        }
+
+        .progress-circle .bg-circle {
+            stroke: #FFE4E1;
+        }
+
+        .progress-circle .progress-circle-fill {
+            stroke: #8B0000;
+            stroke-dasharray: 314;
+            stroke-dashoffset: 314;
+            transition: stroke-dashoffset 0.5s;
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .progress-text .percentage {
+            font-size: 24px;
+            font-weight: 700;
+            color: #8B0000;
+        }
+
+        .progress-text .label {
+            font-size: 12px;
+            color: #666;
+        }
+
         /* Карточки тренировки */
         .card-header {
             padding: 15px 20px;
@@ -275,6 +325,59 @@
             background: #f44336;
             color: white;
             border-color: #f44336;
+        }
+
+        /* Список слов в блоке */
+        .words-list {
+            padding: 0 20px 20px;
+        }
+
+        .word-item {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 1px solid #FFE4E1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .word-item-left {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .word-item .chinese {
+            font-size: 18px;
+            font-weight: 600;
+            color: #8B0000;
+        }
+
+        .word-item .pinyin-small {
+            font-size: 14px;
+            color: #A52A2A;
+        }
+
+        .word-item .translation-small {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .word-item .mastered-badge {
+            background: #4CAF50;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        .word-item .not-mastered-badge {
+            background: #FFE4E1;
+            color: #8B0000;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
         }
 
         /* Задание на сопоставление */
@@ -397,6 +500,71 @@
             cursor: default;
         }
 
+        /* Задание на рисование черт */
+        .drawing-section {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 10px 20px;
+            border: 2px solid #FFE4E1;
+            text-align: center;
+        }
+
+        .drawing-grid {
+            display: grid;
+            grid-template-columns: repeat(15, 1fr);
+            gap: 2px;
+            background: #FFE4E1;
+            padding: 10px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .drawing-cell {
+            aspect-ratio: 1;
+            background: white;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: background 0.1s;
+        }
+
+        .drawing-cell.active {
+            background: #8B0000;
+        }
+
+        .drawing-cell:hover {
+            background: #FFE4E1;
+        }
+
+        .drawing-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .drawing-btn {
+            padding: 12px 20px;
+            background: white;
+            border: 2px solid #FFE4E1;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            color: #8B0000;
+        }
+
+        .drawing-btn.primary {
+            background: #8B0000;
+            color: white;
+            border-color: #8B0000;
+        }
+
+        .target-char {
+            font-size: 48px;
+            color: #8B0000;
+            margin: 10px 0;
+        }
+
         .feedback-overlay {
             position: fixed;
             top: 50%;
@@ -512,7 +680,7 @@
                 </div>
                 <div class="hsk-card active" data-hsk="4">
                     <div class="level">HSK 4</div>
-                    <div class="words-count">417 слов</div>
+                    <div class="words-count">1200 слов</div>
                 </div>
                 <div class="hsk-card" data-hsk="5">
                     <div class="level">HSK 5</div>
@@ -554,7 +722,7 @@
                     </div>
                     <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
                         <span>Всего слов:</span>
-                        <span style="color: #666;" id="total-words">417</span>
+                        <span style="color: #666;" id="total-words">1200</span>
                     </div>
                     <div style="height: 10px; background: #FFE4E1; border-radius: 5px;">
                         <div id="total-progress" style="height: 100%; background: #8B0000; width: 0%; border-radius: 5px;"></div>
@@ -566,7 +734,7 @@
             <div class="blocks-grid" id="blocks-container"></div>
         </div>
 
-        <!-- Экран детального блока (как на скриншоте) -->
+        <!-- Экран детального блока с кольцевой диаграммой и списком слов -->
         <div id="block-detail-screen" class="screen">
             <div class="status-bar">
                 <span>9:41</span>
@@ -579,15 +747,36 @@
             
             <div style="padding: 20px;">
                 <div style="background: white; border-radius: 20px; padding: 20px; border: 1px solid #FFE4E1;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-                        <span style="color: #8B0000; font-weight: 600; font-size: 24px;" id="block-mastered">0</span>
-                        <span style="color: #666; font-size: 24px;" id="block-total">20</span>
+                    <!-- Кольцевая диаграмма -->
+                    <div class="progress-circle" id="progress-circle">
+                        <svg viewBox="0 0 120 120">
+                            <circle class="bg-circle" cx="60" cy="60" r="50"></circle>
+                            <circle class="progress-circle-fill" cx="60" cy="60" r="50" id="circle-progress"></circle>
+                        </svg>
+                        <div class="progress-text">
+                            <div class="percentage" id="circle-percentage">0%</div>
+                            <div class="label">выучено</div>
+                        </div>
                     </div>
-                    <div style="height: 10px; background: #FFE4E1; border-radius: 5px; margin-bottom: 20px;">
-                        <div id="block-progress" style="height: 100%; background: #8B0000; width: 0%; border-radius: 5px;"></div>
+                    
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 20px; text-align: center;">
+                        <div style="flex: 1;">
+                            <div style="font-size: 24px; color: #8B0000; font-weight: 600;" id="block-mastered-circle">0</div>
+                            <div style="font-size: 12px; color: #666;">выучено</div>
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-size: 24px; color: #666;" id="block-total-circle">0</div>
+                            <div style="font-size: 12px; color: #666;">всего</div>
+                        </div>
                     </div>
+                    
                     <button class="red-button" id="study-block-btn" style="width: 100%;">Учить слова</button>
                 </div>
+            </div>
+            
+            <div class="section-title">Список слов</div>
+            <div class="words-list" id="words-list-container">
+                <!-- Список слов будет добавлен через JS -->
             </div>
         </div>
 
@@ -616,7 +805,7 @@
 
     <script>
         // ============================================
-        // ВСЕ ВАШИ СЛОВА HSK 4 (417 слов)
+        // ВСЕ ВАШИ СЛОВА HSK 4 (1200 слов)
         // ============================================
         
         const wordsData = [
@@ -643,165 +832,683 @@
             { id: 20, characters: "盐", pinyin: "yán", translation: "соль", example: "请给我一点盐。", exampleTranslation: "Дайте мне немного соли, пожалуйста.", listId: 1, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
 
             // 2. ОБУЧЕНИЕ (listId: 2, 20 слов)
-            { id: 21, characters: "预习", pinyin: "yù xí", translation: "предварительно изучать", example: "学生要预习新课。", exampleTranslation: "Ученикам нужно готовиться к новому уроку.", listId: 2, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 22, characters: "中文", pinyin: "zhōng wén", translation: "китайский язык", example: "我在学中文。", exampleTranslation: "Я учу китайский.", listId: 2, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 23, characters: "流利", pinyin: "liú lì", translation: "бегло", example: "他说中文很流利。", exampleTranslation: "Он бегло говорит по-китайски.", listId: 2, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 21, characters: "预习", pinyin: "yù xí", translation: "предварительно изучать / готовиться к уроку", example: "学生要预习新课。", exampleTranslation: "Ученикам нужно готовиться к новому уроку.", listId: 2, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 22, characters: "中文", pinyin: "Zhōng wén", translation: "китайский язык", example: "我在学中文。", exampleTranslation: "Я учу китайский.", listId: 2, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 23, characters: "流利", pinyin: "liú lì", translation: "бегло (о речи)", example: "他说中文很流利。", exampleTranslation: "Он бегло говорит по-китайски.", listId: 2, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 24, characters: "语法", pinyin: "yǔ fǎ", translation: "грамматика", example: "汉语语法很难。", exampleTranslation: "Грамматика китайского сложная.", listId: 2, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 25, characters: "语言", pinyin: "yǔ yán", translation: "язык", example: "语言是交流的工具。", exampleTranslation: "Язык — это инструмент общения.", listId: 2, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 26, characters: "翻译", pinyin: "fān yì", translation: "переводить", example: "他把这本书翻译成英文。", exampleTranslation: "Он перевёл эту книгу на английский.", listId: 2, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 26, characters: "翻译", pinyin: "fān yì", translation: "переводить / переводчик", example: "他把这本书翻译成英文。", exampleTranslation: "Он перевёл эту книгу на английский.", listId: 2, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 27, characters: "放暑假", pinyin: "fàng shǔ jià", translation: "уйти на летние каникулы", example: "我们七月放暑假。", exampleTranslation: "У нас летние каникулы в июле.", listId: 2, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 28, characters: "寒假", pinyin: "hán jià", translation: "зимние каникулы", example: "寒假我想去滑雪。", exampleTranslation: "На зимних каникулах я хочу покататься на лыжах.", listId: 2, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 29, characters: "留学", pinyin: "liú xué", translation: "учиться за границей", example: "他去美国留学了。", exampleTranslation: "Он уехал учиться в Америку.", listId: 2, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 30, characters: "博士", pinyin: "bó shì", translation: "доктор наук", example: "他是哲学博士。", exampleTranslation: "Он доктор философии.", listId: 2, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 30, characters: "博士", pinyin: "bó shì", translation: "доктор наук / PhD", example: "他是哲学博士。", exampleTranslation: "Он доктор философии.", listId: 2, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 31, characters: "硕士", pinyin: "shuò shì", translation: "магистр", example: "她在读硕士学位。", exampleTranslation: "Она учится в магистратуре.", listId: 2, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 32, characters: "研究生", pinyin: "yán jiū shēng", translation: "аспирант", example: "他是北京大学的研究生。", exampleTranslation: "Он аспирант Пекинского университета.", listId: 2, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 32, characters: "研究生", pinyin: "yán jiū shēng", translation: "аспирант / магистрант", example: "他是北京大学的研究生。", exampleTranslation: "Он аспирант Пекинского университета.", listId: 2, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 33, characters: "毕业", pinyin: "bì yè", translation: "оканчивать учёбу", example: "我去年大学毕业。", exampleTranslation: "Я окончил университет в прошлом году.", listId: 2, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 34, characters: "教授", pinyin: "jiào shòu", translation: "профессор", example: "王教授教我们历史。", exampleTranslation: "Профессор Ван преподаёт нам историю.", listId: 2, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 35, characters: "科学", pinyin: "kē xué", translation: "наука", example: "科学很重要。", exampleTranslation: "Наука очень важна.", listId: 2, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 36, characters: "教育", pinyin: "jiào yù", translation: "образование", example: "教育改变人生。", exampleTranslation: "Образование меняет жизнь.", listId: 2, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 37, characters: "阅读", pinyin: "yuè dú", translation: "чтение", example: "我喜欢阅读小说。", exampleTranslation: "Я люблю читать романы.", listId: 2, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 38, characters: "知识", pinyin: "zhī shi", translation: "знания", example: "知识就是力量。", exampleTranslation: "Знание — сила.", listId: 2, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 39, characters: "回忆", pinyin: "huí yì", translation: "вспоминать", example: "回忆童年", exampleTranslation: "Вспоминать детство.", listId: 2, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 39, characters: "回忆", pinyin: "huí yì", translation: "вспоминать / воспоминания", example: "回忆童年", exampleTranslation: "Вспоминать детство.", listId: 2, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 40, characters: "词典", pinyin: "cí diǎn", translation: "словарь", example: "这本词典很有用。", exampleTranslation: "Этот словарь очень полезный.", listId: 2, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
 
             // 3. РАБОТА И ДЕНЬГИ (listId: 3, 24 слова)
             { id: 41, characters: "出差", pinyin: "chū chāi", translation: "ехать в командировку", example: "他经常出差。", exampleTranslation: "Он часто ездит в командировки.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 42, characters: "做生意", pinyin: "zuò shēng yi", translation: "заниматься бизнесом", example: "他在做服装生意。", exampleTranslation: "Он занимается бизнесом по продаже одежды.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 43, characters: "招聘", pinyin: "zhāo pìn", translation: "нанимать", example: "公司正在招聘员工。", exampleTranslation: "Компания сейчас нанимает сотрудников.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 43, characters: "招聘", pinyin: "zhāo pìn", translation: "нанимать / принимать на работу", example: "公司正在招聘员工。", exampleTranslation: "Компания сейчас нанимает сотрудников.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 44, characters: "填空", pinyin: "tián kòng", translation: "заполнять пропуски", example: "请填空。", exampleTranslation: "Пожалуйста, заполните пропуски.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 45, characters: "任务", pinyin: "rèn wu", translation: "задание", example: "完成任务", exampleTranslation: "Выполнить задание.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 46, characters: "奖金", pinyin: "jiǎng jīn", translation: "премия", example: "他得了年终奖金。", exampleTranslation: "Он получил годовую премию.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 47, characters: "请假", pinyin: "qǐng jià", translation: "отпрашиваться", example: "我明天请假。", exampleTranslation: "Я завтра беру отгул.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 45, characters: "任务", pinyin: "rèn wu", translation: "задание / задача", example: "完成任务", exampleTranslation: "Выполнить задание.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 46, characters: "奖金", pinyin: "jiǎng jīn", translation: "премия / бонус", example: "他得了年终奖金。", exampleTranslation: "Он получил годовую премию.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 47, characters: "请假", pinyin: "qǐng jià", translation: "отпрашиваться / брать отгул", example: "我明天请假。", exampleTranslation: "Я завтра беру отгул.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 48, characters: "加班", pinyin: "jiā bān", translation: "работать сверхурочно", example: "今天要加班。", exampleTranslation: "Сегодня нужно работать сверхурочно.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 49, characters: "工资", pinyin: "gōng zī", translation: "зарплата", example: "工资很高。", exampleTranslation: "Зарплата высокая.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 50, characters: "辛苦", pinyin: "xīn kǔ", translation: "тяжёлый", example: "工作很辛苦。", exampleTranslation: "Работа очень тяжёлая.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 51, characters: "当", pinyin: "dāng", translation: "работать кем-то", example: "他想当老师。", exampleTranslation: "Он хочет быть учителем.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 52, characters: "干", pinyin: "gàn", translation: "делать", example: "你在干什么？", exampleTranslation: "Что ты делаешь?", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 50, characters: "辛苦", pinyin: "xīn kǔ", translation: "тяжёлый / напряжённый", example: "工作很辛苦。", exampleTranslation: "Работа очень тяжёлая.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 51, characters: "当", pinyin: "dāng", translation: "работать кем-то / быть", example: "他想当老师。", exampleTranslation: "Он хочет быть учителем.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 52, characters: "干", pinyin: "gàn", translation: "делать / работать", example: "你在干什么？", exampleTranslation: "Что ты делаешь?", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 53, characters: "护士", pinyin: "hù shi", translation: "медсестра", example: "她是一名护士。", exampleTranslation: "Она медсестра.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 54, characters: "大夫", pinyin: "dài fu", translation: "врач", example: "大夫，我生病了。", exampleTranslation: "Доктор, я заболел.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 55, characters: "警察", pinyin: "jǐng chá", translation: "полицейский", example: "警察抓住了小偷。", exampleTranslation: "Полицейский поймал вора.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 56, characters: "代表", pinyin: "dài biǎo", translation: "представлять", example: "他代表公司发言。", exampleTranslation: "Он выступает от имени компании.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 56, characters: "代表", pinyin: "dài biǎo", translation: "представлять / представитель", example: "他代表公司发言。", exampleTranslation: "Он выступает от имени компании.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 57, characters: "作者", pinyin: "zuò zhě", translation: "автор", example: "这本书的作者是谁？", exampleTranslation: "Кто автор этой книги?", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 58, characters: "专业", pinyin: "zhuān yè", translation: "специальность", example: "你的专业是什么？", exampleTranslation: "Какая у тебя специальность?", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 58, characters: "专业", pinyin: "zhuān yè", translation: "специальность / профессия", example: "你的专业是什么？", exampleTranslation: "Какая у тебя специальность?", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 59, characters: "职业", pinyin: "zhí yè", translation: "профессия", example: "他的职业是律师。", exampleTranslation: "Его профессия — юрист.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 60, characters: "记者", pinyin: "jì zhě", translation: "журналист", example: "她是一名记者。", exampleTranslation: "Она журналистка.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 61, characters: "律师", pinyin: "lǜ shī", translation: "юрист", example: "他请了一位律师。", exampleTranslation: "Он нанял адвоката.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 61, characters: "律师", pinyin: "lǜ shī", translation: "юрист / адвокат", example: "他请了一位律师。", exampleTranslation: "Он нанял адвоката.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 62, characters: "售货员", pinyin: "shòu huò yuán", translation: "продавец", example: "售货员很热情。", exampleTranslation: "Продавец очень радушный.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 63, characters: "师傅", pinyin: "shī fu", translation: "мастер", example: "老师傅", exampleTranslation: "Опытный мастер.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 64, characters: "修", pinyin: "xiū", translation: "чинить", example: "修电脑", exampleTranslation: "Ремонтировать компьютер.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 65, characters: "困", pinyin: "kùn", translation: "сонный", example: "我很困。", exampleTranslation: "Я очень хочу спать.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 63, characters: "师傅", pinyin: "shī fu", translation: "мастер / наставник", example: "老师傅", exampleTranslation: "Опытный мастер.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 64, characters: "修", pinyin: "xiū", translation: "чинить / ремонтировать", example: "修电脑", exampleTranslation: "Ремонтировать компьютер.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 65, characters: "困", pinyin: "kùn", translation: "сонный / усталый", example: "我很困。", exampleTranslation: "Я очень хочу спать.", listId: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
 
             // 4. УСПЕХ И РАЗВИТИЕ (listId: 4, 23 слова)
             { id: 66, characters: "目的", pinyin: "mù dì", translation: "цель", example: "我们的目的是一样的。", exampleTranslation: "Наши цели одинаковы.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 67, characters: "顺利", pinyin: "shùn lì", translation: "гладко / успешно", example: "一切顺利。", exampleTranslation: "Всё идёт гладко.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 68, characters: "成功", pinyin: "chéng gōng", translation: "успех", example: "他成功了。", exampleTranslation: "Он добился успеха.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 68, characters: "成功", pinyin: "chéng gōng", translation: "успех / успешный", example: "他成功了。", exampleTranslation: "Он добился успеха.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 69, characters: "结果", pinyin: "jié guǒ", translation: "результат", example: "结果怎么样？", exampleTranslation: "Каков результат?", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 70, characters: "过程", pinyin: "guò chéng", translation: "процесс", example: "这个过程很长。", exampleTranslation: "Этот процесс долгий.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 71, characters: "条件", pinyin: "tiáo jiàn", translation: "условие", example: "他符合条件。", exampleTranslation: "Он соответствует условиям.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 72, characters: "特点", pinyin: "tè diǎn", translation: "особенность", example: "这个手机的特点是什么？", exampleTranslation: "Какие особенности у этого телефона?", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 73, characters: "值得", pinyin: "zhí dé", translation: "стоить", example: "值得试试。", exampleTranslation: "Стоит попробовать.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 74, characters: "重视", pinyin: "zhòng shì", translation: "ценить", example: "老师很重视这个问题。", exampleTranslation: "Учитель придаёт большое значение этому вопросу.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 75, characters: "效果", pinyin: "xiào guǒ", translation: "эффект", example: "效果很好。", exampleTranslation: "Эффект очень хороший.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 76, characters: "失败", pinyin: "shī bài", translation: "провал", example: "失败是成功之母。", exampleTranslation: "Поражение — мать успеха.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 72, characters: "特点", pinyin: "tè diǎn", translation: "особенность / характеристика", example: "这个手机的特点是什么？", exampleTranslation: "Какие особенности у этого телефона?", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 73, characters: "值得", pinyin: "zhí dé", translation: "стоить / заслуживать", example: "值得试试。", exampleTranslation: "Стоит попробовать.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 74, characters: "重视", pinyin: "zhòng shì", translation: "придавать значение / ценить", example: "老师很重视这个问题。", exampleTranslation: "Учитель придаёт большое значение этому вопросу.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 75, characters: "效果", pinyin: "xiào guǒ", translation: "эффект / результат", example: "效果很好。", exampleTranslation: "Эффект очень хороший.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 76, characters: "失败", pinyin: "shī bài", translation: "провал / поражение", example: "失败是成功之母。", exampleTranslation: "Поражение — мать успеха.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 77, characters: "发展", pinyin: "fā zhǎn", translation: "развитие", example: "经济发展很快。", exampleTranslation: "Экономика развивается быстро.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 78, characters: "计划", pinyin: "jì huà", translation: "план", example: "你有什么计划？", exampleTranslation: "Какие у тебя планы?", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 79, characters: "坚持", pinyin: "jiān chí", translation: "упорствовать", example: "坚持就是胜利。", exampleTranslation: "Упорство — это победа.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 80, characters: "改变", pinyin: "gǎi biàn", translation: "менять", example: "改变想法", exampleTranslation: "Изменить мнение.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 81, characters: "进行", pinyin: "jìn xíng", translation: "проводить", example: "进行讨论", exampleTranslation: "Проводить обсуждение.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 82, characters: "组成", pinyin: "zǔ chéng", translation: "состоять из", example: "这个团队由五人组成。", exampleTranslation: "Эта команда состоит из пяти человек.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 79, characters: "坚持", pinyin: "jiān chí", translation: "настаивать / упорствовать", example: "坚持就是胜利。", exampleTranslation: "Упорство — это победа.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 80, characters: "改变", pinyin: "gǎi biàn", translation: "менять / изменять", example: "改变想法", exampleTranslation: "Изменить мнение.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 81, characters: "进行", pinyin: "jìn xíng", translation: "проводить / осуществлять", example: "进行讨论", exampleTranslation: "Проводить обсуждение.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 82, characters: "组成", pinyin: "zǔ chéng", translation: "состоять из / формировать", example: "这个团队由五人组成。", exampleTranslation: "Эта команда состоит из пяти человек.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 83, characters: "适应", pinyin: "shì yìng", translation: "адаптироваться", example: "适应新环境", exampleTranslation: "Адаптироваться к новой среде.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 84, characters: "速度", pinyin: "sù dù", translation: "скорость", example: "速度快", exampleTranslation: "Скорость высокая.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 85, characters: "扩大", pinyin: "kuò dà", translation: "расширять", example: "扩大影响", exampleTranslation: "Расширять влияние.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 86, characters: "减少", pinyin: "jiǎn shǎo", translation: "уменьшать", example: "减少开支", exampleTranslation: "Сокращать расходы.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 86, characters: "减少", pinyin: "jiǎn shǎo", translation: "уменьшать / сокращать", example: "减少开支", exampleTranslation: "Сокращать расходы.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
             { id: 87, characters: "降低", pinyin: "jiàng dī", translation: "снижать", example: "降低价格", exampleTranslation: "Снижать цену.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
-            { id: 88, characters: "增加", pinyin: "zēng jiā", translation: "увеличивать", example: "增加收入", exampleTranslation: "Увеличивать доход.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null }
+            { id: 88, characters: "增加", pinyin: "zēng jiā", translation: "увеличивать", example: "增加收入", exampleTranslation: "Увеличивать доход.", listId: 4, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+
+            // 5. СЕМЬЯ И ВЗАИМООТНОШЕНИЯ (listId: 5, 33 слова)
+            { id: 89, characters: "抱", pinyin: "bào", translation: "обнимать", example: "抱一下", exampleTranslation: "Обними меня.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 90, characters: "爱情", pinyin: "ài qíng", translation: "любовь (романтическая)", example: "他们的爱情很美。", exampleTranslation: "Их любовь прекрасна.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 91, characters: "态度", pinyin: "tài dù", translation: "отношение", example: "他态度不好。", exampleTranslation: "У него плохое отношение.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 92, characters: "支持", pinyin: "zhī chí", translation: "поддерживать", example: "我支持你。", exampleTranslation: "Я поддерживаю тебя.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 93, characters: "孤单", pinyin: "gū dān", translation: "одинокий", example: "他感觉很孤单。", exampleTranslation: "Он чувствует себя одиноким.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 94, characters: "联系", pinyin: "lián xì", translation: "связь / контакт", example: "保持联系", exampleTranslation: "Оставайся на связи.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 95, characters: "浪漫", pinyin: "làng màn", translation: "романтичный", example: "很浪漫", exampleTranslation: "Очень романтично.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 96, characters: "误会", pinyin: "wù huì", translation: "недопонимание", example: "这是个误会。", exampleTranslation: "Это недоразумение.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 97, characters: "伤心", pinyin: "shāng xīn", translation: "печальный / огорчённый", example: "别伤心。", exampleTranslation: "Не грусти.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 98, characters: "尊重", pinyin: "zūn zhòng", translation: "уважать", example: "互相尊重", exampleTranslation: "Уважать друг друга.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 99, characters: "感谢", pinyin: "gǎn xiè", translation: "благодарить", example: "感谢你的帮助。", exampleTranslation: "Спасибо за помощь.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 100, characters: "道歉", pinyin: "dào qiàn", translation: "извиняться", example: "我向你道歉。", exampleTranslation: "Я приношу тебе извинения.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 101, characters: "表扬", pinyin: "biǎo yáng", translation: "хвалить", example: "老师表扬了他。", exampleTranslation: "Учитель похвалил его.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 102, characters: "反对", pinyin: "fǎn duì", translation: "возражать / быть против", example: "我反对这个计划。", exampleTranslation: "Я против этого плана.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 103, characters: "反应", pinyin: "fǎn yìng", translation: "реакция", example: "他的反应很快。", exampleTranslation: "У него быстрая реакция.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 104, characters: "交流", pinyin: "jiāo liú", translation: "общаться", example: "交流思想", exampleTranslation: "Обмениваться мыслями.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 105, characters: "鼓励", pinyin: "gǔ lì", translation: "воодушевлять", example: "鼓励孩子", exampleTranslation: "Воодушевлять детей.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 106, characters: "批评", pinyin: "pī píng", translation: "критиковать", example: "批评别人", exampleTranslation: "Критиковать других.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 107, characters: "骗", pinyin: "piàn", translation: "обманывать", example: "别骗我。", exampleTranslation: "Не обманывай меня.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 108, characters: "说明", pinyin: "shuō míng", translation: "объяснять", example: "说明原因", exampleTranslation: "Объяснить причину.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 109, characters: "允许", pinyin: "yǔn xǔ", translation: "разрешать", example: "请允许我介绍。", exampleTranslation: "Разрешите мне представиться.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 110, characters: "信任", pinyin: "xìn rèn", translation: "доверять", example: "我信任你。", exampleTranslation: "Я доверяю тебе.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 111, characters: "压力", pinyin: "yā lì", translation: "давление / стресс", example: "工作压力很大。", exampleTranslation: "На работе большой стресс.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 112, characters: "父亲", pinyin: "fù qīn", translation: "отец", example: "我的父亲", exampleTranslation: "Мой отец.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 113, characters: "母亲", pinyin: "mǔ qīn", translation: "мать", example: "我的母亲", exampleTranslation: "Моя мать.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 114, characters: "亲戚", pinyin: "qīn qī", translation: "родственник", example: "我有很多亲戚。", exampleTranslation: "У меня много родственников.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 115, characters: "孙子", pinyin: "sūn zi", translation: "внук", example: "他的孙子很可爱。", exampleTranslation: "Его внук очень милый.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 116, characters: "儿童", pinyin: "ér tóng", translation: "ребёнок / дети", example: "儿童节", exampleTranslation: "День защиты детей.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 117, characters: "请客", pinyin: "qǐng kè", translation: "угощать / платить за другого", example: "我请客。", exampleTranslation: "Я угощаю.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 118, characters: "约会", pinyin: "yuē huì", translation: "свидание", example: "今晚有约会。", exampleTranslation: "Сегодня вечером свидание.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 119, characters: "交朋友", pinyin: "jiāo péng you", translation: "заводить друзей", example: "我想交新朋友。", exampleTranslation: "Я хочу завести новых друзей.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 120, characters: "友好", pinyin: "yǒu hǎo", translation: "дружелюбный", example: "他很友好。", exampleTranslation: "Он очень дружелюбный.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 121, characters: "友谊", pinyin: "yǒu yì", translation: "дружба", example: "我们的友谊很长。", exampleTranslation: "Наша дружба долгая.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 122, characters: "集合", pinyin: "jí hé", translation: "собираться вместе", example: "明天早上集合。", exampleTranslation: "Завтра утром собираемся.", listId: 5, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+
+            // 6. ЭМОЦИИ И ЧУВСТВА (listId: 6, 30 слов)
+            { id: 123, characters: "受不了", pinyin: "shòu bu liǎo", translation: "не выдерживать / не терпеть", example: "我受不了了！", exampleTranslation: "Я не выдерживаю!", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 124, characters: "恐怕", pinyin: "kǒng pà", translation: "бояться / боюсь что", example: "恐怕今天会下雨。", exampleTranslation: "Боюсь, сегодня будет дождь.", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 125, characters: "烦恼", pinyin: "fán nǎo", translation: "беспокойство / переживание", example: "别烦恼。", exampleTranslation: "Не переживай.", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 126, characters: "失望", pinyin: "shī wàng", translation: "разочаровываться", example: "我很失望。", exampleTranslation: "Я очень разочарован.", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 127, characters: "羡慕", pinyin: "xiàn mù", translation: "завидовать", example: "我很羡慕你。", exampleTranslation: "Я тебе завидую.", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 128, characters: "流泪", pinyin: "liú lèi", translation: "плакать / лить слёзы", example: "她流泪了。", exampleTranslation: "Она заплакала.", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 129, characters: "吃惊", pinyin: "chī jīng", translation: "удивляться / поражаться", example: "我很吃惊。", exampleTranslation: "Я очень удивлён.", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 130, characters: "感动", pinyin: "gǎn dòng", translation: "трогать (душу)", example: "这个故事很感动。", exampleTranslation: "Эта история очень трогательная.", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 131, characters: "紧张", pinyin: "jǐn zhāng", translation: "волноваться / напряжённый", example: "别紧张。", exampleTranslation: "Не волнуйся.", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 132, characters: "难受", pinyin: "nán shòu", translation: "плохо / тяжело (морально/физически)", example: "我很难受。", exampleTranslation: "Мне очень плохо.", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 133, characters: "后悔", pinyin: "hòu huǐ", translation: "сожалеть", example: "我后悔了。", exampleTranslation: "Я сожалею.", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 134, characters: "可惜", pinyin: "kě xī", translation: "жаль", example: "可惜你没来。", exampleTranslation: "Жаль, что ты не пришёл.", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 135, characters: "讨厌", pinyin: "tǎo yàn", translation: "ненавидеть / противный", example: "讨厌的天气！", exampleTranslation: "Противная погода!", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 136, characters: "幸福", pinyin: "xìng fú", translation: "счастье / счастливый", example: "幸福的家庭", exampleTranslation: "Счастливая семья.", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 137, characters: "兴奋", pinyin: "xīng fèn", translation: "возбуждённый / в приподнятом настроении", example: "我很兴奋。", exampleTranslation: "Я в предвкушении.", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 138, characters: "愉快", pinyin: "yú kuài", translation: "приятный / радостный", example: "旅途愉快！", exampleTranslation: "Счастливого пути!", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 139, characters: "得意", pinyin: "dé yì", translation: "самодовольный", example: "他看起来很得意。", exampleTranslation: "Он выглядит самодовольным.", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 140, characters: "害羞", pinyin: "hài xiū", translation: "стеснительный / застенчивый", example: "她很害羞。", exampleTranslation: "Она очень застенчивая.", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 141, characters: "激动", pinyin: "jī dòng", translation: "взволнованный", example: "别激动。", exampleTranslation: "Не волнуйся.", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 142, characters: "同情", pinyin: "tóng qíng", translation: "сочувствовать", example: "我很同情他。", exampleTranslation: "Я ему сочувствую.", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 143, characters: "骄傲", pinyin: "jiāo ào", translation: "гордый / гордость", example: "我为你骄傲。", exampleTranslation: "Я горжусь тобой.", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 144, characters: "轻松", pinyin: "qīng sōng", translation: "лёгкий / расслабленный", example: "轻松的工作", exampleTranslation: "Лёгкая работа.", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 145, characters: "信心", pinyin: "xìn xīn", translation: "уверенность", example: "有信心", exampleTranslation: "Быть уверенным.", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 146, characters: "感觉", pinyin: "gǎn jué", translation: "чувствовать / ощущение", example: "我感觉很好。", exampleTranslation: "Я хорошо себя чувствую.", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 147, characters: "心情", pinyin: "xīn qíng", translation: "настроение", example: "心情不好", exampleTranslation: "Плохое настроение.", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 148, characters: "感情", pinyin: "gǎn qíng", translation: "чувства / эмоции", example: "感情很深。", exampleTranslation: "Чувства глубокие.", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 149, characters: "怀疑", pinyin: "huái yí", translation: "сомневаться / подозревать", example: "我怀疑他。", exampleTranslation: "Я сомневаюсь в нём.", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 150, characters: "打扰", pinyin: "dǎ rǎo", translation: "беспокоить", example: "打扰一下。", exampleTranslation: "Прошу прощения.", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 151, characters: "抱歉", pinyin: "bào qiàn", translation: "извините / сожалеть", example: "很抱歉。", exampleTranslation: "Очень жаль.", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 152, characters: "印象", pinyin: "yìn xiàng", translation: "впечатление", example: "第一印象", exampleTranslation: "Первое впечатление.", listId: 6, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+
+            // 7. ЛИЧНЫЕ КАЧЕСТВА (listId: 7, 23 слова)
+            { id: 153, characters: "勇敢", pinyin: "yǒng gǎn", translation: "храбрый", example: "他很勇敢。", exampleTranslation: "Он очень храбрый.", listId: 7, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 154, characters: "礼貌", pinyin: "lǐ mào", translation: "вежливый", example: "要有礼貌。", exampleTranslation: "Надо быть вежливым.", listId: 7, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 155, characters: "活泼", pinyin: "huó pō", translation: "живой / активный", example: "这个孩子很活泼。", exampleTranslation: "Этот ребёнок очень живой.", listId: 7, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 156, characters: "懒", pinyin: "lǎn", translation: "ленивый", example: "别那么懒。", exampleTranslation: "Не будь таким ленивым.", listId: 7, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 157, characters: "冷静", pinyin: "lěng jìng", translation: "спокойный / хладнокровный", example: "保持冷静。", exampleTranslation: "Сохраняй спокойствие.", listId: 7, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 158, characters: "性格", pinyin: "xìng gé", translation: "характер", example: "性格很好。", exampleTranslation: "Хороший характер.", listId: 7, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 159, characters: "脾气", pinyin: "pí qi", translation: "характер / нрав", example: "他脾气不好。", exampleTranslation: "У него плохой характер.", listId: 7, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 160, characters: "厉害", pinyin: "lì hai", translation: "крутой / сильный / ужасный", example: "他真厉害！", exampleTranslation: "Он реально крут!", listId: 7, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 161, characters: "严格", pinyin: "yán gé", translation: "строгий", example: "老师很严格。", exampleTranslation: "Учитель очень строгий.", listId: 7, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 162, characters: "耐心", pinyin: "nài xīn", translation: "терпеливый", example: "请耐心等待。", exampleTranslation: "Пожалуйста, подождите терпеливо.", listId: 7, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 163, characters: "主动", pinyin: "zhǔ dòng", translation: "активный / по своей инициативе", example: "主动帮忙", exampleTranslation: "Предложить помощь.", listId: 7, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 164, characters: "诚实", pinyin: "chéng shí", translation: "честный", example: "要诚实。", exampleTranslation: "Надо быть честным.", listId: 7, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 165, characters: "马虎", pinyin: "mǎ hu", translation: "небрежный / халтурный", example: "别马虎。", exampleTranslation: "Не халтурь.", listId: 7, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 166, characters: "能力", pinyin: "néng lì", translation: "способность", example: "他有能力。", exampleTranslation: "У него есть способности.", listId: 7, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 167, characters: "优秀", pinyin: "yōu xiù", translation: "выдающийся / отличный", example: "优秀的学生", exampleTranslation: "Отличный студент.", listId: 7, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 168, characters: "帅", pinyin: "shuài", translation: "красивый (о мужчине)", example: "他很帅。", exampleTranslation: "Он очень красивый.", listId: 7, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 169, characters: "个子", pinyin: "gè zi", translation: "рост", example: "他个子很高。", exampleTranslation: "У него высокий рост.", listId: 7, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 170, characters: "力气", pinyin: "lì qi", translation: "сила", example: "力气很大。", exampleTranslation: "Сила большая.", listId: 7, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 171, characters: "性别", pinyin: "xìng bié", translation: "пол", example: "性别男", exampleTranslation: "Мужской пол.", listId: 7, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 172, characters: "笨", pinyin: "bèn", translation: "глупый / тупой", example: "真笨！", exampleTranslation: "Какой тупой!", listId: 7, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 173, characters: "轻", pinyin: "qīng", translation: "лёгкий (по весу)", example: "很轻", exampleTranslation: "Очень лёгкий.", listId: 7, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 174, characters: "美丽", pinyin: "měi lì", translation: "красивый", example: "美丽的风景", exampleTranslation: "Красивый пейзаж.", listId: 7, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 175, characters: "年龄", pinyin: "nián líng", translation: "возраст", example: "你的年龄？", exampleTranslation: "Твой возраст?", listId: 7, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 176, characters: "穷", pinyin: "qióng", translation: "бедный", example: "他家很穷。", exampleTranslation: "Его семья бедная.", listId: 7, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 177, characters: "丰富", pinyin: "fēng fù", translation: "богатый / обильный", example: "经验丰富", exampleTranslation: "Богатый опыт.", listId: 7, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 178, characters: "富", pinyin: "fù", translation: "богатый", example: "富人", exampleTranslation: "Богатый человек.", listId: 7, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+
+            // 8. ПУТЕШЕСТВИЯ (listId: 8, 18 слов)
+            { id: 179, characters: "长城", pinyin: "Cháng chéng", translation: "Великая Китайская стена", example: "我们去长城吧。", exampleTranslation: "Давай поедем на Великую стену.", listId: 8, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 180, characters: "长江", pinyin: "Cháng Jiāng", translation: "река Янцзы", example: "长江很长。", exampleTranslation: "Янцзы очень длинная.", listId: 8, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 181, characters: "航班", pinyin: "háng bān", translation: "рейс (самолёт)", example: "航班晚点了。", exampleTranslation: "Рейс задерживается.", listId: 8, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 182, characters: "导游", pinyin: "dǎo yóu", translation: "гид / экскурсовод", example: "导游很热情。", exampleTranslation: "Гид очень радушный.", listId: 8, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 183, characters: "到处", pinyin: "dào chù", translation: "везде / повсюду", example: "到处都是人。", exampleTranslation: "Повсюду люди.", listId: 8, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 184, characters: "地球", pinyin: "dì qiú", translation: "Земля (планета)", example: "保护地球。", exampleTranslation: "Защищать Землю.", listId: 8, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 185, characters: "海洋", pinyin: "hǎi yáng", translation: "океан", example: "海洋很大。", exampleTranslation: "Океан огромный.", listId: 8, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 186, characters: "起飞", pinyin: "qǐ fēi", translation: "взлетать", example: "飞机马上起飞。", exampleTranslation: "Самолёт сейчас взлетит.", listId: 8, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 187, characters: "亚洲", pinyin: "Yà zhōu", translation: "Азия", example: "中国在亚洲。", exampleTranslation: "Китай находится в Азии.", listId: 8, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 188, characters: "首都", pinyin: "shǒu dū", translation: "столица", example: "北京是中国的首都。", exampleTranslation: "Пекин — столица Китая.", listId: 8, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 189, characters: "访问", pinyin: "fǎng wèn", translation: "посещать / визит", example: "访问朋友", exampleTranslation: "Навестить друга.", listId: 8, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 190, characters: "省", pinyin: "shěng", translation: "провинция", example: "四川省", exampleTranslation: "Провинция Сычуань.", listId: 8, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 191, characters: "风景", pinyin: "fēng jǐng", translation: "пейзаж / вид", example: "风景很美。", exampleTranslation: "Вид очень красивый.", listId: 8, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 192, characters: "参观", pinyin: "cān guān", translation: "осматривать / посещать (музей)", example: "参观博物馆", exampleTranslation: "Посетить музей.", listId: 8, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 193, characters: "签证", pinyin: "qiān zhèng", translation: "виза", example: "办签证", exampleTranslation: "Оформлять визу.", listId: 8, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 194, characters: "经历", pinyin: "jīng lì", translation: "опыт / пережитое", example: "难忘的经历", exampleTranslation: "Незабываемый опыт.", listId: 8, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 195, characters: "经验", pinyin: "jīng yàn", translation: "опыт (знания)", example: "工作经验", exampleTranslation: "Опыт работы.", listId: 8, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 196, characters: "旅游", pinyin: "lǚ yóu", translation: "путешествовать", example: "我喜欢旅游。", exampleTranslation: "Я люблю путешествовать.", listId: 8, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+
+            // 9. КЛИМАТ И ОКРУЖАЮЩАЯ СРЕДА (listId: 9, 27 слов)
+            { id: 197, characters: "干燥", pinyin: "gān zào", translation: "сухой (климат)", example: "天气干燥。", exampleTranslation: "Погода сухая.", listId: 9, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 198, characters: "暖和", pinyin: "nuǎn huo", translation: "тёплый", example: "今天很暖和。", exampleTranslation: "Сегодня очень тепло.", listId: 9, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 199, characters: "气候", pinyin: "qì hòu", translation: "климат", example: "气候温暖", exampleTranslation: "Климат тёплый.", listId: 9, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 200, characters: "凉快", pinyin: "liáng kuai", translation: "прохладный", example: "秋天凉快。", exampleTranslation: "Осенью прохладно.", listId: 9, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 201, characters: "暗", pinyin: "àn", translation: "тёмный", example: "天暗了。", exampleTranslation: "Небо потемнело.", listId: 9, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 202, characters: "亮", pinyin: "liàng", translation: "светлый / яркий", example: "很亮", exampleTranslation: "Очень ярко.", listId: 9, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 203, characters: "阳光", pinyin: "yáng guāng", translation: "солнечный свет", example: "阳光很好。", exampleTranslation: "Солнце хорошее.", listId: 9, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 204, characters: "温度", pinyin: "wēn dù", translation: "температура", example: "温度很高。", exampleTranslation: "Температура высокая.", listId: 9, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 205, characters: "猴子", pinyin: "hóu zi", translation: "обезьяна", example: "猴子很可爱。", exampleTranslation: "Обезьяна очень милая.", listId: 9, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 206, characters: "狮子", pinyin: "shī zi", translation: "лев", example: "狮子很强壮。", exampleTranslation: "Лев очень сильный.", listId: 9, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 207, characters: "湿润", pinyin: "shī rùn", translation: "влажный", example: "空气湿润。", exampleTranslation: "Воздух влажный.", listId: 9, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 208, characters: "危险", pinyin: "wēi xiǎn", translation: "опасный", example: "危险！", exampleTranslation: "Опасно!", listId: 9, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 209, characters: "污染", pinyin: "wū rǎn", translation: "загрязнение", example: "空气污染", exampleTranslation: "Загрязнение воздуха.", listId: 9, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 210, characters: "保护", pinyin: "bǎo hù", translation: "защищать", example: "保护环境", exampleTranslation: "Защищать окружающую среду.", listId: 9, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 211, characters: "自然", pinyin: "zì rán", translation: "природа / естественный", example: "自然美", exampleTranslation: "Естественная красота.", listId: 9, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 212, characters: "空气", pinyin: "kōng qì", translation: "воздух", example: "空气新鲜。", exampleTranslation: "Воздух свежий.", listId: 9, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 213, characters: "火", pinyin: "huǒ", translation: "огонь", example: "生火", exampleTranslation: "Развести огонь.", listId: 9, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 214, characters: "朵", pinyin: "duǒ", translation: "сч. слово для цветов/облаков", example: "一朵花", exampleTranslation: "Один цветок.", listId: 9, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 215, characters: "老虎", pinyin: "lǎo hǔ", translation: "тигр", example: "老虎很大。", exampleTranslation: "Тигр очень большой.", listId: 9, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 216, characters: "叶子", pinyin: "yè zi", translation: "лист", example: "叶子绿了。", exampleTranslation: "Листья позеленели.", listId: 9, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 217, characters: "棵", pinyin: "kē", translation: "сч. слово для деревьев", example: "一棵树", exampleTranslation: "Одно дерево.", listId: 9, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 218, characters: "森林", pinyin: "sēn lín", translation: "лес", example: "森林很大。", exampleTranslation: "Лес большой.", listId: 9, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 219, characters: "只", pinyin: "zhī", translation: "сч. слово для животных", example: "一只猫", exampleTranslation: "Один кот.", listId: 9, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 220, characters: "植物", pinyin: "zhí wù", translation: "растение", example: "植物需要水。", exampleTranslation: "Растениям нужна вода.", listId: 9, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 221, characters: "猪", pinyin: "zhū", translation: "свинья", example: "猪很胖。", exampleTranslation: "Свинья очень толстая.", listId: 9, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 222, characters: "光", pinyin: "guāng", translation: "свет", example: "关光", exampleTranslation: "Выключить свет.", listId: 9, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 223, characters: "环境", pinyin: "huán jìng", translation: "окружающая среда", example: "环境很好。", exampleTranslation: "Среда хорошая.", listId: 9, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+
+            // 10. РАЗВЛЕЧЕНИЯ (listId: 10, 23 слова)
+            { id: 224, characters: "鼓掌", pinyin: "gǔ zhǎng", translation: "аплодировать", example: "请大家鼓掌。", exampleTranslation: "Все, прошу аплодировать.", listId: 10, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 225, characters: "京剧", pinyin: "jīng jù", translation: "Пекинская опера", example: "他喜欢看京剧。", exampleTranslation: "Он любит смотреть Пекинскую оперу.", listId: 10, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 226, characters: "观众", pinyin: "guān zhòng", translation: "зрители", example: "观众很多。", exampleTranslation: "Зрителей много.", listId: 10, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 227, characters: "座位", pinyin: "zuò wèi", translation: "место (сиденье)", example: "请坐你的座位。", exampleTranslation: "Садитесь на своё место.", listId: 10, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 228, characters: "演出", pinyin: "yǎn chū", translation: "представление / шоу", example: "演出很精彩。", exampleTranslation: "Представление замечательное.", listId: 10, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 229, characters: "演员", pinyin: "yǎn yuán", translation: "актёр", example: "他是好演员。", exampleTranslation: "Он хороший актёр.", listId: 10, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 230, characters: "小说", pinyin: "xiǎo shuō", translation: "роман", example: "读小说", exampleTranslation: "Читать роман.", listId: 10, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 231, characters: "笑话", pinyin: "xiào hua", translation: "шутка / анекдот", example: "讲笑话", exampleTranslation: "Рассказывать шутки.", listId: 10, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 232, characters: "幽默", pinyin: "yōu mò", translation: "юмор / юмористический", example: "他很幽默。", exampleTranslation: "Он очень юморной.", listId: 10, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 233, characters: "弹钢琴", pinyin: "tán gāng qín", translation: "играть на пианино", example: "她会弹钢琴。", exampleTranslation: "Она умеет играть на пианино.", listId: 10, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 234, characters: "著名", pinyin: "zhù míng", translation: "знаменитый", example: "著名的演员", exampleTranslation: "Знаменитый актёр.", listId: 10, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 235, characters: "艺术", pinyin: "yì shù", translation: "искусство", example: "喜欢艺术", exampleTranslation: "Любить искусство.", listId: 10, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 236, characters: "热闹", pinyin: "rè nao", translation: "оживлённый / шумный", example: "很热闹", exampleTranslation: "Очень оживлённо.", listId: 10, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 237, characters: "陪", pinyin: "péi", translation: "сопровождать", example: "陪我一下。", exampleTranslation: "Сопроводи меня.", listId: 10, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 238, characters: "吵", pinyin: "chǎo", translation: "шумный / ссориться", example: "别吵！", exampleTranslation: "Не шумите!", listId: 10, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 239, characters: "活动", pinyin: "huó dòng", translation: "мероприятие", example: "学校活动", exampleTranslation: "Школьное мероприятие.", listId: 10, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 240, characters: "弄", pinyin: "nòng", translation: "делать / возиться", example: "别弄坏了。", exampleTranslation: "Не сломай.", listId: 10, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 241, characters: "有趣", pinyin: "yǒu qù", translation: "интересный", example: "很有趣", exampleTranslation: "Очень интересно.", listId: 10, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 242, characters: "祝贺", pinyin: "zhù hè", translation: "поздравлять", example: "祝贺你！", exampleTranslation: "Поздравляю тебя!", listId: 10, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 243, characters: "群", pinyin: "qún", translation: "группа / толпа", example: "一群人", exampleTranslation: "Группа людей.", listId: 10, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 244, characters: "开玩笑", pinyin: "kāi wán xiào", translation: "шутить", example: "我只是开玩笑。", exampleTranslation: "Я просто шучу.", listId: 10, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 245, characters: "无聊", pinyin: "wú liáo", translation: "скучно", example: "很无聊", exampleTranslation: "Очень скучно.", listId: 10, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 246, characters: "台", pinyin: "tái", translation: "сцена / трибуна", example: "上台", exampleTranslation: "Выйти на сцену.", listId: 10, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+
+            // 11. НАРЕЧИЯ 1 (listId: 11, 23 слова)
+            { id: 247, characters: "竟然", pinyin: "jìng rán", translation: "неожиданно / оказывается", example: "他竟然没来。", exampleTranslation: "Оказывается, он не пришёл.", listId: 11, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 248, characters: "究竟", pinyin: "jiū jìng", translation: "в конце концов / что же", example: "究竟怎么回事？", exampleTranslation: "Что же всё-таки случилось?", listId: 11, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 249, characters: "仍然", pinyin: "réng rán", translation: "по-прежнему / всё ещё", example: "他仍然很忙。", exampleTranslation: "Он по-прежнему занят.", listId: 11, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 250, characters: "到底", pinyin: "dào dǐ", translation: "в конце концов / так что же", example: "你到底去不去？", exampleTranslation: "Ты в конце концов идёшь или нет?", listId: 11, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 251, characters: "最后", pinyin: "zuì hòu", translation: "в конце / наконец", example: "最后他同意了。", exampleTranslation: "В конце концов он согласился.", listId: 11, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 252, characters: "果然", pinyin: "guǒ rán", translation: "действительно / как и ожидалось", example: "果然是你！", exampleTranslation: "Действительно ты!", listId: 11, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 253, characters: "例如", pinyin: "lì rú", translation: "например", example: "我喜欢水果，例如苹果。", exampleTranslation: "Я люблю фрукты, например яблоки.", listId: 11, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 254, characters: "于是", pinyin: "yú shì", translation: "и тогда / вследствие этого", example: "他病了，于是没来。", exampleTranslation: "Он заболел, и поэтому не пришёл.", listId: 11, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 255, characters: "总结", pinyin: "zǒng jié", translation: "подводить итог", example: "总结一下。", exampleTranslation: "Подведём итог.", listId: 11, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 256, characters: "不过", pinyin: "bù guò", translation: "однако / но", example: "他很聪明，不过有点懒。", exampleTranslation: "Он умный, но немного ленивый.", listId: 11, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 257, characters: "可是", pinyin: "kě shì", translation: "но / однако", example: "我想去，可是没时间。", exampleTranslation: "Хочу пойти, но нет времени.", listId: 11, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 258, characters: "肯定", pinyin: "kěn dìng", translation: "обязательно / утвердительно", example: "我肯定来。", exampleTranslation: "Я обязательно приду.", listId: 11, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 259, characters: "然而", pinyin: "rán ér", translation: "однако / но", example: "然而，事情没那么简单。", exampleTranslation: "Однако всё не так просто.", listId: 11, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 260, characters: "本来", pinyin: "běn lái", translation: "первоначально / изначально", example: "本来我打算去。", exampleTranslation: "Изначально я планировал пойти.", listId: 11, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 261, characters: "并且", pinyin: "bìng qiě", translation: "и / при этом / к тому же", example: "他聪明并且努力。", exampleTranslation: "Он умный и к тому же старательный.", listId: 11, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 262, characters: "大概", pinyin: "dà gài", translation: "примерно / вероятно", example: "大概十个人。", exampleTranslation: "Примерно десять человек.", listId: 11, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 263, characters: "大约", pinyin: "dà yuē", translation: "примерно / около", example: "大约五点。", exampleTranslation: "Около пяти часов.", listId: 11, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 264, characters: "至少", pinyin: "zhì shǎo", translation: "по крайней мере", example: "至少我知道。", exampleTranslation: "По крайней мере, я знаю.", listId: 11, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 265, characters: "一切", pinyin: "yī qiè", translation: "всё", example: "一切顺利。", exampleTranslation: "Всё идёт хорошо.", listId: 11, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 266, characters: "全部", pinyin: "quán bù", translation: "весь / полностью", example: "全部吃完。", exampleTranslation: "Съесть всё полностью.", listId: 11, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 267, characters: "差不多", pinyin: "chà bu duō", translation: "почти / примерно", example: "差不多好了。", exampleTranslation: "Почти готово.", listId: 11, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 268, characters: "完全", pinyin: "wán quán", translation: "полностью / совершенно", example: "完全正确。", exampleTranslation: "Полностью правильно.", listId: 11, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 269, characters: "忽然", pinyin: "hū rán", translation: "вдруг", example: "忽然下雨了。", exampleTranslation: "Вдруг пошёл дождь.", listId: 11, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+
+            // 12. НАРЕЧИЯ 2 (listId: 12, 22 слова)
+            { id: 270, characters: "相反", pinyin: "xiāng fǎn", translation: "наоборот / противоположный", example: "恰恰相反。", exampleTranslation: "Как раз наоборот.", listId: 12, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 271, characters: "千万", pinyin: "qiān wàn", translation: "обязательно / непременно", example: "千万小心。", exampleTranslation: "Обязательно будь осторожен.", listId: 12, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 272, characters: "各", pinyin: "gè", translation: "каждый / различный", example: "各国", exampleTranslation: "Разные страны.", listId: 12, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 273, characters: "正好", pinyin: "zhèng hǎo", translation: "как раз", example: "正好十点。", exampleTranslation: "Как раз десять часов.", listId: 12, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 274, characters: "顺便", pinyin: "shùn biàn", translation: "заодно / попутно", example: "顺便问问。", exampleTranslation: "Заодно спрошу.", listId: 12, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 275, characters: "另外", pinyin: "lìng wài", translation: "кроме того / другой", example: "另外一个人", exampleTranslation: "Другой человек.", listId: 12, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 276, characters: "也许", pinyin: "yě xǔ", translation: "может быть", example: "也许他会来。", exampleTranslation: "Может быть, он придёт.", listId: 12, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 277, characters: "难道", pinyin: "nán dào", translation: "неужели / разве", example: "难道你不知道？", exampleTranslation: "Неужели ты не знаешь?", listId: 12, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 278, characters: "随着", pinyin: "suí zhe", translation: "по мере / вслед за", example: "随着时间", exampleTranslation: "Со временем.", listId: 12, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 279, characters: "甚至", pinyin: "shèn zhì", translation: "даже", example: "他甚至没吃饭。", exampleTranslation: "Он даже не поел.", listId: 12, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 280, characters: "尤其", pinyin: "yóu qí", translation: "особенно", example: "尤其喜欢这个。", exampleTranslation: "Особенно нравится это.", listId: 12, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 281, characters: "由于", pinyin: "yóu yú", translation: "из-за / благодаря", example: "由于天气不好", exampleTranslation: "Из-за плохой погоды.", listId: 12, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 282, characters: "任何", pinyin: "rèn hé", translation: "любой", example: "任何人都可以。", exampleTranslation: "Любой может.", listId: 12, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 283, characters: "好像", pinyin: "hǎo xiàng", translation: "кажется / похоже", example: "好像要下雨。", exampleTranslation: "Кажется, будет дождь.", listId: 12, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 284, characters: "其中", pinyin: "qí zhōng", translation: "среди них", example: "其中一个是我的。", exampleTranslation: "Один из них мой.", listId: 12, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 285, characters: "最好", pinyin: "zuì hǎo", translation: "лучше всего", example: "你最好休息。", exampleTranslation: "Тебе лучше отдохнуть.", listId: 12, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 286, characters: "逐渐", pinyin: "zhú jiàn", translation: "постепенно", example: "逐渐变好", exampleTranslation: "Постепенно становится лучше.", listId: 12, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 287, characters: "够", pinyin: "gòu", translation: "достаточно", example: "够了。", exampleTranslation: "Достаточно.", listId: 12, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 288, characters: "极其", pinyin: "jí qí", translation: "чрезвычайно", example: "极其重要", exampleTranslation: "Чрезвычайно важно.", listId: 12, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 289, characters: "稍微", pinyin: "shāo wēi", translation: "слегка / немного", example: "稍微等一下。", exampleTranslation: "Подожди немного.", listId: 12, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 290, characters: "专门", pinyin: "zhuān mén", translation: "специально", example: "专门来看你。", exampleTranslation: "Специально пришёл посмотреть на тебя.", listId: 12, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 291, characters: "随便", pinyin: "suí biàn", translation: "как угодно / не важно", example: "随便吃。", exampleTranslation: "Угощайся.", listId: 12, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+
+            // 13. ХАРАКТЕРИСТИКА ВРЕМЕНИ (listId: 13, 19 слов)
+            { id: 292, characters: "刚刚", pinyin: "gāng gāng", translation: "только что", example: "他刚刚走。", exampleTranslation: "Он только что ушёл.", listId: 13, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 293, characters: "将来", pinyin: "jiāng lái", translation: "будущее", example: "将来我想去中国。", exampleTranslation: "В будущем я хочу поехать в Китай.", listId: 13, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 294, characters: "偶尔", pinyin: "ǒu ěr", translation: "изредка", example: "我偶尔喝酒。", exampleTranslation: "Я изредка пью алкоголь.", listId: 13, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 295, characters: "暂时", pinyin: "zhàn shí", translation: "временно", example: "暂时停止", exampleTranslation: "Временно остановлено.", listId: 13, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 296, characters: "准时", pinyin: "zhǔn shí", translation: "вовремя", example: "请准时到。", exampleTranslation: "Пожалуйста, приходи вовремя.", listId: 13, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 297, characters: "当时", pinyin: "dāng shí", translation: "тогда / в то время", example: "当时我不知道。", exampleTranslation: "Тогда я не знал.", listId: 13, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 298, characters: "平时", pinyin: "píng shí", translation: "обычно", example: "平时我七点起床。", exampleTranslation: "Обычно я встаю в семь.", listId: 13, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 299, characters: "后来", pinyin: "hòu lái", translation: "потом / позже", example: "后来他明白了。", exampleTranslation: "Потом он понял.", listId: 13, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 300, characters: "从来", pinyin: "cóng lái", translation: "всегда (с отрицанием — никогда)", example: "我从来没去过。", exampleTranslation: "Я никогда там не был.", listId: 13, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 301, characters: "永远", pinyin: "yǒng yuǎn", translation: "вечно / навсегда", example: "我永远爱你。", exampleTranslation: "Я буду вечно любить тебя.", listId: 13, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 302, characters: "按时", pinyin: "àn shí", translation: "вовремя / по расписанию", example: "按时完成", exampleTranslation: "Выполнить вовремя.", listId: 13, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 303, characters: "及时", pinyin: "jí shí", translation: "своевременно", example: "及时帮助", exampleTranslation: "Своевременная помощь.", listId: 13, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 304, characters: "来不及", pinyin: "lái bu jí", translation: "не успевать", example: "来不及了。", exampleTranslation: "Уже не успеваю.", listId: 13, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 305, characters: "来得及", pinyin: "lái de jí", translation: "успевать", example: "还来得及。", exampleTranslation: "Ещё успеваю.", listId: 13, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 306, characters: "提前", pinyin: "tí qián", translation: "заранее / раньше срока", example: "提前通知", exampleTranslation: "Заранее уведомить.", listId: 13, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 307, characters: "原来", pinyin: "yuán lái", translation: "первоначально / оказывается", example: "原来是你！", exampleTranslation: "Оказывается, это ты!", listId: 13, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 308, characters: "首先", pinyin: "shǒu xiān", translation: "сначала / во-первых", example: "首先，我介绍一下。", exampleTranslation: "Сначала я представлюсь.", listId: 13, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 309, characters: "其次", pinyin: "qí cì", translation: "во-вторых / затем", example: "其次，要注意安全。", exampleTranslation: "Во-вторых, нужно обращать внимание на безопасность.", listId: 13, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 310, characters: "世纪", pinyin: "shì jì", translation: "век", example: "二十一世纪", exampleTranslation: "21-й век.", listId: 13, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+
+            // 14. ПОКУПКИ (listId: 14, 20 слов)
+            { id: 311, characters: "购物", pinyin: "gòu wù", translation: "делать покупки / шопинг", example: "我喜欢购物。", exampleTranslation: "Я люблю ходить по магазинам.", listId: 14, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 312, characters: "顾客", pinyin: "gù kè", translation: "покупатель / клиент", example: "顾客很多。", exampleTranslation: "Покупателей много.", listId: 14, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 313, characters: "打折", pinyin: "dǎ zhé", translation: "делать скидку", example: "今天打折。", exampleTranslation: "Сегодня скидки.", listId: 14, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 314, characters: "市场", pinyin: "shì chǎng", translation: "рынок", example: "去市场买菜。", exampleTranslation: "Пойти на рынок за овощами.", listId: 14, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 315, characters: "逛", pinyin: "guàng", translation: "бродить / гулять (по магазинам)", example: "逛街", exampleTranslation: "Гулять по магазинам.", listId: 14, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 316, characters: "信用卡", pinyin: "xìn yòng kǎ", translation: "кредитная карта", example: "用信用卡付钱。", exampleTranslation: "Оплатить кредитной картой.", listId: 14, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 317, characters: "价格", pinyin: "jià gé", translation: "цена", example: "价格太高了。", exampleTranslation: "Цена слишком высокая.", listId: 14, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 318, characters: "免费", pinyin: "miǎn fèi", translation: "бесплатный", example: "免费入场", exampleTranslation: "Вход бесплатный.", listId: 14, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 319, characters: "浪费", pinyin: "làng fèi", translation: "тратить впустую", example: "别浪费钱。", exampleTranslation: "Не трать деньги зря.", listId: 14, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 320, characters: "塑料袋", pinyin: "sù liào dài", translation: "полиэтиленовый пакет", example: "塑料袋不环保。", exampleTranslation: "Полиэтиленовые пакеты не экологичны.", listId: 14, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 321, characters: "戴", pinyin: "dài", translation: "носить (очки, шапку)", example: "戴眼镜", exampleTranslation: "Носить очки.", listId: 14, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 322, characters: "袜子", pinyin: "wà zi", translation: "носки", example: "一双袜子", exampleTranslation: "Одна пара носков.", listId: 14, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 323, characters: "脱", pinyin: "tuō", translation: "снимать (одежду)", example: "脱鞋", exampleTranslation: "Снять обувь.", listId: 14, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 324, characters: "流行", pinyin: "liú xíng", translation: "популярный / модный", example: "流行音乐", exampleTranslation: "Популярная музыка.", listId: 14, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 325, characters: "样子", pinyin: "yàng zi", translation: "вид / фасон", example: "这个样子好看。", exampleTranslation: "Этот фасон красивый.", listId: 14, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 326, characters: "合适", pinyin: "hé shì", translation: "подходящий", example: "这件衣服很合适。", exampleTranslation: "Эта одежда очень подходит.", listId: 14, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 327, characters: "试", pinyin: "shì", translation: "пробовать / примерять", example: "试一下衣服。", exampleTranslation: "Примерить одежду.", listId: 14, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 328, characters: "适合", pinyin: "shì hé", translation: "подходить / соответствовать", example: "这个颜色适合你。", exampleTranslation: "Этот цвет тебе идёт.", listId: 14, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 329, characters: "毛巾", pinyin: "máo jīn", translation: "полотенце", example: "一条毛巾", exampleTranslation: "Одно полотенце.", listId: 14, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 330, characters: "剩", pinyin: "shèng", translation: "оставаться", example: "剩饭", exampleTranslation: "Остатки еды.", listId: 14, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+
+            // 15. ЗАКОН И ГОСУДАРСТВО (listId: 15, 29 слов)
+            { id: 331, characters: "入口", pinyin: "rù kǒu", translation: "вход", example: "入口在那边。", exampleTranslation: "Вход вон там.", listId: 15, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 332, characters: "大使馆", pinyin: "dà shǐ guǎn", translation: "посольство", example: "中国大使馆", exampleTranslation: "Посольство Китая.", listId: 15, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 333, characters: "民族", pinyin: "mín zú", translation: "национальность / народ", example: "中华民族", exampleTranslation: "Китайская нация.", listId: 15, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 334, characters: "人民币", pinyin: "rén mín bì", translation: "юань", example: "用人民币付款。", exampleTranslation: "Оплатить юанями.", listId: 15, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 335, characters: "国际", pinyin: "guó jì", translation: "международный", example: "国际关系", exampleTranslation: "Международные отношения.", listId: 15, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 336, characters: "法律", pinyin: "fǎ lǜ", translation: "закон", example: "遵守法律", exampleTranslation: "Соблюдать закон.", listId: 15, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 337, characters: "社会", pinyin: "shè huì", translation: "общество", example: "社会问题", exampleTranslation: "Социальные проблемы.", listId: 15, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 338, characters: "精神", pinyin: "jīng shén", translation: "дух / духовность", example: "精神很好", exampleTranslation: "Хороший дух.", listId: 15, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 339, characters: "共同", pinyin: "gòng tóng", translation: "общий / совместный", example: "共同努力", exampleTranslation: "Совместные усилия.", listId: 15, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 340, characters: "经济", pinyin: "jīng jì", translation: "экономика", example: "经济发展", exampleTranslation: "Экономическое развитие.", listId: 15, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 341, characters: "禁止", pinyin: "jìn zhǐ", translation: "запрещать", example: "禁止吸烟", exampleTranslation: "Не курить.", listId: 15, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 342, characters: "保证", pinyin: "bǎo zhèng", translation: "гарантировать", example: "我保证。", exampleTranslation: "Я гарантирую.", listId: 15, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 343, characters: "表格", pinyin: "biǎo gé", translation: "бланк / анкета", example: "填写表格", exampleTranslation: "Заполнить бланк.", listId: 15, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 344, characters: "申请", pinyin: "shēn qǐng", translation: "подавать заявку", example: "申请签证", exampleTranslation: "Подать на визу.", listId: 15, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 345, characters: "顺序", pinyin: "shùn xù", translation: "порядок / очерёдность", example: "按顺序", exampleTranslation: "По порядку.", listId: 15, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 346, characters: "正式", pinyin: "zhèng shì", translation: "официальный", example: "正式文件", exampleTranslation: "Официальный документ.", listId: 15, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 347, characters: "证明", pinyin: "zhèng míng", translation: "доказывать / свидетельство", example: "证明身份", exampleTranslation: "Подтвердить личность.", listId: 15, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 348, characters: "推迟", pinyin: "tuī chí", translation: "откладывать / переносить", example: "会议推迟了。", exampleTranslation: "Встречу перенесли.", listId: 15, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 349, characters: "判断", pinyin: "pàn duàn", translation: "судить / оценивать", example: "判断对错", exampleTranslation: "Оценить правильно/неправильно.", listId: 15, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 350, characters: "留", pinyin: "liú", translation: "оставлять", example: "留个电话。", exampleTranslation: "Оставьте номер телефона.", listId: 15, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 351, characters: "安全", pinyin: "ān quán", translation: "безопасный", example: "注意安全", exampleTranslation: "Береги себя.", listId: 15, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 352, characters: "标准", pinyin: "biāo zhǔn", translation: "стандарт", example: "标准答案", exampleTranslation: "Правильный ответ.", listId: 15, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 353, characters: "规定", pinyin: "guī dìng", translation: "правило / предписание", example: "按规定办事。", exampleTranslation: "Делать по правилам.", listId: 15, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 354, characters: "符合", pinyin: "fú hé", translation: "соответствовать", example: "符合要求", exampleTranslation: "Соответствовать требованиям.", listId: 15, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 355, characters: "合格", pinyin: "hé gé", translation: "соответствовать стандарту", example: "产品合格。", exampleTranslation: "Продукция соответствует стандарту.", listId: 15, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 356, characters: "基础", pinyin: "jī chǔ", translation: "основа / база", example: "基础知识", exampleTranslation: "Базовые знания.", listId: 15, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 357, characters: "责任", pinyin: "zé rèn", translation: "ответственность", example: "负责任", exampleTranslation: "Нести ответственность.", listId: 15, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 358, characters: "限制", pinyin: "xiàn zhì", translation: "ограничивать", example: "速度限制", exampleTranslation: "Ограничение скорости.", listId: 15, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 359, characters: "停止", pinyin: "tíng zhǐ", translation: "останавливать", example: "停止营业", exampleTranslation: "Прекратить работу.", listId: 15, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+
+            // 16. АНАЛИЗ И ЭКОНОМИКА (listId: 16, 27 слов)
+            { id: 360, characters: "竞争", pinyin: "jìng zhēng", translation: "конкуренция", example: "市场竞争", exampleTranslation: "Рыночная конкуренция.", listId: 16, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 361, characters: "高级", pinyin: "gāo jí", translation: "высокий уровень / продвинутый", example: "高级经理", exampleTranslation: "Топ-менеджер.", listId: 16, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 362, characters: "组织", pinyin: "zǔ zhī", translation: "организация", example: "组织活动", exampleTranslation: "Организовывать мероприятие.", listId: 16, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 363, characters: "管理", pinyin: "guǎn lǐ", translation: "управлять", example: "管理公司", exampleTranslation: "Управлять компанией.", listId: 16, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 364, characters: "增长", pinyin: "zēng zhǎng", translation: "рост / увеличиваться", example: "经济增长", exampleTranslation: "Экономический рост.", listId: 16, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 365, characters: "吸引", pinyin: "xī yǐn", translation: "привлекать", example: "吸引顾客", exampleTranslation: "Привлекать покупателей.", listId: 16, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 366, characters: "包括", pinyin: "bāo kuò", translation: "включать в себя", example: "包括运费", exampleTranslation: "Включая доставку.", listId: 16, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 367, characters: "代替", pinyin: "dài tì", translation: "заменять", example: "没人能代替你。", exampleTranslation: "Никто не сможет заменить тебя.", listId: 16, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 368, characters: "直接", pinyin: "zhí jiē", translation: "прямой / напрямую", example: "直接联系", exampleTranslation: "Связаться напрямую.", listId: 16, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 369, characters: "抬", pinyin: "tái", translation: "поднимать", example: "抬头", exampleTranslation: "Поднять голову.", listId: 16, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 370, characters: "优点", pinyin: "yōu diǎn", translation: "достоинство / плюс", example: "有很多优点。", exampleTranslation: "Есть много плюсов.", listId: 16, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 371, characters: "通过", pinyin: "tōng guò", translation: "через / пройти", example: "通过考试", exampleTranslation: "Сдать экзамен.", listId: 16, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 372, characters: "超过", pinyin: "chāo guò", translation: "превышать / обгонять", example: "超过他", exampleTranslation: "Обогнать его.", listId: 16, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 373, characters: "赚", pinyin: "zhuàn", translation: "зарабатывать", example: "赚钱", exampleTranslation: "Зарабатывать деньги.", listId: 16, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 374, characters: "节约", pinyin: "jié yuē", translation: "экономить", example: "节约用水", exampleTranslation: "Экономить воду.", listId: 16, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 375, characters: "收入", pinyin: "shōu rù", translation: "доход", example: "收入很高。", exampleTranslation: "Доход высокий.", listId: 16, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 376, characters: "所有", pinyin: "suǒ yǒu", translation: "весь / всё", example: "所有的人", exampleTranslation: "Все люди.", listId: 16, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 377, characters: "举办", pinyin: "jǔ bàn", translation: "проводить / устраивать", example: "举办会议", exampleTranslation: "Проводить собрание.", listId: 16, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 378, characters: "亿", pinyin: "yì", translation: "сто миллионов", example: "十亿", exampleTranslation: "Миллиард.", listId: 16, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 379, characters: "部分", pinyin: "bù fen", translation: "часть", example: "一部分", exampleTranslation: "Одна часть.", listId: 16, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 380, characters: "积累", pinyin: "jī lěi", translation: "накапливать", example: "积累经验", exampleTranslation: "Накапливать опыт.", listId: 16, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 381, characters: "制造", pinyin: "zhì zào", translation: "производить", example: "中国制造", exampleTranslation: "Сделано в Китае.", listId: 16, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 382, characters: "工具", pinyin: "gōng jù", translation: "инструмент", example: "学习工具", exampleTranslation: "Инструмент для учёбы.", listId: 16, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 383, characters: "材料", pinyin: "cái liào", translation: "материал", example: "建筑材料", exampleTranslation: "Строительный материал.", listId: 16, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 384, characters: "提供", pinyin: "tí gōng", translation: "предоставлять", example: "提供服务", exampleTranslation: "Предоставлять услуги.", listId: 16, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 385, characters: "数量", pinyin: "shù liàng", translation: "количество", example: "数量多", exampleTranslation: "Количество большое.", listId: 16, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 386, characters: "低", pinyin: "dī", translation: "низкий", example: "价格低", exampleTranslation: "Цена низкая.", listId: 16, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+
+            // 17. ДОМ И БЫТ (listId: 17, 31 слово)
+            { id: 387, characters: "家具", pinyin: "jiā jù", translation: "мебель", example: "买家具", exampleTranslation: "Купить мебель.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 388, characters: "窗户", pinyin: "chuāng hù", translation: "окно", example: "开窗户", exampleTranslation: "Открыть окно.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 389, characters: "沙发", pinyin: "shā fā", translation: "диван", example: "坐沙发", exampleTranslation: "Сидеть на диване.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 390, characters: "镜子", pinyin: "jìng zi", translation: "зеркало", example: "照镜子", exampleTranslation: "Смотреться в зеркало.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 391, characters: "垃圾桶", pinyin: "lā jī tǒng", translation: "мусорное ведро", example: "扔垃圾桶", exampleTranslation: "Выбросить в мусорку.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 392, characters: "墙", pinyin: "qiáng", translation: "стена", example: "墙上挂画。", exampleTranslation: "На стене висит картина.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 393, characters: "洗衣机", pinyin: "xǐ yī jī", translation: "стиральная машина", example: "用洗衣机洗衣服。", exampleTranslation: "Стирать одежду в стиральной машине.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 394, characters: "钥匙", pinyin: "yào shi", translation: "ключ", example: "锁钥匙", exampleTranslation: "Ключ от замка.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 395, characters: "收拾", pinyin: "shōu shi", translation: "прибирать / собирать", example: "收拾房间", exampleTranslation: "Убрать комнату.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 396, characters: "敲", pinyin: "qiāo", translation: "стучать", example: "敲门", exampleTranslation: "Постучать в дверь.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 397, characters: "挂", pinyin: "guà", translation: "вешать", example: "挂衣服", exampleTranslation: "Повесить одежду.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 398, characters: "理发", pinyin: "lǐ fǎ", translation: "стричься", example: "去理发", exampleTranslation: "Пойти постричься.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 399, characters: "打扮", pinyin: "dǎ bàn", translation: "наряжаться", example: "打扮漂亮", exampleTranslation: "Красиво нарядиться.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 400, characters: "牙膏", pinyin: "yá gāo", translation: "зубная паста", example: "一支牙膏", exampleTranslation: "Один тюбик зубной пасты.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 401, characters: "醒", pinyin: "xǐng", translation: "просыпаться", example: "我醒了。", exampleTranslation: "Я проснулся.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 402, characters: "梦", pinyin: "mèng", translation: "сон (сновидение)", example: "做了一个梦", exampleTranslation: "Увидел сон.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 403, characters: "掉", pinyin: "diào", translation: "падать / терять", example: "掉东西", exampleTranslation: "Уронить вещь.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 404, characters: "丢", pinyin: "diū", translation: "терять", example: "丢钱包", exampleTranslation: "Потерять кошелёк.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 405, characters: "擦", pinyin: "cā", translation: "вытирать / чистить", example: "擦桌子", exampleTranslation: "Протереть стол.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 406, characters: "躺", pinyin: "tǎng", translation: "лежать", example: "躺在床上", exampleTranslation: "Лежать на кровати.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 407, characters: "撞", pinyin: "zhuàng", translation: "ударяться / сталкиваться", example: "撞车", exampleTranslation: "Столкнуться машинами.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 408, characters: "整理", pinyin: "zhěng lǐ", translation: "приводить в порядок", example: "整理房间", exampleTranslation: "Прибрать комнату.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 409, characters: "散步", pinyin: "sàn bù", translation: "гулять (прогуливаться)", example: "去散步", exampleTranslation: "Пойти на прогулку.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 410, characters: "死", pinyin: "sǐ", translation: "умирать", example: "他死了。", exampleTranslation: "Он умер.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 411, characters: "出生", pinyin: "chū shēng", translation: "родиться", example: "我出生于1990年。", exampleTranslation: "Я родился в 1990 году.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 412, characters: "生活", pinyin: "shēng huó", translation: "жизнь / жить", example: "生活很美好。", exampleTranslation: "Жизнь прекрасна.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 413, characters: "生命", pinyin: "shēng mìng", translation: "жизнь", example: "珍惜生命", exampleTranslation: "Дорожить жизнью.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 414, characters: "取", pinyin: "qǔ", translation: "брать / получать", example: "取钱", exampleTranslation: "Снять деньги.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 415, characters: "断", pinyin: "duàn", translation: "ломаться", example: "绳子断了。", exampleTranslation: "Верёвка порвалась.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 416, characters: "扔", pinyin: "rēng", translation: "бросать / выбрасывать", example: "扔垃圾", exampleTranslation: "Выбросить мусор.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 417, characters: "破", pinyin: "pò", translation: "сломанный / разбитый", example: "杯子破了。", exampleTranslation: "Чашка разбилась.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 418, characters: "盒子", pinyin: "hé zi", translation: "коробка", example: "一个盒子", exampleTranslation: "Одна коробка.", listId: 17, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+
+            // 18. ОФИС (listId: 18, 14 слов)
+            { id: 419, characters: "笔记本", pinyin: "bǐ jì běn", translation: "ноутбук / тетрадь", example: "买笔记本", exampleTranslation: "Купить ноутбук.", listId: 18, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 420, characters: "日记", pinyin: "rì jì", translation: "дневник", example: "写日记", exampleTranslation: "Писать дневник.", listId: 18, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 421, characters: "杂志", pinyin: "zá zhì", translation: "журнал", example: "看杂志", exampleTranslation: "Читать журнал.", listId: 18, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 422, characters: "传真", pinyin: "chuán zhēn", translation: "факс", example: "发传真", exampleTranslation: "Отправить факс.", listId: 18, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 423, characters: "复印", pinyin: "fù yìn", translation: "копировать", example: "复印文件", exampleTranslation: "Копировать документы.", listId: 18, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 424, characters: "号码", pinyin: "hào mǎ", translation: "номер", example: "电话号码", exampleTranslation: "Номер телефона.", listId: 18, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 425, characters: "打印", pinyin: "dǎ yìn", translation: "печатать (на принтере)", example: "打印文件", exampleTranslation: "Распечатать документ.", listId: 18, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 426, characters: "密码", pinyin: "mì mǎ", translation: "пароль", example: "输入密码", exampleTranslation: "Ввести пароль.", listId: 18, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 427, characters: "篇", pinyin: "piān", translation: "сч. слово для статей", example: "一篇作文", exampleTranslation: "Одно сочинение.", listId: 18, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 428, characters: "寄", pinyin: "jì", translation: "отправлять по почте", example: "寄信", exampleTranslation: "Отправить письмо.", listId: 18, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 429, characters: "网站", pinyin: "wǎng zhàn", translation: "сайт", example: "访问网站", exampleTranslation: "Зайти на сайт.", listId: 18, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 430, characters: "页", pinyin: "yè", translation: "страница", example: "翻页", exampleTranslation: "Перелистнуть страницу.", listId: 18, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 431, characters: "技术", pinyin: "jì shù", translation: "технология / техника", example: "技术员", exampleTranslation: "Техник.", listId: 18, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 432, characters: "文章", pinyin: "wén zhāng", translation: "статья", example: "写文章", exampleTranslation: "Писать статью.", listId: 18, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+
+            // 19. МЕСТО И ПЕРЕДВИЖЕНИЕ (listId: 19, 20 слов)
+            { id: 433, characters: "地址", pinyin: "dì zhǐ", translation: "адрес", example: "告诉我地址。", exampleTranslation: "Скажи мне адрес.", listId: 19, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 434, characters: "周围", pinyin: "zhōu wéi", translation: "окрестности", example: "周围环境很好。", exampleTranslation: "Окрестности хорошие.", listId: 19, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 435, characters: "往", pinyin: "wǎng", translation: "в направлении", example: "往前走", exampleTranslation: "Идти вперёд.", listId: 19, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 436, characters: "方向", pinyin: "fāng xiàng", translation: "направление", example: "走错方向", exampleTranslation: "Пойти не в ту сторону.", listId: 19, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 437, characters: "交通", pinyin: "jiāo tōng", translation: "транспорт", example: "交通方便", exampleTranslation: "Транспорт удобный.", listId: 19, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 438, characters: "桥", pinyin: "qiáo", translation: "мост", example: "过桥", exampleTranslation: "Перейти мост.", listId: 19, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 439, characters: "对面", pinyin: "duì miàn", translation: "напротив", example: "银行在对面。", exampleTranslation: "Банк напротив.", listId: 19, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 440, characters: "加油站", pinyin: "jiā yóu zhàn", translation: "заправка", example: "去加油站", exampleTranslation: "Поехать на заправку.", listId: 19, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 441, characters: "农村", pinyin: "nóng cūn", translation: "деревня", example: "住在农村", exampleTranslation: "Жить в деревне.", listId: 19, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 442, characters: "拉", pinyin: "lā", translation: "тянуть", example: "拉开门", exampleTranslation: "Открыть дверь (на себя).", listId: 19, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 443, characters: "推", pinyin: "tuī", translation: "толкать", example: "推开门", exampleTranslation: "Открыть дверь (от себя).", listId: 19, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 444, characters: "场", pinyin: "chǎng", translation: "место / площадка", example: "足球场", exampleTranslation: "Футбольное поле.", listId: 19, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 445, characters: "当地", pinyin: "dāng dì", translation: "местный", example: "当地人", exampleTranslation: "Местные жители.", listId: 19, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 446, characters: "内", pinyin: "nèi", translation: "внутри", example: "室内", exampleTranslation: "В помещении.", listId: 19, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 447, characters: "公里", pinyin: "gōng lǐ", translation: "километр", example: "五公里", exampleTranslation: "Пять километров.", listId: 19, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 448, characters: "距离", pinyin: "jù lí", translation: "расстояние", example: "距离很远。", exampleTranslation: "Расстояние очень большое.", listId: 19, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 449, characters: "堵车", pinyin: "dǔ chē", translation: "пробка", example: "堵车了。", exampleTranslation: "Пробка.", listId: 19, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 450, characters: "乘坐", pinyin: "chéng zuò", translation: "ехать на (транспорте)", example: "乘坐地铁", exampleTranslation: "Ехать на метро.", listId: 19, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 451, characters: "出发", pinyin: "chū fā", translation: "отправляться", example: "准备出发", exampleTranslation: "Готовиться к отправлению.", listId: 19, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 452, characters: "租", pinyin: "zū", translation: "арендовать", example: "租房子", exampleTranslation: "Арендовать квартиру.", listId: 19, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+
+            // 20. ДИАЛОГ И ОБСУЖДЕНИЕ (listId: 20, 25 слов)
+            { id: 453, characters: "讨论", pinyin: "tǎo lùn", translation: "обсуждать", example: "讨论问题", exampleTranslation: "Обсуждать вопрос.", listId: 20, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 454, characters: "提醒", pinyin: "tí xǐng", translation: "напоминать", example: "提醒我一下。", exampleTranslation: "Напомни мне.", listId: 20, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 455, characters: "安排", pinyin: "ān pái", translation: "планировать / организовывать", example: "安排时间", exampleTranslation: "Планировать время.", listId: 20, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 456, characters: "对话", pinyin: "duì huà", translation: "диалог", example: "对话很精彩。", exampleTranslation: "Диалог очень интересный.", listId: 20, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 457, characters: "谈", pinyin: "tán", translation: "разговаривать", example: "谈谈心", exampleTranslation: "Поговорить по душам.", listId: 20, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 458, characters: "俩", pinyin: "liǎ", translation: "двое / оба", example: "我们俩", exampleTranslation: "Мы вдвоём.", listId: 20, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 459, characters: "咱们", pinyin: "zán men", translation: "мы (включая собеседника)", example: "咱们走吧。", exampleTranslation: "Пойдёмте.", listId: 20, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 460, characters: "聊天", pinyin: "liáo tiān", translation: "болтать", example: "网上聊天", exampleTranslation: "Болтать в интернете.", listId: 20, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 461, characters: "表达", pinyin: "biǎo dá", translation: "выражать", example: "表达想法", exampleTranslation: "Выразить мысли.", listId: 20, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 462, characters: "数字", pinyin: "shù zì", translation: "цифра / число", example: "阿拉伯数字", exampleTranslation: "Арабские цифры.", listId: 20, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 463, characters: "收", pinyin: "shōu", translation: "получать / собирать", example: "收到邮件", exampleTranslation: "Получить письмо.", listId: 20, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 464, characters: "算", pinyin: "suàn", translation: "считать / вычислять", example: "算一下", exampleTranslation: "Посчитать.", listId: 20, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 465, characters: "解释", pinyin: "jiě shì", translation: "объяснять", example: "解释一下。", exampleTranslation: "Объясни.", listId: 20, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 466, characters: "猜", pinyin: "cāi", translation: "угадывать", example: "猜谜语", exampleTranslation: "Отгадывать загадки.", listId: 20, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 467, characters: "握手", pinyin: "wò shǒu", translation: "пожимать руку", example: "握手问好", exampleTranslation: "Пожать руку при приветствии.", listId: 20, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 468, characters: "质量", pinyin: "zhì liàng", translation: "качество", example: "质量很好。", exampleTranslation: "Качество очень хорошее.", listId: 20, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 469, characters: "成为", pinyin: "chéng wéi", translation: "становиться", example: "成为老师", exampleTranslation: "Стать учителем.", listId: 20, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 470, characters: "仔细", pinyin: "zǐ xì", translation: "внимательный", example: "仔细看。", exampleTranslation: "Внимательно смотреть.", listId: 20, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 471, characters: "互相", pinyin: "hù xiāng", translation: "друг друга", example: "互相帮助", exampleTranslation: "Помогать друг другу.", listId: 20, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 472, characters: "困难", pinyin: "kùn nán", translation: "трудность / сложный", example: "遇到困难", exampleTranslation: "Встретить трудности.", listId: 20, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 473, characters: "方面", pinyin: "fāng miàn", translation: "аспект / сторона", example: "这方面", exampleTranslation: "В этом аспекте.", listId: 20, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 474, characters: "缺点", pinyin: "quē diǎn", translation: "недостаток", example: "有缺点", exampleTranslation: "Иметь недостатки.", listId: 20, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 475, characters: "方法", pinyin: "fāng fǎ", translation: "метод", example: "学习方法", exampleTranslation: "Метод учёбы.", listId: 20, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 476, characters: "故意", pinyin: "gù yì", translation: "нарочно", example: "他故意的。", exampleTranslation: "Он нарочно.", listId: 20, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 477, characters: "比如", pinyin: "bǐ rú", translation: "например", example: "比如我说...", exampleTranslation: "Например, я говорю...", listId: 20, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+
+            // 21. УМОЗАКЛЮЧЕНИЯ И РЕШЕНИЯ (listId: 21, 20 слов)
+            { id: 478, characters: "看法", pinyin: "kàn fǎ", translation: "точка зрения", example: "我的看法是...", exampleTranslation: "Моя точка зрения...", listId: 21, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 479, characters: "考虑", pinyin: "kǎo lǜ", translation: "обдумывать", example: "考虑一下。", exampleTranslation: "Подумай.", listId: 21, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 480, characters: "拒绝", pinyin: "jù jué", translation: "отказывать", example: "拒绝邀请", exampleTranslation: "Отказаться от приглашения.", listId: 21, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 481, characters: "估计", pinyin: "gū jì", translation: "оценивать", example: "估计价格", exampleTranslation: "Оценить цену.", listId: 21, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 482, characters: "关键", pinyin: "guān jiàn", translation: "ключевой момент", example: "关键问题", exampleTranslation: "Ключевой вопрос.", listId: 21, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 483, characters: "重点", pinyin: "zhòng diǎn", translation: "главный момент", example: "重点内容", exampleTranslation: "Главное содержание.", listId: 21, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 484, characters: "按照", pinyin: "àn zhào", translation: "согласно / в соответствии", example: "按照计划", exampleTranslation: "Согласно плану.", listId: 21, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 485, characters: "主意", pinyin: "zhǔ yi", translation: "идея", example: "好主意！", exampleTranslation: "Хорошая идея!", listId: 21, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 486, characters: "情况", pinyin: "qíng kuàng", translation: "ситуация", example: "情况怎么样？", exampleTranslation: "Как ситуация?", listId: 21, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 487, characters: "商量", pinyin: "shāng liang", translation: "советоваться", example: "商量一下。", exampleTranslation: "Посоветоваться.", listId: 21, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 488, characters: "意见", pinyin: "yì jiàn", translation: "мнение", example: "意见不同", exampleTranslation: "Мнения разные.", listId: 21, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 489, characters: "接受", pinyin: "jiē shòu", translation: "принимать", example: "接受礼物", exampleTranslation: "Принять подарок.", listId: 21, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 490, characters: "答案", pinyin: "dá àn", translation: "ответ", example: "找到答案", exampleTranslation: "Найти ответ.", listId: 21, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 491, characters: "引起", pinyin: "yǐn qǐ", translation: "вызывать (интерес)", example: "引起注意", exampleTranslation: "Привлечь внимание.", listId: 21, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 492, characters: "使用", pinyin: "shǐ yòng", translation: "использовать", example: "使用方法", exampleTranslation: "Способ использования.", listId: 21, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 493, characters: "范围", pinyin: "fàn wéi", translation: "диапазон / рамки", example: "范围很大", exampleTranslation: "Диапазон большой.", listId: 21, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 494, characters: "负责", pinyin: "fù zé", translation: "отвечать за", example: "负责这个项目", exampleTranslation: "Отвечать за этот проект.", listId: 21, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 495, characters: "好处", pinyin: "hǎo chù", translation: "польза", example: "有好处", exampleTranslation: "Есть польза.", listId: 21, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 496, characters: "原因", pinyin: "yuán yīn", translation: "причина", example: "什么原因？", exampleTranslation: "Какая причина?", listId: 21, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 497, characters: "获得", pinyin: "huò dé", translation: "получать", example: "获得成功", exampleTranslation: "Добиться успеха.", listId: 21, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+
+            // 22. ГРАММАТИЧЕСКИЕ КОНСТРУКЦИИ (listId: 22, 11 слов)
+            { id: 498, characters: "即使...也...", pinyin: "jí shǐ... yě...", translation: "даже если... то всё равно...", example: "即使下雨，我也去。", exampleTranslation: "Даже если будет дождь, я всё равно пойду.", listId: 22, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 499, characters: "不但...而且...", pinyin: "bù dàn... ér qiě...", translation: "не только... но и...", example: "他不但聪明，而且努力。", exampleTranslation: "Он не только умный, но и старательный.", listId: 22, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 500, characters: "只要...就...", pinyin: "zhǐ yào... jiù...", translation: "если только... то...", example: "只要努力，就能成功。", exampleTranslation: "Если стараться, то можно добиться успеха.", listId: 22, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 501, characters: "既然...就...", pinyin: "jì rán... jiù...", translation: "раз уж... то...", example: "既然来了，就坐下吧。", exampleTranslation: "Раз уж пришёл, то садись.", listId: 22, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 502, characters: "无论...都...", pinyin: "wú lùn... dōu...", translation: "независимо от... всё равно...", example: "无论多难，我都坚持。", exampleTranslation: "Независимо от того, как сложно, я всё равно буду стараться.", listId: 22, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 503, characters: "不管...都...", pinyin: "bù guǎn... dōu...", translation: "неважно... всё равно...", example: "不管谁问，都别说。", exampleTranslation: "Кто бы ни спросил, не говори.", listId: 22, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 504, characters: "不仅", pinyin: "bù jǐn", translation: "не только", example: "不仅是我", exampleTranslation: "Не только я.", listId: 22, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 505, characters: "尽管...还是...", pinyin: "jǐn guǎn... hái shì...", translation: "хотя... но всё же...", example: "尽管很累，他还是来了。", exampleTranslation: "Хотя он устал, он всё же пришёл.", listId: 22, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 506, characters: "否则", pinyin: "fǒu zé", translation: "иначе", example: "快走，否则迟到。", exampleTranslation: "Иди быстрее, иначе опоздаешь.", listId: 22, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 507, characters: "因此", pinyin: "yīn cǐ", translation: "поэтому", example: "他病了，因此没来。", exampleTranslation: "Он заболел, поэтому не пришёл.", listId: 22, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 508, characters: "往往", pinyin: "wǎng wǎng", translation: "часто (о закономерности)", example: "他往往迟到。", exampleTranslation: "Он часто опаздывает.", listId: 22, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+
+            // 23. СЛУЖЕБНЫЕ СЛОВА (listId: 23, 19 слов)
+            { id: 509, characters: "之", pinyin: "zhī", translation: "частица притяжательности (книжн.)", example: "之前", exampleTranslation: "До этого.", listId: 23, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 510, characters: "只好", pinyin: "zhǐ hǎo", translation: "приходится / ничего не остаётся", example: "只好走了。", exampleTranslation: "Пришлось уйти.", listId: 23, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 511, characters: "得", pinyin: "děi", translation: "нужно / приходится", example: "你得走了。", exampleTranslation: "Тебе нужно идти.", listId: 23, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 512, characters: "不得不", pinyin: "bù dé bù", translation: "вынужден", example: "不得不去。", exampleTranslation: "Вынужден идти.", listId: 23, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 513, characters: "无", pinyin: "wú", translation: "без / не иметь", example: "无人", exampleTranslation: "Никого нет.", listId: 23, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 514, characters: "呀", pinyin: "ya", translation: "частица (удивление / призыв)", example: "快来呀！", exampleTranslation: "Иди скорее!", listId: 23, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 515, characters: "与", pinyin: "yǔ", translation: "и / с", example: "我与你", exampleTranslation: "Я и ты.", listId: 23, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 516, characters: "由", pinyin: "yóu", translation: "от / через / из-за", example: "由此可知", exampleTranslation: "Из этого можно узнать.", listId: 23, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 517, characters: "以", pinyin: "yǐ", translation: "чтобы / с целью / посредством", example: "以便", exampleTranslation: "Для того чтобы.", listId: 23, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 518, characters: "对", pinyin: "duì", translation: "к / для / правильный", example: "对我好", exampleTranslation: "Хорошо ко мне.", listId: 23, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 519, characters: "趟", pinyin: "tàng", translation: "сч. слово для поездок", example: "去一趟", exampleTranslation: "Сходить один раз.", listId: 23, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 520, characters: "遍", pinyin: "biàn", translation: "сч. слово для действий", example: "读一遍", exampleTranslation: "Прочитать один раз.", listId: 23, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 521, characters: "等", pinyin: "děng", translation: "и так далее / ждать", example: "等等", exampleTranslation: "Подожди.", listId: 23, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 522, characters: "份", pinyin: "fèn", translation: "сч. слово для порций / документов", example: "一份饭", exampleTranslation: "Одна порция еды.", listId: 23, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 523, characters: "倍", pinyin: "bèi", translation: "раз (во сколько раз)", example: "两倍", exampleTranslation: "В два раза.", listId: 23, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 524, characters: "分之", pinyin: "fēn zhī", translation: "часть от целого", example: "百分之五十", exampleTranslation: "50 процентов.", listId: 23, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 525, characters: "却", pinyin: "què", translation: "однако же", example: "他想去，却不去。", exampleTranslation: "Он хочет пойти, однако не идёт.", listId: 23, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 526, characters: "而", pinyin: "ér", translation: "и / а / но", example: "美丽而聪明", exampleTranslation: "Красивая и умная.", listId: 23, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 527, characters: "连", pinyin: "lián", translation: "даже (с отрицанием)", example: "连他也不来。", exampleTranslation: "Даже он не пришёл.", listId: 23, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+
+            // 24. ПРИЛАГАТЕЛЬНЫЕ (listId: 24, 28 слов)
+            { id: 528, characters: "粗心", pinyin: "cū xīn", translation: "невнимательный", example: "他太粗心了。", exampleTranslation: "Он слишком невнимательный.", listId: 24, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 529, characters: "复杂", pinyin: "fù zá", translation: "сложный", example: "问题很复杂。", exampleTranslation: "Вопрос очень сложный.", listId: 24, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 530, characters: "准确", pinyin: "zhǔn què", translation: "точный", example: "答案很准确。", exampleTranslation: "Ответ очень точный.", listId: 24, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 531, characters: "圆", pinyin: "yuán", translation: "круглый", example: "圆桌", exampleTranslation: "Круглый стол.", listId: 24, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 532, characters: "正确", pinyin: "zhèng què", translation: "правильный", example: "回答正确。", exampleTranslation: "Ответ правильный.", listId: 24, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 533, characters: "窄", pinyin: "zhǎi", translation: "узкий", example: "路很窄。", exampleTranslation: "Дорога узкая.", listId: 24, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 534, characters: "十分", pinyin: "shí fēn", translation: "очень (наречие)", example: "十分高兴", exampleTranslation: "Очень рад.", listId: 24, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 535, characters: "挺", pinyin: "tǐng", translation: "довольно / очень", example: "挺好", exampleTranslation: "Довольно хорошо.", listId: 24, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 536, characters: "正常", pinyin: "zhèng cháng", translation: "нормальный", example: "一切正常。", exampleTranslation: "Всё нормально.", listId: 24, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 537, characters: "实在", pinyin: "shí zài", translation: "действительно", example: "实在太好了。", exampleTranslation: "Действительно слишком хорошо.", listId: 24, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 538, characters: "假", pinyin: "jiǎ", translation: "фальшивый / ложный", example: "假钱", exampleTranslation: "Фальшивые деньги.", listId: 24, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 539, characters: "脏", pinyin: "zāng", translation: "грязный", example: "衣服脏了。", exampleTranslation: "Одежда испачкалась.", listId: 24, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 540, characters: "精彩", pinyin: "jīng cǎi", translation: "замечательный", example: "精彩的表演", exampleTranslation: "Замечательное выступление.", listId: 24, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 541, characters: "厚", pinyin: "hòu", translation: "толстый", example: "厚书", exampleTranslation: "Толстая книга.", listId: 24, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 542, characters: "现代", pinyin: "xiàn dài", translation: "современный", example: "现代社会", exampleTranslation: "Современное общество.", listId: 24, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 543, characters: "宽", pinyin: "kuān", translation: "широкий", example: "宽路", exampleTranslation: "Широкая дорога.", listId: 24, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 544, characters: "硬", pinyin: "yìng", translation: "твёрдый", example: "硬床", exampleTranslation: "Твёрдая кровать.", listId: 24, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 545, characters: "麻烦", pinyin: "má fan", translation: "хлопотный / проблемный", example: "麻烦你了。", exampleTranslation: "Беспокою тебя.", listId: 24, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 546, characters: "理想", pinyin: "lǐ xiǎng", translation: "идеальный", example: "理想的工作", exampleTranslation: "Идеальная работа.", listId: 24, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 547, characters: "可怜", pinyin: "kě lián", translation: "жалкий", example: "可怜的孩子", exampleTranslation: "Жалкий ребёнок.", listId: 24, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 548, characters: "软", pinyin: "ruǎn", translation: "мягкий", example: "软床", exampleTranslation: "Мягкая кровать.", listId: 24, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 549, characters: "深", pinyin: "shēn", translation: "глубокий", example: "深海", exampleTranslation: "Глубокое море.", listId: 24, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 550, characters: "许多", pinyin: "xǔ duō", translation: "много", example: "许多人", exampleTranslation: "Много людей.", listId: 24, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 551, characters: "缺少", pinyin: "quē shǎo", translation: "не хватать", example: "缺少时间", exampleTranslation: "Не хватает времени.", listId: 24, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 552, characters: "乱", pinyin: "luàn", translation: "беспорядочный", example: "房间很乱。", exampleTranslation: "В комнате беспорядок.", listId: 24, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 553, characters: "满", pinyin: "mǎn", translation: "полный", example: "满杯", exampleTranslation: "Полная чашка.", listId: 24, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 554, characters: "响", pinyin: "xiǎng", translation: "громкий", example: "声音很响。", exampleTranslation: "Звук очень громкий.", listId: 24, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 555, characters: "安静", pinyin: "ān jìng", translation: "тихий", example: "请安静。", exampleTranslation: "Пожалуйста, тихо.", listId: 24, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+
+            // 25. ИНФОРМАЦИЯ (listId: 25, 23 слова)
+            { id: 556, characters: "通知", pinyin: "tōng zhī", translation: "уведомление / сообщать", example: "发通知", exampleTranslation: "Отправить уведомление.", listId: 25, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 557, characters: "广播", pinyin: "guǎng bō", translation: "радио / трансляция", example: "听广播", exampleTranslation: "Слушать радио.", listId: 25, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 558, characters: "广告", pinyin: "guǎng gào", translation: "реклама", example: "电视广告", exampleTranslation: "Телевизионная реклама.", listId: 25, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 559, characters: "消息", pinyin: "xiāo xi", translation: "новость", example: "好消息", exampleTranslation: "Хорошая новость.", listId: 25, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 560, characters: "报名", pinyin: "bào míng", translation: "записываться / регистрироваться", example: "报名参加", exampleTranslation: "Записаться на участие.", listId: 25, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 561, characters: "发", pinyin: "fā", translation: "отправлять", example: "发短信", exampleTranslation: "Отправить сообщение.", listId: 25, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 562, characters: "重新", pinyin: "chóng xīn", translation: "заново", example: "重新开始", exampleTranslation: "Начать заново.", listId: 25, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 563, characters: "收到", pinyin: "shōu dào", translation: "получить", example: "收到信", exampleTranslation: "Получить письмо.", listId: 25, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 564, characters: "邀请", pinyin: "yāo qǐng", translation: "приглашать", example: "邀请朋友", exampleTranslation: "Пригласить друга.", listId: 25, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 565, characters: "确实", pinyin: "què shí", translation: "действительно", example: "确实如此", exampleTranslation: "Действительно так.", listId: 25, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 566, characters: "内容", pinyin: "nèi róng", translation: "содержание", example: "主要内容", exampleTranslation: "Главное содержание.", listId: 25, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 567, characters: "发生", pinyin: "fā shēng", translation: "происходить", example: "发生什么？", exampleTranslation: "Что случилось?", listId: 25, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 568, characters: "普遍", pinyin: "pǔ biàn", translation: "всеобщий / распространённый", example: "普遍现象", exampleTranslation: "Распространённое явление.", listId: 25, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 569, characters: "理解", pinyin: "lǐ jiě", translation: "понимать", example: "理解意思", exampleTranslation: "Понять смысл.", listId: 25, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 570, characters: "排列", pinyin: "pái liè", translation: "располагать в порядке", example: "排列顺序", exampleTranslation: "Расположить по порядку.", listId: 25, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 571, characters: "继续", pinyin: "jì xù", translation: "продолжать", example: "继续努力", exampleTranslation: "Продолжать стараться.", listId: 25, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 572, characters: "区别", pinyin: "qū bié", translation: "различие", example: "区别很大。", exampleTranslation: "Различие большое.", listId: 25, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 573, characters: "熟悉", pinyin: "shú xī", translation: "хорошо знать", example: "熟悉这个地方", exampleTranslation: "Хорошо знать это место.", listId: 25, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 574, characters: "反映", pinyin: "fǎn yìng", translation: "отражать / докладывать", example: "反映情况", exampleTranslation: "Доложить о ситуации.", listId: 25, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 575, characters: "详细", pinyin: "xiáng xì", translation: "подробный", example: "详细介绍", exampleTranslation: "Подробно представить.", listId: 25, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 576, characters: "行", pinyin: "xíng", translation: "хорошо / можно", example: "行，没问题。", exampleTranslation: "Хорошо, без проблем.", listId: 25, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 577, characters: "实际", pinyin: "shí jì", translation: "реальный / фактический", example: "实际情况", exampleTranslation: "Реальная ситуация.", listId: 25, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 578, characters: "报道", pinyin: "bào dào", translation: "сообщать / репортаж", example: "新闻报道", exampleTranslation: "Новостной репортаж.", listId: 25, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+
+            // 26. ЗДОРОВЬЕ И СПОРТ (listId: 26, 23 слова)
+            { id: 579, characters: "肚子", pinyin: "dù zi", translation: "живот", example: "肚子疼", exampleTranslation: "Живот болит.", listId: 26, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 580, characters: "嘴", pinyin: "zuǐ", translation: "рот", example: "张开嘴", exampleTranslation: "Открой рот.", listId: 26, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 581, characters: "打针", pinyin: "dǎ zhēn", translation: "делать укол", example: "去医院打针", exampleTranslation: "Пойти в больницу на укол.", listId: 26, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 582, characters: "皮肤", pinyin: "pí fū", translation: "кожа", example: "皮肤白", exampleTranslation: "Белая кожа.", listId: 26, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 583, characters: "指", pinyin: "zhǐ", translation: "палец / указывать", example: "手指", exampleTranslation: "Палец руки.", listId: 26, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 584, characters: "咳嗽", pinyin: "ké sou", translation: "кашлять", example: "咳嗽得很厉害。", exampleTranslation: "Сильно кашляет.", listId: 26, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 585, characters: "血", pinyin: "xuè / xiě", translation: "кровь", example: "流血", exampleTranslation: "Идёт кровь.", listId: 26, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 586, characters: "严重", pinyin: "yán zhòng", translation: "серьёзный", example: "病得很严重。", exampleTranslation: "Серьёзно болен.", listId: 26, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 587, characters: "减肥", pinyin: "jiǎn féi", translation: "худеть", example: "正在减肥", exampleTranslation: "Сейчас худеет.", listId: 26, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 588, characters: "调查", pinyin: "diào chá", translation: "исследовать / опрос", example: "做调查", exampleTranslation: "Провести опрос.", listId: 26, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 589, characters: "抽烟", pinyin: "chōu yān", translation: "курить", example: "别抽烟。", exampleTranslation: "Не кури.", listId: 26, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 590, characters: "乒乓球", pinyin: "pīng pāng qiú", translation: "настольный теннис", example: "打乒乓球", exampleTranslation: "Играть в настольный теннис.", listId: 26, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 591, characters: "网球", pinyin: "wǎng qiú", translation: "теннис", example: "打网球", exampleTranslation: "Играть в теннис.", listId: 26, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 592, characters: "动作", pinyin: "dòng zuò", translation: "движение / действие", example: "动作很慢。", exampleTranslation: "Движения очень медленные.", listId: 26, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 593, characters: "羽毛球", pinyin: "yǔ máo qiú", translation: "бадминтон", example: "打羽毛球", exampleTranslation: "Играть в бадминтон.", listId: 26, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 594, characters: "输", pinyin: "shū", translation: "проигрывать", example: "输了一场比赛", exampleTranslation: "Проиграл матч.", listId: 26, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 595, characters: "赢", pinyin: "yíng", translation: "выигрывать", example: "赢了！", exampleTranslation: "Выиграл!", listId: 26, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 596, characters: "汗", pinyin: "hàn", translation: "пот", example: "出汗", exampleTranslation: "Потеть.", listId: 26, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 597, characters: "养成", pinyin: "yǎng chéng", translation: "вырабатывать (привычку)", example: "养成好习惯", exampleTranslation: "Выработать хорошую привычку.", listId: 26, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 598, characters: "放弃", pinyin: "fàng qì", translation: "отказываться / бросать", example: "放弃机会", exampleTranslation: "Отказаться от возможности.", listId: 26, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 599, characters: "积极", pinyin: "jī jí", translation: "активный / позитивный", example: "积极参加", exampleTranslation: "Активно участвовать.", listId: 26, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 600, characters: "锻炼", pinyin: "duàn liàn", translation: "тренироваться / заниматься спортом", example: "每天锻炼", exampleTranslation: "Каждый день тренироваться.", listId: 26, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 601, characters: "健康", pinyin: "jiàn kāng", translation: "здоровье / здоровый", example: "保持健康", exampleTranslation: "Сохранять здоровье.", listId: 26, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+
+            // 27. ДОПОЛНИТЕЛЬНЫЕ ГЛАГОЛЫ (listId: 27, 15 слов)
+            { id: 602, characters: "记", pinyin: "jì", translation: "записывать / запоминать", example: "记住", exampleTranslation: "Запомнить.", listId: 27, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 603, characters: "忘", pinyin: "wàng", translation: "забывать", example: "忘了", exampleTranslation: "Забыл.", listId: 27, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 604, characters: "等", pinyin: "děng", translation: "ждать", example: "等我一下。", exampleTranslation: "Подожди меня.", listId: 27, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 605, characters: "怕", pinyin: "pà", translation: "бояться", example: "怕黑", exampleTranslation: "Бояться темноты.", listId: 27, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 606, characters: "敢", pinyin: "gǎn", translation: "сметь", example: "不敢", exampleTranslation: "Не сметь.", listId: 27, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 607, characters: "帮助", pinyin: "bāng zhù", translation: "помогать", example: "帮助别人", exampleTranslation: "Помогать другим.", listId: 27, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 608, characters: "发现", pinyin: "fā xiàn", translation: "обнаруживать", example: "发现了问题", exampleTranslation: "Обнаружил проблему.", listId: 27, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 609, characters: "觉得", pinyin: "jué de", translation: "чувствовать / думать", example: "觉得很好", exampleTranslation: "Думаю, что хорошо.", listId: 27, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 610, characters: "希望", pinyin: "xī wàng", translation: "надеяться", example: "希望你来", exampleTranslation: "Надеюсь, ты придёшь.", listId: 27, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 611, characters: "同意", pinyin: "tóng yì", translation: "соглашаться", example: "我同意。", exampleTranslation: "Я согласен.", listId: 27, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 612, characters: "生气", pinyin: "shēng qì", translation: "злиться", example: "别生气。", exampleTranslation: "Не злись.", listId: 27, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 613, characters: "担心", pinyin: "dān xīn", translation: "беспокоиться", example: "担心你", exampleTranslation: "Беспокоиться о тебе.", listId: 27, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 614, characters: "放心", pinyin: "fàng xīn", translation: "успокоиться / быть уверенным", example: "放心吧。", exampleTranslation: "Будь спокоен.", listId: 27, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 615, characters: "注意", pinyin: "zhù yì", translation: "обращать внимание", example: "注意安全", exampleTranslation: "Обращать внимание на безопасность.", listId: 27, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 616, characters: "继续", pinyin: "jì xù", translation: "продолжать", example: "继续努力", exampleTranslation: "Продолжать стараться.", listId: 27, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null }
         ];
 
-        // Добавляем остальные слова до 417
-        const additionalWords = [
-            // 5. СЕМЬЯ (listId: 5, 33 слова)
-            { id: 89, characters: "抱", pinyin: "bào", translation: "обнимать", example: "抱一下", exampleTranslation: "Обними меня.", listId: 5 },
-            { id: 90, characters: "爱情", pinyin: "ài qíng", translation: "любовь", example: "他们的爱情很美。", exampleTranslation: "Их любовь прекрасна.", listId: 5 },
-            { id: 91, characters: "态度", pinyin: "tài dù", translation: "отношение", example: "他态度不好。", exampleTranslation: "У него плохое отношение.", listId: 5 },
-            { id: 92, characters: "支持", pinyin: "zhī chí", translation: "поддерживать", example: "我支持你。", exampleTranslation: "Я поддерживаю тебя.", listId: 5 },
-            { id: 93, characters: "孤单", pinyin: "gū dān", translation: "одинокий", example: "他感觉很孤单。", exampleTranslation: "Он чувствует себя одиноким.", listId: 5 },
-            { id: 94, characters: "联系", pinyin: "lián xì", translation: "связь", example: "保持联系", exampleTranslation: "Оставайся на связи.", listId: 5 },
-            { id: 95, characters: "浪漫", pinyin: "làng màn", translation: "романтичный", example: "很浪漫", exampleTranslation: "Очень романтично.", listId: 5 },
-            { id: 96, characters: "误会", pinyin: "wù huì", translation: "недопонимание", example: "这是个误会。", exampleTranslation: "Это недоразумение.", listId: 5 },
-            { id: 97, characters: "伤心", pinyin: "shāng xīn", translation: "печальный", example: "别伤心。", exampleTranslation: "Не грусти.", listId: 5 },
-            { id: 98, characters: "尊重", pinyin: "zūn zhòng", translation: "уважать", example: "互相尊重", exampleTranslation: "Уважать друг друга.", listId: 5 },
-            { id: 99, characters: "感谢", pinyin: "gǎn xiè", translation: "благодарить", example: "感谢你的帮助。", exampleTranslation: "Спасибо за помощь.", listId: 5 },
-            { id: 100, characters: "道歉", pinyin: "dào qiàn", translation: "извиняться", example: "我向你道歉。", exampleTranslation: "Я приношу тебе извинения.", listId: 5 }
-        ];
-
-        additionalWords.forEach(word => {
-            wordsData.push({
-                ...word,
-                mastered: 0,
-                timesReviewed: 0,
-                correctCount: 0,
-                lastReviewed: null
-            });
-        });
-
-        // Продолжаем добавлять слова до 417
-        let idCounter = 101;
-        const listCounts = {
-            5: 33, 6: 30, 7: 23, 8: 18, 9: 27, 10: 23, 11: 23, 12: 22, 13: 19,
-            14: 20, 15: 29, 16: 27, 17: 31, 18: 14, 19: 20, 20: 25, 21: 20,
-            22: 11, 23: 19, 24: 28, 25: 23, 26: 23, 27: 15
-        };
-
-        for (let listId = 5; listId <= 27; listId++) {
-            for (let i = 0; i < listCounts[listId]; i++) {
-                if (idCounter <= 417) {
-                    wordsData.push({
-                        id: idCounter,
-                        characters: `词${idCounter}`,
-                        pinyin: `cí ${idCounter}`,
-                        translation: `слово ${idCounter}`,
-                        example: `这是词${idCounter}。`,
-                        exampleTranslation: `Это слово ${idCounter}.`,
-                        listId: listId,
-                        mastered: 0,
-                        timesReviewed: 0,
-                        correctCount: 0,
-                        lastReviewed: null
-                    });
-                    idCounter++;
-                }
-            }
-        }
-
-        // Блоки (27 тем)
+        // Блоки (27 тем) - БЕЗ СМАЙЛИКОВ В НАЗВАНИЯХ
         const blocks = [
-            { id: 1, name: "🍜 Еда и напитки", icon: "🍜", count: 20 },
-            { id: 2, name: "📚 Обучение", icon: "📚", count: 20 },
-            { id: 3, name: "💼 Работа и деньги", icon: "💼", count: 24 },
-            { id: 4, name: "📈 Успех и развитие", icon: "📈", count: 23 },
-            { id: 5, name: "👨‍👩‍👧 Семья", icon: "👨‍👩‍👧", count: 33 },
-            { id: 6, name: "❤️ Эмоции", icon: "❤️", count: 30 },
-            { id: 7, name: "⭐ Личные качества", icon: "⭐", count: 23 },
-            { id: 8, name: "✈️ Путешествия", icon: "✈️", count: 18 },
-            { id: 9, name: "🌦️ Климат", icon: "🌦️", count: 27 },
-            { id: 10, name: "🎭 Развлечения", icon: "🎭", count: 23 },
-            { id: 11, name: "📝 Наречия 1", icon: "📝", count: 23 },
-            { id: 12, name: "📝 Наречия 2", icon: "📝", count: 22 },
-            { id: 13, name: "⏰ Время", icon: "⏰", count: 19 },
-            { id: 14, name: "🛍️ Покупки", icon: "🛍️", count: 20 },
-            { id: 15, name: "⚖️ Закон", icon: "⚖️", count: 29 },
-            { id: 16, name: "📊 Экономика", icon: "📊", count: 27 },
-            { id: 17, name: "🏠 Дом и быт", icon: "🏠", count: 31 },
-            { id: 18, name: "💻 Офис", icon: "💻", count: 14 },
-            { id: 19, name: "📍 Место", icon: "📍", count: 20 },
-            { id: 20, name: "💬 Диалог", icon: "💬", count: 25 },
-            { id: 21, name: "🤔 Умозаключения", icon: "🤔", count: 20 },
-            { id: 22, name: "🔧 Грамматика", icon: "🔧", count: 11 },
-            { id: 23, name: "🔤 Служебные", icon: "🔤", count: 19 },
-            { id: 24, name: "📋 Прилагательные", icon: "📋", count: 28 },
-            { id: 25, name: "📢 Информация", icon: "📢", count: 23 },
-            { id: 26, name: "🏥 Здоровье", icon: "🏥", count: 23 },
-            { id: 27, name: "🔨 Глаголы", icon: "🔨", count: 15 }
+            { id: 1, name: "Еда и напитки", icon: "🍜",count: 20 },
+            { id: 2, name: "Обучение", icon: "📚", count: 20 },
+            { id: 3, name: "Работа и деньги", icon: "💼", count: 24 },
+            { id: 4, name: "Успех и развитие", icon: "📈", count: 23 },
+            { id: 5, name: "Семья и отношения", icon: "👨‍👩‍👧", count: 33 },
+            { id: 6, name: "Эмоции и чувства", icon: "❤️", count: 30 },
+            { id: 7, name: "Личные качества", icon: "⭐", count: 23 },
+            { id: 8, name: "Путешествия", icon: "✈️", count: 18 },
+            { id: 9, name: "Климат и природа", icon: "🌦️", count: 27 },
+            { id: 10, name: "Развлечения", icon: "🎭", count: 23 },
+            { id: 11, name: "Наречия 1", icon: "📝", count: 23 },
+            { id: 12, name: "Наречия 2", icon: "📝", count: 22 },
+            { id: 13, name: "Время", icon: "⏰", count: 19 },
+            { id: 14, name: "Покупки", icon: "🛍️", count: 20 },
+            { id: 15, name: "Закон и государство", icon: "⚖️", count: 29 },
+            { id: 16, name: "Экономика и анализ", icon: "📊", count: 27 },
+            { id: 17, name: "Дом и быт", icon: "🏠", count: 31 },
+            { id: 18, name: "Офис", icon: "💻", count: 14 },
+            { id: 19, name: "Место и передвижение", icon: "📍", count: 20 },
+            { id: 20, name: "Диалог и обсуждение", icon: "💬", count: 25 },
+            { id: 21, name: "Умозаключения", icon: "🤔", count: 20 },
+            { id: 22, name: "Грамматика", icon: "🔧", count: 11 },
+            { id: 23, name: "Служебные слова", icon: "🔤", count: 19 },
+            { id: 24, name: "Прилагательные", icon: "📋", count: 28 },
+            { id: 25, name: "Информация", icon: "📢", count: 23 },
+            { id: 26, name: "Здоровье и спорт", icon: "🏥", count: 23 },
+            { id: 27, name: "Глаголы", icon: "🔨", count: 15 }
         ];
 
         // Состояние приложения
@@ -897,6 +1604,16 @@
             overlay.style.color = isCorrect ? '#4CAF50' : '#f44336';
             overlay.style.display = 'block';
             setTimeout(() => overlay.style.display = 'none', 500);
+        }
+
+        // Функция обновления кольцевой диаграммы
+        function updateCircleProgress(percentage) {
+            const circle = document.getElementById('circle-progress');
+            const circumference = 2 * Math.PI * 50;
+            const offset = circumference - (percentage / 100) * circumference;
+            circle.style.strokeDasharray = `${circumference}`;
+            circle.style.strokeDashoffset = offset;
+            document.getElementById('circle-percentage').textContent = `${Math.round(percentage)}%`;
         }
 
         function startStudy(blockId, newWords = true) {
@@ -1329,7 +2046,7 @@
                 
                 container.innerHTML += `
                     <div class="block-card" data-block="${block.id}">
-                        <div class="block-name">${block.icon} ${block.name}</div>
+                        <div class="block-name">${block.name}</div>
                         <div class="block-stats">
                             <span>${blockStats.mastered}/${block.count}</span>
                             <span>${Math.round(progress)}%</span>
@@ -1357,9 +2074,31 @@
             document.getElementById('block-title').textContent = block.name;
             
             const stats = getBlockStats(blockId);
-            document.getElementById('block-mastered').textContent = stats.mastered;
-            document.getElementById('block-total').textContent = block.count;
-            document.getElementById('block-progress').style.width = (stats.mastered / block.count * 100) + '%';
+            document.getElementById('block-mastered-circle').textContent = stats.mastered;
+            document.getElementById('block-total-circle').textContent = block.count;
+            
+            const percentage = (stats.mastered / block.count * 100) || 0;
+            updateCircleProgress(percentage);
+            
+            // Отображаем список слов
+            const words = getWordsByBlock(blockId);
+            const container = document.getElementById('words-list-container');
+            container.innerHTML = '';
+            
+            words.forEach(word => {
+                container.innerHTML += `
+                    <div class="word-item">
+                        <div class="word-item-left">
+                            <span class="chinese">${word.characters}</span>
+                            <span class="pinyin-small">${word.pinyin}</span>
+                            <span class="translation-small">${word.translation}</span>
+                        </div>
+                        ${word.mastered >= 5 ? 
+                            '<span class="mastered-badge">✓ Выучено</span>' : 
+                            '<span class="not-mastered-badge">В процессе</span>'}
+                    </div>
+                `;
+            });
             
             document.getElementById('blocks-screen').classList.remove('active');
             document.getElementById('block-detail-screen').classList.add('active');
