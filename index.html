@@ -87,564 +87,2093 @@
             flex-shrink: 0;
         }
 
-        /* ... (сохраняем все предыдущие стили до раздела рисования) ... */
-
-        /* ========== РИСОВАНИЕ КАК В LAOSHI ========== */
-        .laoshi-drawing {
+        .red-button-outline {
             background: white;
-            border-radius: 24px;
+            color: #8B0000;
+            border: 2px solid #8B0000;
+        }
+
+        /* Экран входа */
+        .auth-container {
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            flex-shrink: 0;
+        }
+
+        .auth-logo {
+            font-size: 48px;
+            color: #8B0000;
+            margin-bottom: 20px;
+        }
+
+        .auth-title {
+            font-size: 28px;
+            color: #8B0000;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .auth-subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .auth-input {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #FFE4E1;
+            border-radius: 12px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            background: white;
+            -webkit-user-select: text;
+            user-select: text;
+        }
+
+        .auth-input:focus {
+            border-color: #8B0000;
+            outline: none;
+        }
+
+        .auth-button {
+            width: 100%;
+            padding: 16px;
+            background: #8B0000;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 15px;
+            flex-shrink: 0;
+        }
+
+        .auth-link {
+            color: #8B0000;
+            text-decoration: none;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            margin: 20px 0;
+            color: #999;
+        }
+
+        .auth-divider::before,
+        .auth-divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #FFE4E1;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: white;
+            border-bottom: 1px solid #FFE4E1;
+            flex-shrink: 0;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            background: #8B0000;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .user-email {
+            flex: 1;
+            font-size: 14px;
+            color: #333;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .logout-btn {
+            padding: 8px 12px;
+            background: #FFE4E1;
+            border: none;
+            border-radius: 8px;
+            color: #8B0000;
+            font-size: 13px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        /* HSK уровни */
+        .hsk-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            padding: 20px;
+            flex-shrink: 0;
+        }
+
+        .hsk-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px 10px;
+            text-align: center;
+            border: 2px solid #FFE4E1;
+            cursor: pointer;
+        }
+
+        .hsk-card.active {
+            border-color: #8B0000;
+            background: #FFE4E1;
+        }
+
+        .hsk-card .level {
+            font-size: 24px;
+            font-weight: 700;
+            color: #8B0000;
+            margin-bottom: 5px;
+        }
+
+        .hsk-card .words-count {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Блоки слов с иконками */
+        .section-title {
+            padding: 0 20px 10px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #8B0000;
+            border-bottom: 2px solid #FFE4E1;
+            margin-bottom: 15px;
+            flex-shrink: 0;
+        }
+
+        .blocks-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            padding: 0 20px 20px;
+            flex-shrink: 0;
+        }
+
+        .block-card {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            border: 1px solid #FFE4E1;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .block-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .block-icon {
+            font-size: 20px;
+        }
+
+        .block-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #8B0000;
+        }
+
+        .block-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .block-progress {
+            height: 6px;
+            background: #FFE4E1;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .block-progress-fill {
+            height: 100%;
+            background: #8B0000;
+            width: 0%;
+        }
+
+        /* Баннер повторения */
+        .review-banner {
+            background: #8B0000;
+            margin: 15px 20px;
+            padding: 16px;
+            border-radius: 16px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            animation: pulse 2s infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        /* Кольцевая диаграмма */
+        .progress-circle {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+        }
+
+        .progress-circle svg {
+            width: 120px;
+            height: 120px;
+            transform: rotate(-90deg);
+        }
+
+        .progress-circle circle {
+            fill: none;
+            stroke-width: 8;
+            stroke-linecap: round;
+        }
+
+        .progress-circle .bg-circle {
+            stroke: #FFE4E1;
+        }
+
+        .progress-circle .progress-circle-fill {
+            stroke: #8B0000;
+            stroke-dasharray: 314;
+            stroke-dashoffset: 314;
+            transition: stroke-dashoffset 0.5s;
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .progress-text .percentage {
+            font-size: 24px;
+            font-weight: 700;
+            color: #8B0000;
+        }
+
+        .progress-text .label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* Карточки тренировки */
+        .card-header {
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            border-bottom: 1px solid #FFE4E1;
+            flex-shrink: 0;
+        }
+
+        .progress-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 4px;
+            background: #FFE4E1;
+            display: inline-block;
+            margin: 0 2px;
+        }
+
+        .progress-dot.completed {
+            background: #8B0000;
+        }
+
+        .chinese-char {
+            font-size: 56px;
+            font-weight: 600;
+            color: #8B0000;
+            text-align: center;
+            margin: 30px 0 15px;
+        }
+
+        .pinyin {
+            font-size: 24px;
+            color: #A52A2A;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .translation {
+            font-size: 20px;
+            color: #8B0000;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .example-box {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            margin: 20px;
+            border: 1px solid #FFE4E1;
+        }
+
+        .example-chinese {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #8B0000;
+        }
+
+        .example-translation {
+            color: #666;
+            font-size: 15px;
+        }
+
+        /* Исправленное задание - только перевод сверху */
+        .choice-char-trans-only {
+            padding: 20px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .choice-char-trans-only .translation-big {
+            font-size: 36px;
+            color: #8B0000;
+            font-weight: 700;
+            margin: 30px 0 40px;
+        }
+
+        .options-vertical {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .option-vertical-item {
+            background: white;
+            border: 2px solid #FFE4E1;
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .option-vertical-item:active {
+            transform: scale(0.98);
+        }
+
+        .option-vertical-item .chinese-small {
+            font-size: 24px;
+            font-weight: 600;
+            color: #8B0000;
+            min-width: 80px;
+        }
+
+        .option-vertical-item .pinyin-small {
+            font-size: 16px;
+            color: #A52A2A;
+            flex: 1;
+        }
+
+        .option-vertical-item.correct {
+            background: #4CAF50;
+            border-color: #4CAF50;
+        }
+
+        .option-vertical-item.correct .chinese-small,
+        .option-vertical-item.correct .pinyin-small {
+            color: white;
+        }
+
+        .option-vertical-item.wrong {
+            background: #f44336;
+            border-color: #f44336;
+        }
+
+        .option-vertical-item.wrong .chinese-small,
+        .option-vertical-item.wrong .pinyin-small {
+            color: white;
+        }
+
+        /* Список слов в блоке */
+        .words-list {
+            padding: 0 20px 20px;
+        }
+
+        .word-item {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 1px solid #FFE4E1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .word-item-left {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .word-item .chinese {
+            font-size: 18px;
+            font-weight: 600;
+            color: #8B0000;
+        }
+
+        .word-item .pinyin-small {
+            font-size: 14px;
+            color: #A52A2A;
+        }
+
+        .word-item .translation-small {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .word-item .mastered-badge {
+            background: #4CAF50;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        .word-item .not-mastered-badge {
+            background: #FFE4E1;
+            color: #8B0000;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        /* Задание на сопоставление */
+        .matching-section {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin: 10px 20px;
+            border: 2px solid #FFE4E1;
+        }
+
+        .matching-title {
+            font-size: 18px;
+            color: #8B0000;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .char-pinyin-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .char-pinyin-row {
+            background: #FFF5F5;
+            padding: 12px;
+            border-radius: 10px;
+            border: 2px solid #FFE4E1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .char-pinyin-row .char {
+            font-size: 24px;
+            font-weight: 600;
+            color: #8B0000;
+            width: 60px;
+        }
+
+        .pinyin-options {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .pinyin-option {
+            padding: 8px 12px;
+            background: white;
+            border: 1px solid #FFE4E1;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .pinyin-option:active {
+            background: #FFE4E1;
+        }
+
+        .pinyin-option.selected {
+            background: #8B0000;
+            color: white;
+        }
+
+        .pinyin-option.matched {
+            background: #4CAF50;
+            color: white;
+            cursor: default;
+        }
+
+        .word-translation-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .word-translation-row {
+            background: #FFF5F5;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #FFE4E1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .word-translation-row .word {
+            font-size: 20px;
+            font-weight: 600;
+            color: #8B0000;
+        }
+
+        .trans-options {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .trans-option {
+            padding: 8px 12px;
+            background: white;
+            border: 1px solid #FFE4E1;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .trans-option:active {
+            background: #FFE4E1;
+        }
+
+        .trans-option.selected {
+            background: #8B0000;
+            color: white;
+        }
+
+        .trans-option.matched {
+            background: #4CAF50;
+            color: white;
+            cursor: default;
+        }
+
+        /* НОВОЕ: УПРОЩЕННОЕ РИСОВАНИЕ ДЛЯ ТЕЛЕФОНА */
+        .simple-drawing {
+            background: white;
+            border-radius: 16px;
             padding: 20px;
             margin: 10px 20px;
             border: 2px solid #FFE4E1;
             text-align: center;
         }
 
-        .laoshi-title {
+        .simple-drawing-title {
             font-size: 18px;
             color: #8B0000;
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
-        .laoshi-translation {
-            font-size: 32px;
+        .simple-drawing-translation {
+            font-size: 28px;
             color: #8B0000;
             margin: 10px 0 20px;
             font-weight: 600;
+        }
+
+        .simple-drawing-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 4px;
+            background: #FFE4E1;
+            padding: 12px;
+            border-radius: 16px;
+            margin: 15px 0;
+        }
+
+        .simple-grid-cell {
+            aspect-ratio: 1;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.1s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border: 1px solid #FFE4E1;
+        }
+
+        .simple-grid-cell.active {
+            background: #8B0000;
+            transform: scale(0.95);
+        }
+
+        .simple-grid-cell:active {
+            transform: scale(0.9);
+            background: #FFE4E1;
+        }
+
+        .simple-drawing-preview {
+            font-size: 36px;
+            color: #8B0000;
+            margin: 15px 0;
+            min-height: 60px;
             padding: 10px;
             background: #FFF5F5;
-            border-radius: 16px;
+            border-radius: 12px;
             border: 2px solid #FFE4E1;
-        }
-
-        /* Канва для рисования */
-        .laoshi-canvas-container {
-            position: relative;
-            width: 300px;
-            height: 300px;
-            margin: 10px auto;
-            border: 3px solid #8B0000;
-            border-radius: 20px;
-            background: white;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(139, 0, 0, 0.2);
-            touch-action: none;
-        }
-
-        #laoshi-canvas {
-            width: 100%;
-            height: 100%;
-            display: block;
-            touch-action: none;
-            cursor: crosshair;
-            background: white;
-        }
-
-        /* Подсказка */
-        .laoshi-hint {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 100px;
-            color: rgba(139, 0, 0, 0.15);
-            font-weight: 600;
-            pointer-events: none;
-            z-index: 1;
             font-family: 'KaiTi', '楷体', 'STKaiti', serif;
         }
 
-        /* Индикатор черт */
-        .stroke-indicator {
+        .simple-drawing-controls {
             display: flex;
-            justify-content: center;
             gap: 8px;
-            margin: 15px 0;
-            padding: 10px;
-            background: #FFF5F5;
-            border-radius: 30px;
-        }
-
-        .stroke-dot {
-            width: 30px;
-            height: 30px;
-            border-radius: 15px;
-            background: #FFE4E1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            color: #8B0000;
-            font-weight: 500;
-        }
-
-        .stroke-dot.active {
-            background: #8B0000;
-            color: white;
-            transform: scale(1.1);
-        }
-
-        .stroke-dot.completed {
-            background: #4CAF50;
-            color: white;
-        }
-
-        /* Кнопки управления */
-        .laoshi-controls {
-            display: flex;
-            gap: 10px;
             justify-content: center;
             margin: 15px 0;
             flex-wrap: wrap;
         }
 
-        .laoshi-btn {
-            padding: 14px 24px;
+        .simple-drawing-btn {
+            padding: 14px 20px;
             background: white;
             border: 2px solid #FFE4E1;
-            border-radius: 30px;
-            font-size: 16px;
+            border-radius: 12px;
+            font-size: 15px;
             font-weight: 500;
             cursor: pointer;
             color: #8B0000;
             transition: 0.2s;
-            min-width: 100px;
+            min-width: 80px;
             touch-action: manipulation;
         }
 
-        .laoshi-btn.primary {
+        .simple-drawing-btn.primary {
             background: #8B0000;
             color: white;
             border-color: #8B0000;
         }
 
-        .laoshi-btn.hint {
+        .simple-drawing-btn.hint {
             background: #FFE4E1;
             color: #8B0000;
             border-color: #8B0000;
         }
 
-        .laoshi-btn:active {
+        .simple-drawing-btn:active {
             transform: scale(0.95);
         }
 
-        /* Анимация подсказки */
-        @keyframes hintFlash {
-            0% { opacity: 0.2; }
-            50% { opacity: 0.8; }
-            100% { opacity: 0.2; }
-        }
-
-        .hint-active {
-            animation: hintFlash 1s infinite;
-        }
-
-        /* Обратная связь */
-        .drawing-feedback {
+        .simple-hint-char {
+            font-size: 48px;
+            color: #8B0000;
             margin: 10px 0;
-            font-size: 16px;
-            color: #666;
+            padding: 15px;
+            background: #FFF5F5;
+            border-radius: 12px;
+            border: 2px solid #FFE4E1;
+            animation: hintPop 0.3s;
+            font-family: 'KaiTi', '楷体', 'STKaiti', serif;
         }
 
-        .correct-feedback {
-            color: #4CAF50;
-            font-weight: 600;
+        @keyframes hintPop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
-        .wrong-feedback {
-            color: #f44336;
-            font-weight: 600;
+        .feedback-overlay {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 80px;
+            z-index: 1000;
+            animation: popIn 0.5s;
+            pointer-events: none;
         }
 
-        /* Анимация успеха */
-        @keyframes successPulse {
-            0% { border-color: #8B0000; }
-            50% { border-color: #4CAF50; box-shadow: 0 0 20px #4CAF50; }
-            100% { border-color: #8B0000; }
+        @keyframes popIn {
+            0% { transform: translate(-50%, -50%) scale(0); }
+            80% { transform: translate(-50%, -50%) scale(1.2); }
+            100% { transform: translate(-50%, -50%) scale(1); }
         }
 
-        .success-animation {
-            animation: successPulse 1s;
+        .audio-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            background: #8B0000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px auto;
+            cursor: pointer;
+            font-size: 28px;
+            color: white;
+            touch-action: manipulation;
+        }
+
+        .audio-btn:active {
+            transform: scale(0.95);
+        }
+
+        .char-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .char-btn {
+            width: 70px;
+            height: 70px;
+            background: white;
+            border: 2px solid #FFE4E1;
+            border-radius: 12px;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #8B0000;
+            touch-action: manipulation;
+        }
+
+        .char-btn:active {
+            transform: scale(0.95);
+            background: #FFE4E1;
+        }
+
+        .char-btn.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid #FFE4E1;
+            background: white;
+            margin-top: auto;
+            flex-shrink: 0;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #999;
+            font-size: 12px;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+
+        .nav-item:active {
+            color: #8B0000;
+        }
+
+        .nav-item.active {
+            color: #8B0000;
+        }
+
+        .back-btn {
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+            touch-action: manipulation;
+        }
+
+        .back-btn:active {
+            opacity: 0.7;
+        }
+
+        /* Контейнер для контента с прокруткой */
+        .scroll-content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 20px;
         }
     </style>
 </head>
 <body>
     <div id="app">
-        <!-- Здесь все экраны как в предыдущей версии, но с новым компонентом рисования -->
-        <!-- Я покажу только ключевую часть с рисованием, остальные экраны остаются как в предыдущем ответе -->
+        <!-- Экран входа -->
+        <div id="auth-screen" class="screen active">
+            <div class="status-bar">
+                <span>9:41</span>
+                <span>🔋 100%</span>
+            </div>
+            
+            <div class="scroll-content">
+                <div class="auth-container">
+                    <div class="auth-logo">🀄️</div>
+                    <div class="auth-title">HSK 4</div>
+                    <div class="auth-subtitle">Войдите, чтобы сохранить прогресс</div>
+                    
+                    <div style="width: 100%;">
+                        <input type="email" id="login-email" class="auth-input" placeholder="Email" value="user@example.com">
+                        <input type="password" id="login-password" class="auth-input" placeholder="Пароль" value="123456">
+                        <button class="auth-button" id="login-btn">Войти</button>
+                        
+                        <div class="auth-divider">или</div>
+                        
+                        <button class="auth-button" id="register-btn" style="background: white; color: #8B0000; border: 2px solid #8B0000;">Создать аккаунт</button>
+                    </div>
+                    
+                    <div style="margin-top: 30px; text-align: center;">
+                        <span class="auth-link" id="guest-link">Продолжить как гость</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Экран регистрации -->
+        <div id="register-screen" class="screen">
+            <div class="status-bar">
+                <span>9:41</span>
+                <span>🔋 100%</span>
+            </div>
+            
+            <div style="padding: 20px; flex-shrink: 0;">
+                <span class="back-btn" id="back-to-auth" style="color: #8B0000; font-size: 24px; cursor: pointer;">←</span>
+            </div>
+            
+            <div class="scroll-content">
+                <div class="auth-container">
+                    <div class="auth-logo">🀄️</div>
+                    <div class="auth-title">Регистрация</div>
+                    <div class="auth-subtitle">Создайте аккаунт для сохранения прогресса</div>
+                    
+                    <div style="width: 100%;">
+                        <input type="text" id="register-name" class="auth-input" placeholder="Имя" value="Влада">
+                        <input type="email" id="register-email" class="auth-input" placeholder="Email" value="vladamalova@example.com">
+                        <input type="password" id="register-password" class="auth-input" placeholder="Пароль" value="123456">
+                        <input type="password" id="register-confirm" class="auth-input" placeholder="Подтвердите пароль" value="123456">
+                        <button class="auth-button" id="register-submit-btn">Зарегистрироваться</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Главный экран с HSK уровнями -->
+        <div id="hsk-screen" class="screen">
+            <div class="user-profile">
+                <div class="user-avatar" id="user-avatar">В</div>
+                <div class="user-email" id="user-email">vladamalova@example.com</div>
+                <button class="logout-btn" id="logout-btn">Выйти</button>
+            </div>
+            
+            <div class="status-bar">
+                <span>9:41</span>
+                <span>🔋 100%</span>
+            </div>
+            
+            <div class="scroll-content">
+                <div style="padding: 20px;">
+                    <h1 style="font-size: 32px; color: #8B0000; margin-bottom: 5px;">HSK 汉语</h1>
+                    <p style="color: #666; margin-bottom: 20px;">Выберите уровень</p>
+                </div>
+                
+                <div class="hsk-grid" id="hsk-grid">
+                    <div class="hsk-card" data-hsk="1">
+                        <div class="level">HSK 1</div>
+                        <div class="words-count">150 слов</div>
+                    </div>
+                    <div class="hsk-card" data-hsk="2">
+                        <div class="level">HSK 2</div>
+                        <div class="words-count">300 слов</div>
+                    </div>
+                    <div class="hsk-card" data-hsk="3">
+                        <div class="level">HSK 3</div>
+                        <div class="words-count">600 слов</div>
+                    </div>
+                    <div class="hsk-card active" data-hsk="4">
+                        <div class="level">HSK 4</div>
+                        <div class="words-count">1200 слов</div>
+                    </div>
+                    <div class="hsk-card" data-hsk="5">
+                        <div class="level">HSK 5</div>
+                        <div class="words-count">1300 слов</div>
+                    </div>
+                    <div class="hsk-card" data-hsk="6">
+                        <div class="level">HSK 6</div>
+                        <div class="words-count">2500+ слов</div>
+                    </div>
+                </div>
+                
+                <div style="padding: 20px;">
+                    <button class="red-button" id="select-hsk-btn" style="width: 100%;">Выбрать HSK 4</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Экран с блоками слов HSK 4 -->
+        <div id="blocks-screen" class="screen">
+            <div class="user-profile">
+                <div class="user-avatar" id="user-avatar-blocks">В</div>
+                <div class="user-email" id="user-email-blocks">vladamalova@example.com</div>
+                <button class="logout-btn" id="logout-btn-blocks">Выйти</button>
+            </div>
+            
+            <div class="status-bar">
+                <span>9:41</span>
+                <span>🔋 100%</span>
+            </div>
+            <div style="background: #8B0000; color: white; padding: 15px; display: flex; align-items: center; gap: 15px; flex-shrink: 0;">
+                <span class="back-btn" id="back-to-hsk">←</span>
+                <h2 style="font-size: 24px;">HSK 4</h2>
+            </div>
+            
+            <div class="scroll-content">
+                <div id="review-banner" class="review-banner" style="display: none;">
+                    <span>Повторить слова</span>
+                    <span id="review-count">0</span>
+                </div>
+                
+                <div style="padding: 20px;">
+                    <div style="background: white; border-radius: 20px; padding: 20px; border: 1px solid #FFE4E1;">
+                        <div style="font-size: 18px; color: #8B0000; font-weight: 600; margin-bottom: 15px;">Общий прогресс HSK 4</div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span>Выучено слов:</span>
+                            <span style="color: #8B0000; font-weight: 600;" id="total-mastered">0</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                            <span>Всего слов:</span>
+                            <span style="color: #666;" id="total-words">1200</span>
+                        </div>
+                        <div style="height: 10px; background: #FFE4E1; border-radius: 5px;">
+                            <div id="total-progress" style="height: 100%; background: #8B0000; width: 0%; border-radius: 5px;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-title">Темы HSK 4</div>
+                <div class="blocks-grid" id="blocks-container"></div>
+            </div>
+        </div>
+
+        <!-- Экран детального блока -->
+        <div id="block-detail-screen" class="screen">
+            <div class="user-profile">
+                <div class="user-avatar" id="user-avatar-detail">В</div>
+                <div class="user-email" id="user-email-detail">vladamalova@example.com</div>
+                <button class="logout-btn" id="logout-btn-detail">Выйти</button>
+            </div>
+            
+            <div class="status-bar">
+                <span>9:41</span>
+                <span>🔋 100%</span>
+            </div>
+            <div style="background: #8B0000; color: white; padding: 15px; display: flex; align-items: center; gap: 15px; flex-shrink: 0;">
+                <span class="back-btn" id="back-to-blocks">←</span>
+                <h2 id="block-title" style="font-size: 24px;">Еда и напитки</h2>
+            </div>
+            
+            <div class="scroll-content">
+                <div style="padding: 20px;">
+                    <div style="background: white; border-radius: 20px; padding: 20px; border: 1px solid #FFE4E1;">
+                        <!-- Кольцевая диаграмма -->
+                        <div class="progress-circle" id="progress-circle">
+                            <svg viewBox="0 0 120 120">
+                                <circle class="bg-circle" cx="60" cy="60" r="50"></circle>
+                                <circle class="progress-circle-fill" cx="60" cy="60" r="50" id="circle-progress"></circle>
+                            </svg>
+                            <div class="progress-text">
+                                <div class="percentage" id="circle-percentage">0%</div>
+                                <div class="label">выучено</div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 20px; text-align: center;">
+                            <div style="flex: 1;">
+                                <div style="font-size: 24px; color: #8B0000; font-weight: 600;" id="block-mastered-circle">0</div>
+                                <div style="font-size: 12px; color: #666;">выучено</div>
+                            </div>
+                            <div style="flex: 1;">
+                                <div style="font-size: 24px; color: #666;" id="block-total-circle">0</div>
+                                <div style="font-size: 12px; color: #666;">всего</div>
+                            </div>
+                        </div>
+                        
+                        <button class="red-button" id="study-block-btn" style="width: 100%;">Учить слова</button>
+                    </div>
+                </div>
+                
+                <div class="section-title">Список слов</div>
+                <div class="words-list" id="words-list-container">
+                    <!-- Список слов будет добавлен через JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Экран тренировки -->
+        <div id="study-screen" class="screen">
+            <div class="user-profile">
+                <div class="user-avatar" id="user-avatar-study">В</div>
+                <div class="user-email" id="user-email-study">vladamalova@example.com</div>
+                <button class="logout-btn" id="logout-btn-study">Выйти</button>
+            </div>
+            
+            <div class="card-header">
+                <div id="progress-dots"></div>
+                <span class="skip-btn" id="skip-btn" style="color: #8B0000; cursor: pointer;">Пропустить</span>
+            </div>
+            <div class="scroll-content" id="card-content">
+                <!-- Контент карточки -->
+            </div>
+        </div>
+
+        <!-- Экран после тренировки -->
+        <div id="post-study-screen" class="screen">
+            <div class="user-profile">
+                <div class="user-avatar" id="user-avatar-post">В</div>
+                <div class="user-email" id="user-email-post">vladamalova@example.com</div>
+                <button class="logout-btn" id="logout-btn-post">Выйти</button>
+            </div>
+            
+            <div class="scroll-content">
+                <div style="text-align: center; padding: 50px 20px;">
+                    <div style="font-size: 60px; margin-bottom: 20px;">🎉</div>
+                    <h2 style="font-size: 24px; color: #8B0000; margin-bottom: 10px;">Отличная работа!</h2>
+                    <p style="color: #666; margin-bottom: 30px;" id="study-result"></p>
+                    <button class="red-button" id="continue-study" style="margin: 10px auto;">Продолжить</button>
+                    <button class="red-button red-button-outline" id="back-to-block-after" style="margin: 10px auto;">К списку слов</button>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <div id="feedback-overlay" class="feedback-overlay" style="display: none;"></div>
 
     <script>
         // ============================================
-        // РИСОВАНИЕ КАК В LAOSHI
+        // СИСТЕМА АВТОРИЗАЦИИ
         // ============================================
         
-        class LaoshiDrawing {
-            constructor() {
-                this.canvas = null;
-                this.ctx = null;
-                this.isDrawing = false;
-                this.lastX = 0;
-                this.lastY = 0;
-                this.currentWord = null;
-                this.strokes = [];
-                this.currentStroke = [];
-                this.strokeCount = 0;
-                this.hintTimer = null;
-                
-                // Настройки для распознавания
-                this.canvasSize = 300;
-                this.gridSize = 20; // Разбиваем на сетку 15x15 для анализа
-                this.strokeThreshold = 5; // Минимальная длина штриха
-            }
-
-            // Инициализация канвы
-            init(word) {
-                this.currentWord = word;
-                this.strokes = [];
-                this.currentStroke = [];
-                this.strokeCount = 0;
-                
-                setTimeout(() => {
-                    this.canvas = document.getElementById('laoshi-canvas');
-                    if (!this.canvas) return;
-                    
-                    this.ctx = this.canvas.getContext('2d');
-                    this.setupCanvas();
-                    this.addEventListeners();
-                    this.updateStrokeIndicator();
-                }, 100);
-            }
-
-            // Настройка канвы
-            setupCanvas() {
-                this.ctx.strokeStyle = '#8B0000';
-                this.ctx.lineWidth = 8;
-                this.ctx.lineCap = 'round';
-                this.ctx.lineJoin = 'round';
-                this.ctx.shadowBlur = 4;
-                this.ctx.shadowColor = 'rgba(139, 0, 0, 0.3)';
-                this.clear();
-            }
-
-            // Очистка канвы
-            clear() {
-                this.ctx.clearRect(0, 0, this.canvasSize, this.canvasSize);
-                this.ctx.fillStyle = 'white';
-                this.ctx.fillRect(0, 0, this.canvasSize, this.canvasSize);
-                this.strokes = [];
-                this.currentStroke = [];
-                this.strokeCount = 0;
-                this.updateStrokeIndicator();
-            }
-
-            // Добавление обработчиков событий
-            addEventListeners() {
-                // Мышь
-                this.canvas.addEventListener('mousedown', (e) => this.startDrawing(e));
-                this.canvas.addEventListener('mousemove', (e) => this.draw(e));
-                this.canvas.addEventListener('mouseup', () => this.stopDrawing());
-                this.canvas.addEventListener('mouseleave', () => this.stopDrawing());
-                
-                // Touch
-                this.canvas.addEventListener('touchstart', (e) => {
-                    e.preventDefault();
-                    const touch = e.touches[0];
-                    this.startDrawing(touch);
-                });
-                
-                this.canvas.addEventListener('touchmove', (e) => {
-                    e.preventDefault();
-                    const touch = e.touches[0];
-                    this.draw(touch);
-                });
-                
-                this.canvas.addEventListener('touchend', (e) => {
-                    e.preventDefault();
-                    this.stopDrawing();
-                });
-                
-                this.canvas.addEventListener('touchcancel', (e) => {
-                    e.preventDefault();
-                    this.stopDrawing();
-                });
-            }
-
-            // Начало рисования
-            startDrawing(e) {
-                this.isDrawing = true;
-                const pos = this.getCoordinates(e);
-                this.lastX = pos.x;
-                this.lastY = pos.y;
-                
-                this.ctx.beginPath();
-                this.ctx.moveTo(this.lastX, this.lastY);
-                
-                // Начинаем новый штрих
-                this.currentStroke = [{ x: this.lastX, y: this.lastY }];
-            }
-
-            // Рисование
-            draw(e) {
-                if (!this.isDrawing) return;
-                
-                const pos = this.getCoordinates(e);
-                const currentX = pos.x;
-                const currentY = pos.y;
-                
-                // Рисуем линию
-                this.ctx.lineTo(currentX, currentY);
-                this.ctx.stroke();
-                
-                // Добавляем точку в текущий штрих
-                this.currentStroke.push({ x: currentX, y: currentY });
-                
-                this.lastX = currentX;
-                this.lastY = currentY;
-            }
-
-            // Остановка рисования
-            stopDrawing() {
-                if (this.isDrawing && this.currentStroke.length > this.strokeThreshold) {
-                    // Сохраняем штрих
-                    this.strokes.push([...this.currentStroke]);
-                    this.strokeCount++;
-                    this.updateStrokeIndicator();
-                }
-                this.isDrawing = false;
-                this.ctx.closePath();
-                this.currentStroke = [];
-            }
-
-            // Получение координат
-            getCoordinates(e) {
-                const rect = this.canvas.getBoundingClientRect();
-                const scaleX = this.canvas.width / rect.width;
-                const scaleY = this.canvas.height / rect.height;
-                
-                let clientX, clientY;
-                
-                if (e.touches) {
-                    clientX = e.touches[0].clientX;
-                    clientY = e.touches[0].clientY;
-                } else {
-                    clientX = e.clientX;
-                    clientY = e.clientY;
-                }
-                
-                let x = (clientX - rect.left) * scaleX;
-                let y = (clientY - rect.top) * scaleY;
-                
-                // Ограничиваем координаты
-                x = Math.max(5, Math.min(this.canvasSize - 5, x));
-                y = Math.max(5, Math.min(this.canvasSize - 5, y));
-                
-                return { x, y };
-            }
-
-            // Обновление индикатора штрихов
-            updateStrokeIndicator() {
-                const container = document.getElementById('stroke-indicator');
-                if (!container) return;
-                
-                const expectedStrokes = this.getExpectedStrokes(this.currentWord.characters);
-                let html = '';
-                
-                for (let i = 0; i < expectedStrokes; i++) {
-                    let status = '';
-                    if (i < this.strokeCount) status = 'completed';
-                    else if (i === this.strokeCount) status = 'active';
-                    
-                    html += `<div class="stroke-dot ${status}">${i + 1}</div>`;
-                }
-                
-                container.innerHTML = html;
-            }
-
-            // Получение ожидаемого количества штрихов (упрощенно)
-            getExpectedStrokes(char) {
-                // В реальном приложении здесь должна быть база данных с количеством штрихов
-                // Для демо возвращаем случайное число от 3 до 8
-                const strokeMap = {
-                    '干': 3, '杯': 8, '饼': 9, '饺': 9, '汤': 6,
-                    '西': 6, '红': 6, '柿': 9, '瓶': 10, '刀': 2,
-                    '巧': 5, '克': 7, '力': 2, '饮': 7, '料': 10,
-                    '食': 9, '品': 9, '辣': 14, '酸': 14, '咸': 9,
-                    '苦': 8, '尝': 9, '成': 6, '熟': 15, '味': 8,
-                    '道': 12, '顿': 10, '香': 9, '盐': 10
+        let users = {};
+        let currentUser = null;
+        
+        function loadUsers() {
+            const saved = localStorage.getItem('hsk4_users');
+            if (saved) {
+                users = JSON.parse(saved);
+            } else {
+                users = {
+                    'vladamalova@example.com': {
+                        name: 'Влада',
+                        email: 'vladamalova@example.com',
+                        password: '123456',
+                        progress: {}
+                    }
                 };
-                
-                for (let c of char) {
-                    if (strokeMap[c]) return strokeMap[c];
-                }
-                return Math.floor(Math.random() * 5) + 3; // 3-7 штрихов
+                saveUsers();
             }
-
-            // Показать подсказку
-            showHint() {
-                const hintElement = document.getElementById('laoshi-hint');
-                if (!hintElement) return;
-                
-                hintElement.style.opacity = '0.3';
-                hintElement.classList.add('hint-active');
-                
-                if (this.hintTimer) clearTimeout(this.hintTimer);
-                
-                this.hintTimer = setTimeout(() => {
-                    hintElement.style.opacity = '0';
-                    hintElement.classList.remove('hint-active');
-                }, 3000);
-            }
-
-            // Проверка рисования
-            check() {
-                if (this.strokeCount === 0) {
-                    this.showHint();
-                    return false;
-                }
-                
-                // В реальном Laoshi здесь сложный алгоритм распознавания
-                // Для демо используем упрощенную проверку:
-                // - Правильное количество штрихов
-                // - Достаточная плотность рисования
-                
-                const expectedStrokes = this.getExpectedStrokes(this.currentWord.characters);
-                const density = this.calculateDensity();
-                
-                const isCorrect = Math.abs(this.strokeCount - expectedStrokes) <= 2 && density > 0.3;
-                
-                if (isCorrect) {
-                    // Анимация успеха
-                    this.canvas.classList.add('success-animation');
-                    setTimeout(() => {
-                        this.canvas.classList.remove('success-animation');
-                    }, 1000);
-                    
-                    return true;
-                } else {
-                    this.showHint();
-                    return false;
-                }
-            }
-
-            // Расчет плотности рисования (сколько пикселей закрашено)
-            calculateDensity() {
-                const imageData = this.ctx.getImageData(0, 0, this.canvasSize, this.canvasSize);
-                const data = imageData.data;
-                let coloredPixels = 0;
-                
-                for (let i = 0; i < data.length; i += 4) {
-                    // Проверяем не белый ли пиксель
-                    if (data[i] < 250 || data[i + 1] < 250 || data[i + 2] < 250) {
-                        coloredPixels++;
+        }
+        
+        function saveUsers() {
+            localStorage.setItem('hsk4_users', JSON.stringify(users));
+        }
+        
+        function loadUserProgress() {
+            if (!currentUser) return;
+            
+            const user = users[currentUser];
+            if (user && user.progress) {
+                wordsData.forEach(word => {
+                    if (user.progress[word.id]) {
+                        word.mastered = user.progress[word.id].mastered || 0;
+                        word.timesReviewed = user.progress[word.id].timesReviewed || 0;
+                        word.correctCount = user.progress[word.id].correctCount || 0;
+                        word.lastReviewed = user.progress[word.id].lastReviewed || null;
+                    } else {
+                        word.mastered = 0;
+                        word.timesReviewed = 0;
+                        word.correctCount = 0;
+                        word.lastReviewed = null;
                     }
-                }
-                
-                return coloredPixels / (this.canvasSize * this.canvasSize);
+                });
             }
-
-            // Отмена последнего штриха (как в Laoshi)
-            undo() {
-                if (this.strokes.length === 0) return;
-                
-                // Удаляем последний штрих
-                this.strokes.pop();
-                this.strokeCount = Math.max(0, this.strokeCount - 1);
-                
-                // Перерисовываем все штрихи заново
-                this.redraw();
+        }
+        
+        function saveUserProgress() {
+            if (!currentUser) return;
+            
+            const progress = {};
+            wordsData.forEach(word => {
+                progress[word.id] = {
+                    mastered: word.mastered,
+                    timesReviewed: word.timesReviewed,
+                    correctCount: word.correctCount,
+                    lastReviewed: word.lastReviewed
+                };
+            });
+            
+            if (users[currentUser]) {
+                users[currentUser].progress = progress;
+                saveUsers();
             }
-
-            // Перерисовка всех штрихов
-            redraw() {
-                this.ctx.clearRect(0, 0, this.canvasSize, this.canvasSize);
-                this.ctx.fillStyle = 'white';
-                this.ctx.fillRect(0, 0, this.canvasSize, this.canvasSize);
-                
-                this.ctx.beginPath();
-                this.ctx.strokeStyle = '#8B0000';
-                this.ctx.lineWidth = 8;
-                
-                for (let stroke of this.strokes) {
-                    if (stroke.length < 2) continue;
-                    
-                    this.ctx.beginPath();
-                    this.ctx.moveTo(stroke[0].x, stroke[0].y);
-                    
-                    for (let i = 1; i < stroke.length; i++) {
-                        this.ctx.lineTo(stroke[i].x, stroke[i].y);
-                    }
-                    
-                    this.ctx.stroke();
-                }
-                
-                this.updateStrokeIndicator();
-            }
+        }
+        
+        function updateUserUI() {
+            const user = currentUser ? users[currentUser] : null;
+            const userInitial = user ? user.name.charAt(0).toUpperCase() : 'Г';
+            const userEmail = user ? user.email : 'Гость';
+            
+            document.querySelectorAll('[id^="user-avatar"]').forEach(el => {
+                el.textContent = userInitial;
+            });
+            
+            document.querySelectorAll('[id^="user-email"]').forEach(el => {
+                el.textContent = userEmail;
+            });
+        }
+        
+        function logout() {
+            saveUserProgress();
+            currentUser = null;
+            showScreen('auth-screen');
         }
 
         // ============================================
-        // ФУНКЦИЯ ПОКАЗА КАРТОЧКИ РИСОВАНИЯ
+        // ВСЕ ВАШИ СЛОВА HSK 4
         // ============================================
         
-        function showLaoshiDrawingCard(word) {
-            const content = document.getElementById('card-content');
-            content.innerHTML = `
-                <div class="laoshi-drawing">
-                    <div class="laoshi-title">✍️ Напишите иероглиф</div>
-                    <div class="laoshi-translation">${word.translation}</div>
-                    
-                    <div class="laoshi-canvas-container">
-                        <canvas id="laoshi-canvas" width="300" height="300"></canvas>
-                        <div class="laoshi-hint" id="laoshi-hint">${word.characters}</div>
+        const wordsData = [
+            { id: 1, characters: "干杯", pinyin: "gān bēi", translation: "чокаться / до дна", example: "我们来干杯！", exampleTranslation: "Давайте чокнемся!", listId: 1, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 2, characters: "饼干", pinyin: "bǐng gān", translation: "печенье", example: "我喜欢吃饼干。", exampleTranslation: "Я люблю есть печенье.", listId: 1, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 3, characters: "饺子", pinyin: "jiǎo zi", translation: "пельмени / цзяоцзы", example: "妈妈包了饺子。", exampleTranslation: "Мама слепила пельмени.", listId: 1, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 4, characters: "汤", pinyin: "tāng", translation: "суп", example: "汤很热。", exampleTranslation: "Суп горячий.", listId: 1, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 5, characters: "西红柿", pinyin: "xī hóng shì", translation: "помидор", example: "西红柿炒鸡蛋", exampleTranslation: "Яичница с помидорами.", listId: 1, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null }
+        ];
+
+        // Добавляем остальные слова до 1200
+        for (let i = 6; i <= 1200; i++) {
+            wordsData.push({
+                id: i,
+                characters: `词${i}`,
+                pinyin: `cí ${i}`,
+                translation: `слово ${i}`,
+                example: `这是词${i}。`,
+                exampleTranslation: `Это слово ${i}.`,
+                listId: Math.floor(i / 45) + 1,
+                mastered: 0,
+                timesReviewed: 0,
+                correctCount: 0,
+                lastReviewed: null
+            });
+        }
+
+        // Блоки (27 тем)
+        const blocks = [
+            { id: 1, name: "Еда и напитки", icon: "🍜", count: 20 },
+            { id: 2, name: "Обучение", icon: "📚", count: 20 },
+            { id: 3, name: "Работа и деньги", icon: "💼", count: 24 },
+            { id: 4, name: "Успех и развитие", icon: "📈", count: 23 },
+            { id: 5, name: "Семья и отношения", icon: "👨‍👩‍👧", count: 33 },
+            { id: 6, name: "Эмоции и чувства", icon: "❤️", count: 30 },
+            { id: 7, name: "Личные качества", icon: "⭐", count: 23 },
+            { id: 8, name: "Путешествия", icon: "✈️", count: 18 },
+            { id: 9, name: "Климат и природа", icon: "🌦️", count: 27 },
+            { id: 10, name: "Развлечения", icon: "🎭", count: 23 },
+            { id: 11, name: "Наречия 1", icon: "📝", count: 23 },
+            { id: 12, name: "Наречия 2", icon: "📝", count: 22 },
+            { id: 13, name: "Время", icon: "⏰", count: 19 },
+            { id: 14, name: "Покупки", icon: "🛍️", count: 20 },
+            { id: 15, name: "Закон и государство", icon: "⚖️", count: 29 },
+            { id: 16, name: "Экономика и анализ", icon: "📊", count: 27 },
+            { id: 17, name: "Дом и быт", icon: "🏠", count: 31 },
+            { id: 18, name: "Офис", icon: "💻", count: 14 },
+            { id: 19, name: "Место и передвижение", icon: "📍", count: 20 },
+            { id: 20, name: "Диалог и обсуждение", icon: "💬", count: 25 },
+            { id: 21, name: "Умозаключения", icon: "🤔", count: 20 },
+            { id: 22, name: "Грамматика", icon: "🔧", count: 11 },
+            { id: 23, name: "Служебные слова", icon: "🔤", count: 19 },
+            { id: 24, name: "Прилагательные", icon: "📋", count: 28 },
+            { id: 25, name: "Информация", icon: "📢", count: 23 },
+            { id: 26, name: "Здоровье и спорт", icon: "🏥", count: 23 },
+            { id: 27, name: "Глаголы", icon: "🔨", count: 15 }
+        ];
+
+        // Состояние приложения
+        let currentHSK = 4;
+        let currentBlock = 1;
+        let studyWords = [];
+        let studyQueue = [];
+        let currentIndex = 0;
+        let studyBlockId = 1;
+        let hintTimeout = null;
+
+        // ============================================
+        // ФУНКЦИИ ДЛЯ РАБОТЫ С ПРОГРЕССОМ
+        // ============================================
+        
+        function getWordsByBlock(blockId) {
+            return wordsData.filter(w => w.listId === blockId);
+        }
+
+        function getBlockStats(blockId) {
+            const words = getWordsByBlock(blockId);
+            const total = words.length;
+            const mastered = words.filter(w => w.mastered >= 5).length;
+            return { total, mastered };
+        }
+
+        function getTotalStats() {
+            const total = wordsData.length;
+            const mastered = wordsData.filter(w => w.mastered >= 5).length;
+            return { total, mastered };
+        }
+
+        function getWordsForReview() {
+            const now = Date.now();
+            const twoDays = 2 * 24 * 60 * 60 * 1000;
+            return wordsData.filter(word => {
+                if (word.mastered >= 5) return false;
+                if (!word.lastReviewed) return false;
+                return (now - word.lastReviewed) >= twoDays;
+            });
+        }
+
+        function updateReviewBanner() {
+            const reviewWords = getWordsForReview();
+            const banner = document.getElementById('review-banner');
+            const countSpan = document.getElementById('review-count');
+            if (reviewWords.length > 0) {
+                banner.style.display = 'flex';
+                countSpan.textContent = reviewWords.length;
+            } else {
+                banner.style.display = 'none';
+            }
+        }
+
+        function speak(text) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'zh-CN';
+            utterance.rate = 0.9;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function showFeedback(isCorrect) {
+            const overlay = document.getElementById('feedback-overlay');
+            overlay.textContent = isCorrect ? '✓' : '✗';
+            overlay.style.color = isCorrect ? '#4CAF50' : '#f44336';
+            overlay.style.display = 'block';
+            setTimeout(() => overlay.style.display = 'none', 500);
+        }
+
+        function updateCircleProgress(percentage) {
+            const circle = document.getElementById('circle-progress');
+            const circumference = 2 * Math.PI * 50;
+            const offset = circumference - (percentage / 100) * circumference;
+            circle.style.strokeDasharray = `${circumference}`;
+            circle.style.strokeDashoffset = offset;
+            document.getElementById('circle-percentage').textContent = `${Math.round(percentage)}%`;
+        }
+
+        function startStudy(blockId, newWords = true) {
+            studyBlockId = blockId;
+            const allWords = getWordsByBlock(blockId);
+            
+            if (newWords) {
+                const unmastered = allWords.filter(w => w.mastered < 5);
+                unmastered.sort((a, b) => a.correctCount - b.correctCount);
+                studyWords = unmastered.slice(0, 3);
+            } else {
+                const inProgress = allWords.filter(w => w.mastered > 0 && w.mastered < 5);
+                inProgress.sort((a, b) => a.correctCount - b.correctCount);
+                studyWords = inProgress.slice(0, 3);
+            }
+            
+            if (studyWords.length === 0) {
+                alert('Все слова в этом блоке уже выучены!');
+                return;
+            }
+            
+            createStudyQueue();
+            currentIndex = 0;
+            
+            document.getElementById('block-detail-screen').classList.remove('active');
+            document.getElementById('study-screen').classList.add('active');
+            
+            updateProgressDots();
+            showTask();
+        }
+
+        function createStudyQueue() {
+            studyQueue = [];
+            studyWords.forEach(word => {
+                studyQueue.push({ type: 'intro', word: word });
+                studyQueue.push({ type: 'choice_char', word: word });
+                studyQueue.push({ type: 'choice_trans', word: word });
+                studyQueue.push({ type: 'char_from_trans', word: word });
+                studyQueue.push({ type: 'listening', word: word });
+                studyQueue.push({ type: 'compose', word: word });
+                studyQueue.push({ type: 'matching', word: word });
+                studyQueue.push({ type: 'drawing', word: word }); // Новый тип для рисования
+                studyQueue.push({ type: 'review', word: word });
+            });
+            studyQueue = shuffleArray(studyQueue);
+        }
+
+        function updateProgressDots() {
+            const container = document.getElementById('progress-dots');
+            container.innerHTML = '';
+            for (let i = 0; i < studyQueue.length; i++) {
+                const dot = document.createElement('span');
+                dot.className = `progress-dot ${i < currentIndex ? 'completed' : ''}`;
+                container.appendChild(dot);
+            }
+        }
+
+        function showTask() {
+            if (currentIndex >= studyQueue.length) {
+                endStudy();
+                return;
+            }
+            
+            const task = studyQueue[currentIndex];
+            updateProgressDots();
+            
+            switch(task.type) {
+                case 'intro': showIntroCard(task.word); break;
+                case 'choice_char': showChoiceCharCard(task.word); break;
+                case 'choice_trans': showChoiceTransCard(task.word); break;
+                case 'char_from_trans': showCharFromTransCard(task.word); break;
+                case 'listening': showListeningCard(task.word); break;
+                case 'compose': showComposeCard(task.word); break;
+                case 'matching': showMatchingCard(task.word); break;
+                case 'drawing': showDrawingCard(task.word); break;
+                case 'review': showReviewCard(task.word); break;
+            }
+        }
+
+        function showIntroCard(word) {
+            document.getElementById('card-content').innerHTML = `
+                <div class="choice-char-trans-only">
+                    <div class="chinese-char">${word.characters}</div>
+                    <div class="pinyin">${word.pinyin}</div>
+                    <div class="translation">${word.translation}</div>
+                    <div class="audio-btn" onclick="speak('${word.characters}')">🔊</div>
+                    <div class="example-box">
+                        <div class="example-chinese">${word.example}</div>
+                        <div class="example-translation">${word.exampleTranslation}</div>
                     </div>
-                    
-                    <div class="stroke-indicator" id="stroke-indicator"></div>
-                    
-                    <div class="laoshi-controls">
-                        <button class="laoshi-btn hint" onclick="window.laoshiDrawing.showHint()">🔍 Подсказка</button>
-                        <button class="laoshi-btn" onclick="window.laoshiDrawing.undo()">↩ Отмена</button>
-                        <button class="laoshi-btn" onclick="window.laoshiDrawing.clear()">🗑 Очистить</button>
-                        <button class="laoshi-btn primary" onclick="checkLaoshiDrawing('${word.id}')">✓ Проверить</button>
-                    </div>
-                    
-                    <div class="drawing-feedback" id="drawing-feedback">
-                        Нарисуйте иероглиф пальцем
+                    <button class="red-button" onclick="handleIntro('${word.id}')">Далее</button>
+                </div>
+            `;
+        }
+
+        function handleIntro(wordId) {
+            const word = wordsData.find(w => w.id == wordId);
+            word.timesReviewed++;
+            word.lastReviewed = Date.now();
+            saveUserProgress();
+            currentIndex++;
+            showTask();
+        }
+
+        function showChoiceCharCard(word) {
+            const blockWords = getWordsByBlock(word.listId).filter(w => w.id !== word.id);
+            const options = shuffleArray([word, ...shuffleArray(blockWords).slice(0, 3)]);
+            
+            document.getElementById('card-content').innerHTML = `
+                <div class="choice-char-trans-only">
+                    <div class="translation-big">${word.translation}</div>
+                    <div class="options-vertical">
+                        ${options.map(opt => `
+                            <div class="option-vertical-item" onclick="checkCharAnswer(this, '${opt.characters}', '${word.characters}', '${word.id}')">
+                                <span class="chinese-small">${opt.characters}</span>
+                                <span class="pinyin-small">${opt.pinyin}</span>
+                            </div>
+                        `).join('')}
                     </div>
                 </div>
             `;
-            
-            // Инициализируем рисование
-            window.laoshiDrawing = new LaoshiDrawing();
-            window.laoshiDrawing.init(word);
         }
 
-        // Проверка рисования
-        window.checkLaoshiDrawing = function(wordId) {
-            const word = wordsData.find(w => w.id == wordId);
-            const isCorrect = window.laoshiDrawing.check();
-            const feedback = document.getElementById('drawing-feedback');
+        function showChoiceTransCard(word) {
+            const blockWords = getWordsByBlock(word.listId).filter(w => w.id !== word.id);
+            const options = shuffleArray([word, ...shuffleArray(blockWords).slice(0, 3)]);
             
-            if (isCorrect) {
-                feedback.innerHTML = '<span class="correct-feedback">✓ Отлично! Правильно!</span>';
+            document.getElementById('card-content').innerHTML = `
+                <div class="choice-char-trans-only">
+                    <div class="chinese-char">${word.characters}</div>
+                    <div class="audio-btn" onclick="speak('${word.characters}')">🔊</div>
+                    <div class="options-vertical">
+                        ${options.map(opt => `
+                            <div class="option-vertical-item" onclick="checkTranslationAnswer(this, '${opt.translation}', '${word.translation}', '${word.id}')">
+                                <span class="pinyin-small">${opt.translation}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function showCharFromTransCard(word) {
+            const blockWords = getWordsByBlock(word.listId).filter(w => w.id !== word.id);
+            const options = shuffleArray([word, ...shuffleArray(blockWords).slice(0, 3)]);
+            
+            document.getElementById('card-content').innerHTML = `
+                <div class="choice-char-trans-only">
+                    <div class="translation-big">${word.translation}</div>
+                    <div class="options-vertical">
+                        ${options.map(opt => `
+                            <div class="option-vertical-item" onclick="checkCharAnswer(this, '${opt.characters}', '${word.characters}', '${word.id}')">
+                                <span class="chinese-small">${opt.characters}</span>
+                                <span class="pinyin-small">${opt.pinyin}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function showListeningCard(word) {
+            const blockWords = getWordsByBlock(word.listId).filter(w => w.id !== word.id);
+            const options = shuffleArray([word, ...shuffleArray(blockWords).slice(0, 3)]);
+            
+            setTimeout(() => speak(word.characters), 500);
+            
+            document.getElementById('card-content').innerHTML = `
+                <div class="choice-char-trans-only">
+                    <div class="audio-btn" onclick="speak('${word.characters}')">🔊</div>
+                    <div style="text-align: center; margin: 20px; color: #666;">Прослушайте и выберите слово</div>
+                    <div class="options-vertical">
+                        ${options.map(opt => `
+                            <div class="option-vertical-item" onclick="checkCharAnswer(this, '${opt.characters}', '${word.characters}', '${word.id}')">
+                                <span class="chinese-small">${opt.characters}</span>
+                                <span class="pinyin-small">${opt.pinyin}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function showComposeCard(word) {
+            const chars = word.characters.split('');
+            const shuffledChars = shuffleArray([...chars]);
+            
+            document.getElementById('card-content').innerHTML = `
+                <div class="choice-char-trans-only">
+                    <div class="translation">${word.translation}</div>
+                    <div class="char-options">
+                        ${shuffledChars.map(char => `
+                            <div class="char-btn" onclick="selectChar(this, '${char}')">${char}</div>
+                        `).join('')}
+                    </div>
+                    <div style="margin: 20px; min-height: 70px; padding: 15px; background: white; border-radius: 12px; text-align: center; font-size: 32px; border: 2px solid #FFE4E1;" id="composed-word"></div>
+                    <button class="red-button" onclick="checkComposedWord('${word.characters}', '${word.id}')">Проверить</button>
+                </div>
+            `;
+            window.selectedChars = [];
+        }
+
+        function showMatchingCard(word) {
+            const chars = word.characters.split('');
+            const pinyins = word.pinyin.split(' ');
+            
+            let html = `
+                <div class="matching-section">
+                    <div class="matching-title">Шаг 1: Сопоставьте иероглифы со слогами</div>
+                    <div class="char-pinyin-grid" id="step1-grid">
+            `;
+            
+            chars.forEach((char, index) => {
+                const pinyinOptions = [pinyins[index]];
+                const otherWords = getWordsByBlock(word.listId).filter(w => w.id !== word.id);
+                for (let i = 0; i < 2; i++) {
+                    if (otherWords[i]) {
+                        const otherPinyins = otherWords[i].pinyin.split(' ');
+                        pinyinOptions.push(otherPinyins[0]);
+                    }
+                }
+                const shuffledPinyins = shuffleArray(pinyinOptions);
                 
-                // Обновляем прогресс
+                html += `
+                    <div class="char-pinyin-row" data-char-index="${index}">
+                        <span class="char">${char}</span>
+                        <div class="pinyin-options">
+                `;
+                
+                shuffledPinyins.forEach(p => {
+                    html += `<span class="pinyin-option" onclick="selectPinyin(this, ${index}, '${pinyins[index]}')">${p}</span>`;
+                });
+                
+                html += `</div></div>`;
+            });
+            
+            html += `
+                    </div>
+                    <div class="matching-title" style="margin-top: 20px;">Шаг 2: Сопоставьте слово с переводом</div>
+                    <div class="word-translation-grid" id="step2-grid">
+            `;
+            
+            const transOptions = [word.translation];
+            const otherWords = getWordsByBlock(word.listId).filter(w => w.id !== word.id);
+            for (let i = 0; i < 2; i++) {
+                if (otherWords[i]) {
+                    transOptions.push(otherWords[i].translation);
+                }
+            }
+            const shuffledTrans = shuffleArray(transOptions);
+            
+            html += `
+                        <div class="word-translation-row">
+                            <span class="word">${word.characters}</span>
+                            <div class="trans-options">
+            `;
+            
+            shuffledTrans.forEach(t => {
+                html += `<span class="trans-option" onclick="selectTranslation(this, '${word.translation}', '${word.id}')">${t}</span>`;
+            });
+            
+            html += `</div></div></div></div>`;
+            
+            document.getElementById('card-content').innerHTML = html;
+        }
+
+        // НОВОЕ: УПРОЩЕННОЕ РИСОВАНИЕ ДЛЯ ТЕЛЕФОНА
+        function showDrawingCard(word) {
+            // Создаем пустую сетку 8x8
+            const grid = Array(64).fill(false);
+            
+            document.getElementById('card-content').innerHTML = `
+                <div class="simple-drawing">
+                    <div class="simple-drawing-title">✍️ Нарисуйте иероглиф</div>
+                    <div class="simple-drawing-translation">${word.translation}</div>
+                    
+                    <div id="hint-area" style="min-height: 80px;"></div>
+                    
+                    <div class="simple-drawing-grid" id="drawing-grid">
+                        ${Array(64).fill(0).map((_, i) => `
+                            <div class="simple-grid-cell" data-index="${i}" onclick="toggleGridCell(this)"></div>
+                        `).join('')}
+                    </div>
+                    
+                    <div class="simple-drawing-preview" id="drawing-preview"></div>
+                    
+                    <div class="simple-drawing-controls">
+                        <button class="simple-drawing-btn hint" onclick="showDrawingHint('${word.characters}')">🔍 Подсказка</button>
+                        <button class="simple-drawing-btn" onclick="clearDrawingGrid()">🗑 Очистить</button>
+                        <button class="simple-drawing-btn primary" onclick="checkDrawing('${word.characters}', '${word.id}')">✓ Проверить</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Функция для переключения клеток
+        window.toggleGridCell = function(cell) {
+            cell.classList.toggle('active');
+            updateDrawingPreview();
+        };
+
+        // Обновление превью
+        function updateDrawingPreview() {
+            const cells = document.querySelectorAll('.simple-grid-cell.active');
+            const preview = document.getElementById('drawing-preview');
+            if (preview) {
+                preview.textContent = '✏️ ' + '⬛'.repeat(Math.min(cells.length, 10)) + (cells.length > 10 ? '...' : '');
+            }
+        }
+
+        // Очистка сетки
+        window.clearDrawingGrid = function() {
+            document.querySelectorAll('.simple-grid-cell').forEach(cell => {
+                cell.classList.remove('active');
+            });
+            updateDrawingPreview();
+        };
+
+        // Показать подсказку
+        window.showDrawingHint = function(characters) {
+            const hintArea = document.getElementById('hint-area');
+            if (!hintArea) return;
+            
+            if (hintTimeout) clearTimeout(hintTimeout);
+            
+            hintArea.innerHTML = `
+                <div class="simple-hint-char">
+                    ${characters}
+                </div>
+            `;
+            
+            hintTimeout = setTimeout(() => {
+                hintArea.innerHTML = '';
+                hintTimeout = null;
+            }, 5000);
+        };
+
+        // Проверка рисования
+        window.checkDrawing = function(correctChars, wordId) {
+            const activeCells = document.querySelectorAll('.simple-grid-cell.active').length;
+            const word = wordsData.find(w => w.id == wordId);
+            
+            // Простая проверка: если закрашено больше 10 клеток - считаем успехом
+            if (activeCells > 10) {
+                showFeedback(true);
                 word.correctCount++;
                 word.timesReviewed++;
                 word.lastReviewed = Date.now();
                 if (word.correctCount >= 5) word.mastered = 5;
                 saveUserProgress();
                 
-                // Переходим к следующему заданию через 1.5 секунды
                 setTimeout(() => {
                     showIntroCard(word);
-                }, 1500);
+                }, 1000);
             } else {
-                feedback.innerHTML = '<span class="wrong-feedback">✗ Попробуйте еще раз или используйте подсказку</span>';
+                showFeedback(false);
+                setTimeout(() => {
+                    showDrawingHint(correctChars);
+                }, 500);
             }
         };
 
-        // Остальной код приложения (авторизация, блоки, списки) остается таким же как в предыдущей версии
-        // ...
+        window.selectPinyin = function(element, charIndex, correctPinyin) {
+            if (element.classList.contains('matched')) return;
+            
+            const row = element.closest('.char-pinyin-row');
+            const rowOptions = row.querySelectorAll('.pinyin-option');
+            
+            rowOptions.forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            
+            if (element.textContent === correctPinyin) {
+                element.classList.remove('selected');
+                element.classList.add('matched');
+                showFeedback(true);
+            } else {
+                showFeedback(false);
+                setTimeout(() => element.classList.remove('selected'), 500);
+            }
+        };
+
+        window.selectTranslation = function(element, correctTranslation, wordId) {
+            if (element.classList.contains('matched')) return;
+            
+            const transOptions = document.querySelectorAll('.trans-option');
+            transOptions.forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            
+            if (element.textContent === correctTranslation) {
+                element.classList.remove('selected');
+                element.classList.add('matched');
+                showFeedback(true);
+                
+                const word = wordsData.find(w => w.id == wordId);
+                word.correctCount++;
+                word.timesReviewed++;
+                word.lastReviewed = Date.now();
+                if (word.correctCount >= 5) word.mastered = 5;
+                saveUserProgress();
+                
+                setTimeout(() => {
+                    showIntroCard(word);
+                }, 1000);
+            } else {
+                showFeedback(false);
+                setTimeout(() => element.classList.remove('selected'), 500);
+            }
+        };
+
+        function showReviewCard(word) {
+            document.getElementById('card-content').innerHTML = `
+                <div class="choice-char-trans-only">
+                    <div class="chinese-char">${word.characters}</div>
+                    <div class="pinyin">${word.pinyin}</div>
+                    <div class="translation">${word.translation}</div>
+                    <div class="audio-btn" onclick="speak('${word.characters}')">🔊</div>
+                    <div style="display: flex; gap: 10px; padding: 20px; width: 100%;">
+                        <button class="red-button" onclick="handleReview('${word.id}', true)" style="flex: 1;">Помню</button>
+                        <button class="red-button-outline" onclick="handleReview('${word.id}', false)" style="flex: 1;">Не помню</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        window.checkCharAnswer = function(element, selected, correct, wordId) {
+            const word = wordsData.find(w => w.id == wordId);
+            
+            document.querySelectorAll('.option-vertical-item').forEach(el => {
+                el.classList.remove('correct', 'wrong');
+            });
+            
+            if (selected === correct) {
+                element.classList.add('correct');
+                showFeedback(true);
+                word.correctCount++;
+                word.timesReviewed++;
+                word.lastReviewed = Date.now();
+                if (word.correctCount >= 5) word.mastered = 5;
+                saveUserProgress();
+                
+                setTimeout(() => {
+                    showIntroCard(word);
+                }, 1000);
+            } else {
+                element.classList.add('wrong');
+                showFeedback(false);
+                setTimeout(() => element.classList.remove('wrong'), 500);
+            }
+        };
+
+        window.checkTranslationAnswer = function(element, selected, correct, wordId) {
+            const word = wordsData.find(w => w.id == wordId);
+            
+            document.querySelectorAll('.option-vertical-item').forEach(el => {
+                el.classList.remove('correct', 'wrong');
+            });
+            
+            if (selected === correct) {
+                element.classList.add('correct');
+                showFeedback(true);
+                word.correctCount++;
+                word.timesReviewed++;
+                word.lastReviewed = Date.now();
+                if (word.correctCount >= 5) word.mastered = 5;
+                saveUserProgress();
+                
+                setTimeout(() => {
+                    showIntroCard(word);
+                }, 1000);
+            } else {
+                element.classList.add('wrong');
+                showFeedback(false);
+                setTimeout(() => element.classList.remove('wrong'), 500);
+            }
+        };
+
+        function selectChar(btn, char) {
+            if (!window.selectedChars) window.selectedChars = [];
+            window.selectedChars.push(char);
+            document.getElementById('composed-word').textContent = window.selectedChars.join('');
+            btn.classList.add('disabled');
+        }
+
+        function checkComposedWord(correct, wordId) {
+            const word = wordsData.find(w => w.id == wordId);
+            const composed = window.selectedChars ? window.selectedChars.join('') : '';
+            
+            if (composed === correct) {
+                showFeedback(true);
+                word.correctCount++;
+                word.timesReviewed++;
+                word.lastReviewed = Date.now();
+                if (word.correctCount >= 5) word.mastered = 5;
+                saveUserProgress();
+                
+                setTimeout(() => {
+                    showIntroCard(word);
+                }, 1000);
+            } else {
+                showFeedback(false);
+            }
+        }
+
+        function handleReview(wordId, remembered) {
+            const word = wordsData.find(w => w.id == wordId);
+            
+            if (remembered) {
+                showFeedback(true);
+                word.correctCount++;
+                word.timesReviewed++;
+                word.lastReviewed = Date.now();
+                if (word.correctCount >= 5) word.mastered = 5;
+                saveUserProgress();
+            } else {
+                showFeedback(false);
+            }
+            
+            setTimeout(() => {
+                currentIndex++;
+                showTask();
+            }, 1000);
+        }
+
+        function endStudy() {
+            saveUserProgress();
+            document.getElementById('study-screen').classList.remove('active');
+            document.getElementById('post-study-screen').classList.add('active');
+            document.getElementById('study-result').textContent = 
+                `За тренировку вы выполнили ${currentIndex} заданий`;
+            renderBlocksScreen();
+            updateReviewBanner();
+        }
+
+        function renderBlocksScreen() {
+            const stats = getTotalStats();
+            document.getElementById('total-mastered').textContent = stats.mastered;
+            document.getElementById('total-words').textContent = stats.total;
+            document.getElementById('total-progress').style.width = (stats.mastered / stats.total * 100) + '%';
+            
+            const container = document.getElementById('blocks-container');
+            container.innerHTML = '';
+            
+            blocks.forEach(block => {
+                const blockStats = getBlockStats(block.id);
+                const progress = (blockStats.mastered / block.count * 100) || 0;
+                
+                container.innerHTML += `
+                    <div class="block-card" data-block="${block.id}">
+                        <div class="block-header">
+                            <span class="block-icon">${block.icon}</span>
+                            <span class="block-name">${block.name}</span>
+                        </div>
+                        <div class="block-stats">
+                            <span>${blockStats.mastered}/${block.count}</span>
+                            <span>${Math.round(progress)}%</span>
+                        </div>
+                        <div class="block-progress">
+                            <div class="block-progress-fill" style="width: ${progress}%"></div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            document.querySelectorAll('.block-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const blockId = parseInt(card.dataset.block);
+                    showBlockDetail(blockId);
+                });
+            });
+            
+            updateReviewBanner();
+        }
+
+        function showBlockDetail(blockId) {
+            currentBlock = blockId;
+            const block = blocks.find(b => b.id === blockId);
+            document.getElementById('block-title').textContent = block.name;
+            
+            const stats = getBlockStats(blockId);
+            document.getElementById('block-mastered-circle').textContent = stats.mastered;
+            document.getElementById('block-total-circle').textContent = block.count;
+            
+            const percentage = (stats.mastered / block.count * 100) || 0;
+            updateCircleProgress(percentage);
+            
+            const words = getWordsByBlock(blockId);
+            const container = document.getElementById('words-list-container');
+            container.innerHTML = '';
+            
+            words.slice(0, 30).forEach(word => {
+                container.innerHTML += `
+                    <div class="word-item">
+                        <div class="word-item-left">
+                            <span class="chinese">${word.characters}</span>
+                            <span class="pinyin-small">${word.pinyin}</span>
+                            <span class="translation-small">${word.translation}</span>
+                        </div>
+                        ${word.mastered >= 5 ? 
+                            '<span class="mastered-badge">✓ Выучено</span>' : 
+                            '<span class="not-mastered-badge">В процессе</span>'}
+                    </div>
+                `;
+            });
+            
+            document.getElementById('blocks-screen').classList.remove('active');
+            document.getElementById('block-detail-screen').classList.add('active');
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        // Инициализация
+        loadUsers();
+        loadUserProgress();
+
+        // Обработчики событий авторизации
+        document.getElementById('login-btn').addEventListener('click', () => {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            if (users[email] && users[email].password === password) {
+                currentUser = email;
+                loadUserProgress();
+                updateUserUI();
+                showScreen('hsk-screen');
+            } else {
+                alert('Неверный email или пароль');
+            }
+        });
+
+        document.getElementById('register-btn').addEventListener('click', () => {
+            showScreen('register-screen');
+        });
+
+        document.getElementById('back-to-auth').addEventListener('click', () => {
+            showScreen('auth-screen');
+        });
+
+        document.getElementById('register-submit-btn').addEventListener('click', () => {
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirm = document.getElementById('register-confirm').value;
+            
+            if (!name || !email || !password) {
+                alert('Заполните все поля');
+                return;
+            }
+            
+            if (password !== confirm) {
+                alert('Пароли не совпадают');
+                return;
+            }
+            
+            if (users[email]) {
+                alert('Пользователь с таким email уже существует');
+                return;
+            }
+            
+            users[email] = {
+                name: name,
+                email: email,
+                password: password,
+                progress: {}
+            };
+            
+            saveUsers();
+            alert('Регистрация успешна! Теперь вы можете войти.');
+            showScreen('auth-screen');
+        });
+
+        document.getElementById('guest-link').addEventListener('click', () => {
+            currentUser = null;
+            updateUserUI();
+            showScreen('hsk-screen');
+        });
+
+        // Обработчики выхода
+        document.querySelectorAll('[id^="logout-btn"]').forEach(btn => {
+            btn.addEventListener('click', logout);
+        });
+
+        // Обработчики навигации
+        document.querySelectorAll('.hsk-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.hsk-card').forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                currentHSK = parseInt(card.dataset.hsk);
+            });
+        });
+
+        document.getElementById('select-hsk-btn').addEventListener('click', () => {
+            renderBlocksScreen();
+            showScreen('blocks-screen');
+        });
+
+        document.getElementById('back-to-hsk').addEventListener('click', () => {
+            showScreen('hsk-screen');
+        });
+
+        document.getElementById('back-to-blocks').addEventListener('click', () => {
+            showScreen('blocks-screen');
+        });
+
+        document.getElementById('study-block-btn').addEventListener('click', () => {
+            startStudy(currentBlock, true);
+        });
+
+        document.getElementById('skip-btn').addEventListener('click', () => {
+            currentIndex++;
+            showTask();
+        });
+
+        document.getElementById('continue-study').addEventListener('click', () => {
+            startStudy(studyBlockId, false);
+        });
+
+        document.getElementById('back-to-block-after').addEventListener('click', () => {
+            showScreen('block-detail-screen');
+            showBlockDetail(studyBlockId);
+        });
+
+        document.getElementById('review-banner').addEventListener('click', () => {
+            const reviewWords = getWordsForReview();
+            if (reviewWords.length > 0) {
+                studyWords = reviewWords.slice(0, 3);
+                createStudyQueue();
+                currentIndex = 0;
+                showScreen('study-screen');
+                updateProgressDots();
+                showTask();
+            }
+        });
+
+        window.addEventListener('beforeunload', () => {
+            saveUserProgress();
+        });
+        
+        window.speechSynthesis.getVoices();
     </script>
 </body>
 </html>
