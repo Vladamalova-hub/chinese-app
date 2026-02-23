@@ -2049,7 +2049,6 @@
             { id: 27, name: "Глаголы", icon: "🔨", count: 15 }
         ];
 
-
         // Состояние приложения
         let currentHSK = 4;
         let currentBlock = 1;
@@ -2295,7 +2294,8 @@
                     <div class="options-vertical">
                         ${options.map(opt => `
                             <div class="option-vertical-item" onclick="checkCharAnswer(this, '${opt.characters}', '${word.characters}', '${word.id}')">
-                                ${opt.characters}<br><small>${opt.pinyin}</small>
+                                <span class="chinese-small">${opt.characters}</span>
+                                <span class="pinyin-small">${opt.pinyin}</span>
                             </div>
                         `).join('')}
                     </div>
