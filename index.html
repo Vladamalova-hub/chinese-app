@@ -391,7 +391,7 @@
             color: #666;
         }
 
-        /* Карточка слова (новая) */
+        /* Карточка слова */
         .word-card {
             background: white;
             border-radius: 24px;
@@ -567,7 +567,7 @@
             border-radius: 6px;
         }
 
-        /* Карточки тренировки (оставляем как было) */
+        /* Карточки тренировки */
         .choice-char-trans-only {
             padding: 20px;
             text-align: center;
@@ -840,7 +840,7 @@
             cursor: default;
         }
 
-        /* Экран завершения блока (новый) */
+        /* Экран завершения блока */
         .block-complete {
             text-align: center;
             padding: 40px 20px;
@@ -1144,7 +1144,7 @@
                 <div class="block-progress-container">
                     <div class="block-progress-stats">
                         <span>Прогресс блока</span>
-                        <span id="block-mastered-count">0</span>
+                        <span id="block-mastered-count">0/0</span>
                     </div>
                     <div class="block-progress-bar-big">
                         <div class="block-progress-fill-big" id="block-progress-bar" style="width: 0%"></div>
@@ -1157,7 +1157,7 @@
             </div>
         </div>
 
-        <!-- Экран карточки слова (новый) -->
+        <!-- Экран карточки слова -->
         <div id="word-card-screen" class="screen">
             <div class="user-profile">
                 <div class="user-avatar" id="user-avatar-card">В</div>
@@ -1177,7 +1177,7 @@
             <div class="scroll-content" id="word-card-content"></div>
         </div>
 
-        <!-- Экран тренировки (оставляем как было) -->
+        <!-- Экран тренировки -->
         <div id="study-screen" class="screen">
             <div class="user-profile">
                 <div class="user-avatar" id="user-avatar-study">В</div>
@@ -1211,7 +1211,7 @@
             </div>
         </div>
 
-        <!-- Экран завершения блока (новый) -->
+        <!-- Экран завершения блока -->
         <div id="block-complete-screen" class="screen">
             <div class="user-profile">
                 <div class="user-avatar" id="user-avatar-complete">В</div>
@@ -1330,6 +1330,22 @@
             showScreen('auth-screen');
         }
 
+        // ============================================
+        // ВСЕ ВАШИ СЛОВА HSK 4 (ТОЛЬКО ОДИН МАССИВ)
+        // ============================================
+
+        const wordsData = [
+            // 1. ЕДА И НАПИТКИ (listId: 1, 20 слов)
+            { id: 1, characters: "干杯", pinyin: "gān bēi", translation: "чокаться / до дна", example: "我们来干杯！", exampleTranslation: "Давайте чокнемся!", listId: 1, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 2, characters: "饼干", pinyin: "bǐng gān", translation: "печенье", example: "我喜欢吃饼干。", exampleTranslation: "Я люблю есть печенье.", listId: 1, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 3, characters: "饺子", pinyin: "jiǎo zi", translation: "пельмени / цзяоцзы", example: "妈妈包了饺子。", exampleTranslation: "Мама слепила пельмени.", listId: 1, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 4, characters: "汤", pinyin: "tāng", translation: "суп", example: "汤很热。", exampleTranslation: "Суп горячий.", listId: 1, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 5, characters: "西红柿", pinyin: "xī hóng shì", translation: "помидор", example: "西红柿炒鸡蛋", exampleTranslation: "Яичница с помидорами.", listId: 1, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 6, characters: "瓶子", pinyin: "píng zi", translation: "бутылка", example: "一瓶水", exampleTranslation: "Одна бутылка воды.", listId: 1, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 7, characters: "刀", pinyin: "dāo", translation: "нож", example: "这把刀很锋利。", exampleTranslation: "Этот нож очень острый.", listId: 1, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 8, characters: "巧克力", pinyin: "qiǎo kè lì", translation: "шоколад", example: "我喜欢吃巧克力。", exampleTranslation: "Я люблю шоколад.", listId: 1, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 9, characters: "饮料", pinyin: "yǐn liào", translation: "напиток", example: "你想喝什么饮料？", exampleTranslation: "Какой напиток ты хочешь?", listId: 1, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
+            { id: 10, characters: "食品", pinyin: "shí pǐn", translation: "продукты питания", example: "这家店卖食品。", example
          const wordsData = [
             // 1. ЕДА И НАПИТКИ (listId: 1, 20 слов)
             { id: 1, characters: "干杯", pinyin: "gān bēi", translation: "чокаться / до дна", example: "我们来干杯！", exampleTranslation: "Давайте чокнемся!", listId: 1, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
@@ -2032,6 +2048,7 @@
             { id: 26, name: "Здоровье и спорт", icon: "🏥", count: 23 },
             { id: 27, name: "Глаголы", icon: "🔨", count: 15 }
         ];
+
 
         // Состояние приложения
         let currentHSK = 4;
