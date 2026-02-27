@@ -3120,25 +3120,7 @@
                 `За тренировку вы выполнили ${currentIndex} заданий`;
             renderBlocksScreen();
             updateReviewBanner(currentHSK);
-                // ========== ИЛИ ЭТОТ ПРОСТОЙ ВАРИАНТ ==========
-    // Добавляем гифку с фейерверком поверх всего
-            const fireworksDiv = document.createElement('div');
-            fireworksDiv.style.position = 'fixed';
-            fireworksDiv.style.top = '0';
-            fireworksDiv.style.left = '0';
-            fireworksDiv.style.width = '100%';
-            fireworksDiv.style.height = '100%';
-            fireworksDiv.style.pointerEvents = 'none';
-            fireworksDiv.style.zIndex = '10000';
-            fireworksDiv.innerHTML = '<img src="https://media.giphy.com/media/LOXGUGJbVayIY/giphy.gif" style="width:100%; height:100%; object-fit: cover;">';
-            document.body.appendChild(fireworksDiv);
-    
-    // Удаляем через 3 секунды
-            setTimeout(() => {
-                fireworksDiv.remove();
-            }, 3000);
-    // ===============================================
-          }
+        }
 
         function renderBlocksScreen() {
             const blocks = currentHSK === 3 ? hsk3Blocks : hsk4Blocks;
