@@ -674,109 +674,6 @@
             text-align: center;
         }
 
-        .char-pinyin-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .char-pinyin-row {
-            background: #FFF5F5;
-            padding: 12px;
-            border-radius: 10px;
-            border: 2px solid #FFE4E1;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .char-pinyin-row .char {
-            font-size: 24px;
-            font-weight: 600;
-            color: #8B0000;
-            width: 60px;
-        }
-
-        .pinyin-options {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            justify-content: flex-end;
-        }
-
-        .pinyin-option {
-            padding: 8px 12px;
-            background: white;
-            border: 1px solid #FFE4E1;
-            border-radius: 8px;
-            font-size: 14px;
-            cursor: pointer;
-            color: #666;
-        }
-
-        .pinyin-option.selected {
-            background: #8B0000;
-            color: white;
-        }
-
-        .pinyin-option.matched {
-            background: #4CAF50;
-            color: white;
-            cursor: default;
-        }
-
-        .word-translation-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .word-translation-row {
-            background: #FFF5F5;
-            padding: 15px;
-            border-radius: 10px;
-            border: 2px solid #FFE4E1;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .word-translation-row .word {
-            font-size: 20px;
-            font-weight: 600;
-            color: #8B0000;
-        }
-
-        .trans-options {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            justify-content: flex-end;
-        }
-
-        .trans-option {
-            padding: 8px 12px;
-            background: white;
-            border: 1px solid #FFE4E1;
-            border-radius: 8px;
-            font-size: 14px;
-            cursor: pointer;
-            color: #666;
-        }
-
-        .trans-option.selected {
-            background: #8B0000;
-            color: white;
-        }
-
-        .trans-option.matched {
-            background: #4CAF50;
-            color: white;
-            cursor: default;
-        }
-
         .audio-btn {
             width: 60px;
             height: 60px;
@@ -1017,7 +914,7 @@
                     </div>
                     <div class="hsk-card" data-hsk="4">
                         <div class="level">HSK 4</div>
-                        <div class="words-count">600 слов</div>
+                        <div class="words-count">615 слов</div>
                     </div>
                     <div class="hsk-card" data-hsk="5">
                         <div class="level">HSK 5</div>
@@ -1203,6 +1100,7 @@
     <div id="feedback-overlay" class="feedback-overlay" style="display: none;"></div>
 
     <script>
+
         // ============================================
         // СЛОВА HSK 3 (ваша лексика)
         // ============================================
@@ -2325,243 +2223,9 @@
             setTimeout(() => overlay.style.display = 'none', 500);
         }
 
-        function updateCircleProgress(percentage) {
-            const circle = document.getElementById('circle-progress');
-            const circumference = 2 * Math.PI * 50;
-            const offset = circumference - (percentage / 100) * circumference;
-            circle.style.strokeDasharray = `${circumference}`;
-            circle.style.strokeDashoffset = offset;
-            document.getElementById('circle-percentage').textContent = `${Math.round(percentage)}%`;
-        }
-
         // ============================================
-        // ФУНКЦИИ ДЛЯ РАБОТЫ СО СЛОВАМИ
+        // ТИПЫ УПРАЖНЕНИЙ (ОБНОВЛЕННЫЕ)
         // ============================================
-
-        function getWordsByBlock(blockId) {
-            return wordsData.filter(w => w.listId === blockId);
-        }
-
-        function getBlockStats(blockId) {
-            const words = getWordsByBlock(blockId);
-            const total = words.length;
-            const mastered = words.filter(w => w.mastered >= 5).length;
-            return { total, mastered };
-        }
-
-        function getTotalStats() {
-            const total = wordsData.length;
-            const mastered = wordsData.filter(w => w.mastered >= 5).length;
-            return { total, mastered };
-        }
-
-        function getWordsForReview() {
-            const now = Date.now();
-            const twoDays = 2 * 24 * 60 * 60 * 1000;
-            return wordsData.filter(word => {
-                if (word.mastered >= 5) return false;
-                if (!word.lastReviewed) return false;
-                return (now - word.lastReviewed) >= twoDays;
-            });
-        }
-
-        function updateReviewBanner() {
-            const reviewWords = getWordsForReview();
-            const banner = document.getElementById('review-banner');
-            const countSpan = document.getElementById('review-count');
-            if (reviewWords.length > 0) {
-                banner.style.display = 'flex';
-                countSpan.textContent = reviewWords.length;
-            } else {
-                banner.style.display = 'none';
-            }
-        }
-
-        // ============================================
-        // ФУНКЦИИ ДЛЯ ТРЕНИРОВОК
-        // ============================================
-
-        function startStudy(blockId, newWords = true) {
-            studyBlockId = blockId;
-            const allWords = getWordsByBlock(blockId);
-            
-            if (newWords) {
-                const unmastered = allWords.filter(w => w.mastered < 5);
-                unmastered.sort((a, b) => a.correctCount - b.correctCount);
-                studyWords = unmastered.slice(0, 3);
-            } else {
-                const inProgress = allWords.filter(w => w.mastered > 0 && w.mastered < 5);
-                inProgress.sort((a, b) => a.correctCount - b.correctCount);
-                studyWords = inProgress.slice(0, 3);
-            }
-            
-            if (studyWords.length === 0) {
-                alert('Все слова в этом блоке уже выучены!');
-                return;
-            }
-            
-            createStudyQueue();
-            currentIndex = 0;
-            
-            document.getElementById('block-detail-screen').classList.remove('active');
-            document.getElementById('study-screen').classList.add('active');
-            
-            updateProgressDots();
-            showTask();
-        }
-
-        function createStudyQueue() {
-            studyQueue = [];
-            
-            // Добавляем каждое слово по отдельности
-            studyWords.forEach(word => {
-                studyQueue.push({ type: 'intro', word: word });
-                studyQueue.push({ type: 'choice_char', word: word });
-                studyQueue.push({ type: 'choice_trans', word: word });
-                studyQueue.push({ type: 'char_from_trans', word: word });
-                studyQueue.push({ type: 'listening', word: word });
-                studyQueue.push({ type: 'compose', word: word });
-            });
-            
-            // Добавляем общее задание на соответствие для всех слов
-            studyQueue.push({ type: 'matching_all', words: studyWords });
-            
-            // Добавляем финальное повторение для каждого слова
-            studyWords.forEach(word => {
-                studyQueue.push({ type: 'review', word: word });
-            });
-            
-            studyQueue = shuffleArray(studyQueue);
-        }
-
-        function updateProgressDots() {
-            const container = document.getElementById('progress-dots');
-            container.innerHTML = '';
-            for (let i = 0; i < studyQueue.length; i++) {
-                const dot = document.createElement('span');
-                dot.className = `progress-dot ${i < currentIndex ? 'completed' : ''}`;
-                container.appendChild(dot);
-            }
-        }
-
-        function showTask() {
-            if (currentIndex >= studyQueue.length) {
-                endStudy();
-                return;
-            }
-            
-            const task = studyQueue[currentIndex];
-            updateProgressDots();
-            
-            switch(task.type) {
-                case 'intro': showIntroCard(task.word); break;
-                case 'choice_char': showChoiceCharCard(task.word); break;
-                case 'choice_trans': showChoiceTransCard(task.word); break;
-                case 'char_from_trans': showCharFromTransCard(task.word); break;
-                case 'listening': showListeningCard(task.word); break;
-                case 'compose': showComposeCard(task.word); break;
-                case 'matching_all': showMatchingAllCard(task.words); break;
-                case 'review': showReviewCard(task.word); break;
-            }
-        }
-
-        // ============================================
-        // ТИПЫ УПРАЖНЕНИЙ
-        // ============================================
-
-        // 1. Карточка-знакомство
-        function showIntroCard(word) {
-            document.getElementById('card-content').innerHTML = `
-                <div class="choice-char-trans-only">
-                    <div class="chinese-char">${word.characters}</div>
-                    <div class="pinyin">${word.pinyin}</div>
-                    <div class="translation">${word.translation}</div>
-                    <div class="audio-btn" onclick="speak('${word.characters}')">🔊</div>
-                    <div class="example-box">
-                        <div class="example-chinese">${word.example}</div>
-                        <div class="example-translation">${word.exampleTranslation}</div>
-                    </div>
-                    <button class="red-button" onclick="handleIntro('${word.id}')">Далее</button>
-                </div>
-            `;
-        }
-
-        function handleIntro(wordId) {
-            const word = wordsData.find(w => w.id == wordId);
-            word.timesReviewed++;
-            word.lastReviewed = Date.now();
-            saveUserProgress();
-            currentIndex++;
-            showTask();
-        }
-
-        // 2. Выбор иероглифа по переводу
-        function showChoiceCharCard(word) {
-            const blockWords = getWordsByBlock(word.listId).filter(w => w.id !== word.id);
-            const options = shuffleArray([word, ...shuffleArray(blockWords).slice(0, 3)]);
-            
-            document.getElementById('card-content').innerHTML = `
-                <div class="choice-char-trans-only">
-                    <div class="translation-big">${word.translation}</div>
-                    <div class="options-vertical">
-                        ${options.map(opt => `
-                            <div class="option-vertical-item" onclick="checkCharAnswer(this, '${opt.characters}', '${word.characters}', '${word.id}')">
-                                <span class="chinese-small">${opt.characters}</span>
-                                <span class="pinyin-small">${opt.pinyin}</span>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-        }
-
-        // 3. Выбор перевода по иероглифу
-        function showChoiceTransCard(word) {
-            const blockWords = getWordsByBlock(word.listId).filter(w => w.id !== word.id);
-            const options = shuffleArray([word, ...shuffleArray(blockWords).slice(0, 3)]);
-            
-            document.getElementById('card-content').innerHTML = `
-                <div class="choice-char-trans-only">
-                    <div class="chinese-char">${word.characters}</div>
-                    <div class="audio-btn" onclick="speak('${word.characters}')">🔊</div>
-                    <div class="options-vertical">
-                        ${options.map(opt => `
-                            <div class="option-vertical-item" onclick="checkTranslationAnswer(this, '${opt.translation}', '${word.translation}', '${word.id}')">
-                                <span class="pinyin-small">${opt.translation}</span>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-        }
-
-        // 4. Выбор иероглифа по переводу (аналог 2)
-        function showCharFromTransCard(word) {
-            showChoiceCharCard(word);
-        }
-
-        // 5. Аудирование
-        function showListeningCard(word) {
-            const blockWords = getWordsByBlock(word.listId).filter(w => w.id !== word.id);
-            const options = shuffleArray([word, ...shuffleArray(blockWords).slice(0, 3)]);
-            
-            setTimeout(() => speak(word.characters), 500);
-            
-            document.getElementById('card-content').innerHTML = `
-                <div class="choice-char-trans-only">
-                    <div class="audio-btn" onclick="speak('${word.characters}')">🔊</div>
-                    <div style="text-align: center; margin: 20px; color: #666;">Прослушайте и выберите слово</div>
-                    <div class="options-vertical">
-                        ${options.map(opt => `
-                            <div class="option-vertical-item" onclick="checkCharAnswer(this, '${opt.characters}', '${word.characters}', '${word.id}')">
-                                <span class="chinese-small">${opt.characters}</span>
-                                <span class="pinyin-small">${opt.pinyin}</span>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-        }
 
         // 6. Сборка иероглифа из частей (с кнопкой очистки)
         function showComposeCard(word) {
@@ -2577,14 +2241,13 @@
                         `).join('')}
                     </div>
                     <div style="margin: 20px; min-height: 70px; padding: 15px; background: white; border-radius: 12px; text-align: center; font-size: 32px; border: 2px solid #FFE4E1;" id="composed-word"></div>
-                    <div style="display: flex; gap: 10px; justify-content: center;">
+                    <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
                         <button class="red-button" onclick="checkComposedWord('${word.characters}', '${word.id}')" style="width: auto; padding: 12px 24px;">Проверить</button>
                         <button class="red-button-outline" onclick="resetCompose()" style="width: auto; padding: 12px 24px;">Очистить</button>
                     </div>
                 </div>
             `;
             window.selectedChars = [];
-            window.currentComposeWord = word;
         }
 
         // Сброс собранного слова
@@ -2620,14 +2283,15 @@
                 saveUserProgress();
                 
                 setTimeout(() => {
-                    showIntroCard(word);
+                    currentIndex++;
+                    showTask();
                 }, 1000);
             } else {
                 showFeedback(false);
             }
         }
 
-        // 7. Задание на соответствие всех слов из тренировки
+        // 7. НОВОЕ ЗАДАНИЕ: соответствие всех слов из тренировки
         function showMatchingAllCard(words) {
             const shuffledWords = shuffleArray([...words]);
             const shuffledTranslations = shuffleArray([...words.map(w => w.translation)]);
@@ -2773,107 +2437,50 @@
             }
         }
 
-        // 8. Карточка повторения
-        function showReviewCard(word) {
-            document.getElementById('card-content').innerHTML = `
-                <div class="choice-char-trans-only">
-                    <div class="chinese-char">${word.characters}</div>
-                    <div class="pinyin">${word.pinyin}</div>
-                    <div class="translation">${word.translation}</div>
-                    <div class="audio-btn" onclick="speak('${word.characters}')">🔊</div>
-                    <div class="example-box">
-                        <div class="example-chinese">${word.example}</div>
-                        <div class="example-translation">${word.exampleTranslation}</div>
-                    </div>
-                    <div style="display: flex; gap: 10px; padding: 20px; width: 100%;">
-                        <button class="red-button" onclick="handleReview('${word.id}', true)" style="flex: 1;">Помню</button>
-                        <button class="red-button-outline" onclick="handleReview('${word.id}', false)" style="flex: 1;">Не помню</button>
-                    </div>
-                </div>
-            `;
-        }
-
-        function handleReview(wordId, remembered) {
-            const word = wordsData.find(w => w.id == wordId);
+        // Обновляем функцию createStudyQueue, чтобы добавить новое задание
+        function createStudyQueue() {
+            studyQueue = [];
             
-            if (remembered) {
-                showFeedback(true);
-                word.correctCount++;
-                word.timesReviewed++;
-                word.lastReviewed = Date.now();
-                if (word.correctCount >= 5) word.mastered = 5;
-                saveUserProgress();
-            } else {
-                showFeedback(false);
-            }
-            
-            setTimeout(() => {
-                currentIndex++;
-                showTask();
-            }, 1000);
-        }
-
-        // Проверка ответов для выбора иероглифа
-        window.checkCharAnswer = function(element, selected, correct, wordId) {
-            const word = wordsData.find(w => w.id == wordId);
-            
-            document.querySelectorAll('.option-vertical-item').forEach(el => {
-                el.classList.remove('correct', 'wrong');
+            // Добавляем каждое слово по отдельности
+            studyWords.forEach(word => {
+                studyQueue.push({ type: 'intro', word: word });
+                studyQueue.push({ type: 'choice_char', word: word });
+                studyQueue.push({ type: 'choice_trans', word: word });
+                studyQueue.push({ type: 'char_from_trans', word: word });
+                studyQueue.push({ type: 'listening', word: word });
+                studyQueue.push({ type: 'compose', word: word });
             });
             
-            if (selected === correct) {
-                element.classList.add('correct');
-                showFeedback(true);
-                word.correctCount++;
-                word.timesReviewed++;
-                word.lastReviewed = Date.now();
-                if (word.correctCount >= 5) word.mastered = 5;
-                saveUserProgress();
-                
-                setTimeout(() => {
-                    showIntroCard(word);
-                }, 1000);
-            } else {
-                element.classList.add('wrong');
-                showFeedback(false);
-                setTimeout(() => element.classList.remove('wrong'), 500);
-            }
-        };
-
-        // Проверка ответов для выбора перевода
-        window.checkTranslationAnswer = function(element, selected, correct, wordId) {
-            const word = wordsData.find(w => w.id == wordId);
+            // Добавляем общее задание на соответствие для всех слов
+            studyQueue.push({ type: 'matching_all', words: studyWords });
             
-            document.querySelectorAll('.option-vertical-item').forEach(el => {
-                el.classList.remove('correct', 'wrong');
+            // Добавляем финальное повторение для каждого слова
+            studyWords.forEach(word => {
+                studyQueue.push({ type: 'review', word: word });
             });
             
-            if (selected === correct) {
-                element.classList.add('correct');
-                showFeedback(true);
-                word.correctCount++;
-                word.timesReviewed++;
-                word.lastReviewed = Date.now();
-                if (word.correctCount >= 5) word.mastered = 5;
-                saveUserProgress();
-                
-                setTimeout(() => {
-                    showIntroCard(word);
-                }, 1000);
-            } else {
-                element.classList.add('wrong');
-                showFeedback(false);
-                setTimeout(() => element.classList.remove('wrong'), 500);
-            }
-        };
-
-        // Завершение тренировки
-        function endStudy() {
-            saveUserProgress();
-            document.getElementById('study-screen').classList.remove('active');
-            document.getElementById('post-study-screen').classList.add('active');
-            document.getElementById('study-result').textContent = 
-                `За тренировку вы выполнили ${currentIndex} заданий`;
-            renderBlocksScreen();
-            updateReviewBanner();
+            studyQueue = shuffleArray(studyQueue);
         }
+
+        // Обновляем функцию showTask для нового типа задания
+        function showTask() {
+            if (currentIndex >= studyQueue.length) {
+                endStudy();
+                return;
+            }
+            
+            const task = studyQueue[currentIndex];
+            updateProgressDots();
+            
+            switch(task.type) {
+                case 'intro': showIntroCard(task.word); break;
+                case 'choice_char': showChoiceCharCard(task.word); break;
+                case 'choice_trans': showChoiceTransCard(task.word); break;
+                case 'char_from_trans': showCharFromTransCard(task.word); break;
+                case 'listening': showListeningCard(task.word); break;
+                case 'compose': showComposeCard(task.word); break;
+                case 'matching_all': showMatchingAllCard(task.words); break;
+                case 'review': showReviewCard(task.word); break;
+            }
+        }
+       
