@@ -1,9 +1,10 @@
+HSK 4 проверено
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>HSK 3-4 | Китайский тренажер</title>
+    <title>HSK| Китайский тренажер</title>
     <style>
         * {
             margin: 0;
@@ -93,6 +94,7 @@
             border: 2px solid #8B0000;
         }
 
+        /* Экран входа */
         .auth-container {
             padding: 40px 20px;
             display: flex;
@@ -220,6 +222,7 @@
             flex-shrink: 0;
         }
 
+        /* HSK уровни */
         .hsk-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -254,6 +257,7 @@
             color: #666;
         }
 
+        /* Блоки слов с иконками */
         .section-title {
             padding: 0 20px 10px;
             font-size: 18px;
@@ -320,6 +324,7 @@
             width: 0%;
         }
 
+        /* Баннер повторения */
         .review-banner {
             background: #8B0000;
             margin: 15px 20px;
@@ -340,6 +345,7 @@
             100% { transform: scale(1); }
         }
 
+        /* Кольцевая диаграмма */
         .progress-circle {
             position: relative;
             width: 120px;
@@ -389,6 +395,7 @@
             color: #666;
         }
 
+        /* Карточки тренировки */
         .card-header {
             padding: 15px 20px;
             display: flex;
@@ -454,6 +461,7 @@
             font-size: 15px;
         }
 
+        /* Задание с выбором */
         .choice-char-trans-only {
             padding: 20px;
             text-align: center;
@@ -523,6 +531,7 @@
             color: white;
         }
 
+        /* Список слов в блоке */
         .words-list {
             padding: 0 20px 20px;
         }
@@ -579,6 +588,7 @@
             font-size: 12px;
         }
 
+        /* Модальное окно карточки слова */
         .modal-overlay {
             position: absolute;
             top: 0;
@@ -658,6 +668,7 @@
             cursor: pointer;
         }
 
+        /* Задание на сопоставление */
         .matching-section {
             background: white;
             border-radius: 16px;
@@ -672,6 +683,109 @@
             font-weight: 600;
             margin-bottom: 15px;
             text-align: center;
+        }
+
+        .char-pinyin-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .char-pinyin-row {
+            background: #FFF5F5;
+            padding: 12px;
+            border-radius: 10px;
+            border: 2px solid #FFE4E1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .char-pinyin-row .char {
+            font-size: 24px;
+            font-weight: 600;
+            color: #8B0000;
+            width: 60px;
+        }
+
+        .pinyin-options {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .pinyin-option {
+            padding: 8px 12px;
+            background: white;
+            border: 1px solid #FFE4E1;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .pinyin-option.selected {
+            background: #8B0000;
+            color: white;
+        }
+
+        .pinyin-option.matched {
+            background: #4CAF50;
+            color: white;
+            cursor: default;
+        }
+
+        .word-translation-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .word-translation-row {
+            background: #FFF5F5;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #FFE4E1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .word-translation-row .word {
+            font-size: 20px;
+            font-weight: 600;
+            color: #8B0000;
+        }
+
+        .trans-options {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .trans-option {
+            padding: 8px 12px;
+            background: white;
+            border: 1px solid #FFE4E1;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .trans-option.selected {
+            background: #8B0000;
+            color: white;
+        }
+
+        .trans-option.matched {
+            background: #4CAF50;
+            color: white;
+            cursor: default;
         }
 
         .audio-btn {
@@ -790,6 +904,7 @@
             100% { transform: translate(-50%, -50%) scale(1); }
         }
 
+        /* Экран завершения блока */
         .completion-container {
             display: flex;
             flex-direction: column;
@@ -832,7 +947,7 @@
             <div class="scroll-content">
                 <div class="auth-container">
                     <div class="auth-logo">🀄️</div>
-                    <div class="auth-title">HSK 3-4</div>
+                    <div class="auth-title">HSK</div>
                     <div class="auth-subtitle">Войдите, чтобы сохранить прогресс</div>
                     
                     <div style="width: 100%;">
@@ -902,37 +1017,37 @@
                 <div class="hsk-grid" id="hsk-grid">
                     <div class="hsk-card" data-hsk="1">
                         <div class="level">HSK 1</div>
-                        <div class="words-count">0 слов</div>
+                        <div class="words-count">150 слов</div>
                     </div>
                     <div class="hsk-card" data-hsk="2">
                         <div class="level">HSK 2</div>
-                        <div class="words-count">0 слов</div>
+                        <div class="words-count">300 слов</div>
                     </div>
-                    <div class="hsk-card active" data-hsk="3">
+                    <div class="hsk-card" data-hsk="3">
                         <div class="level">HSK 3</div>
-                        <div class="words-count">315 слов</div>
+                        <div class="words-count">600 слов</div>
                     </div>
-                    <div class="hsk-card" data-hsk="4">
+                    <div class="hsk-card active" data-hsk="4">
                         <div class="level">HSK 4</div>
-                        <div class="words-count">615 слов</div>
+                        <div class="words-count">1200 слов</div>
                     </div>
                     <div class="hsk-card" data-hsk="5">
                         <div class="level">HSK 5</div>
-                        <div class="words-count">0 слов</div>
+                        <div class="words-count">2500 слов</div>
                     </div>
                     <div class="hsk-card" data-hsk="6">
                         <div class="level">HSK 6</div>
-                        <div class="words-count">0 слов</div>
+                        <div class="words-count">5000+ слов</div>
                     </div>
                 </div>
                 
                 <div style="padding: 20px;">
-                    <button class="red-button" id="select-hsk-btn" style="width: 100%;">Выбрать HSK 3</button>
+                    <button class="red-button" id="select-hsk-btn" style="width: 100%;">Выбрать HSK 4</button>
                 </div>
             </div>
         </div>
 
-        <!-- Экран с блоками слов -->
+        <!-- Экран с блоками слов HSK 4 -->
         <div id="blocks-screen" class="screen">
             <div class="user-profile">
                 <div class="user-avatar" id="user-avatar-blocks">В</div>
@@ -946,7 +1061,7 @@
             </div>
             <div style="background: #8B0000; color: white; padding: 15px; display: flex; align-items: center; gap: 15px; flex-shrink: 0;">
                 <span class="back-btn" id="back-to-hsk">←</span>
-                <h2 id="hsk-title" style="font-size: 24px;">HSK 3</h2>
+                <h2 style="font-size: 24px;">HSK 4</h2>
             </div>
             
             <div class="scroll-content">
@@ -957,14 +1072,14 @@
                 
                 <div style="padding: 20px;">
                     <div style="background: white; border-radius: 20px; padding: 20px; border: 1px solid #FFE4E1;">
-                        <div style="font-size: 18px; color: #8B0000; font-weight: 600; margin-bottom: 15px;" id="progress-title">Общий прогресс HSK 3</div>
+                        <div style="font-size: 18px; color: #8B0000; font-weight: 600; margin-bottom: 15px;">Общий прогресс HSK 4</div>
                         <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
                             <span>Выучено слов:</span>
                             <span style="color: #8B0000; font-weight: 600;" id="total-mastered">0</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
                             <span>Всего слов:</span>
-                            <span style="color: #666;" id="total-words">0</span>
+                            <span style="color: #666;" id="total-words">1200</span>
                         </div>
                         <div style="height: 10px; background: #FFE4E1; border-radius: 5px;">
                             <div id="total-progress" style="height: 100%; background: #8B0000; width: 0%; border-radius: 5px;"></div>
@@ -972,7 +1087,7 @@
                     </div>
                 </div>
                 
-                <div class="section-title">Темы</div>
+                <div class="section-title">Темы HSK 4</div>
                 <div class="blocks-grid" id="blocks-container"></div>
             </div>
         </div>
@@ -991,7 +1106,7 @@
             </div>
             <div style="background: #8B0000; color: white; padding: 15px; display: flex; align-items: center; gap: 15px; flex-shrink: 0;">
                 <span class="back-btn" id="back-to-blocks">←</span>
-                <h2 id="block-title" style="font-size: 24px;">Глаголы</h2>
+                <h2 id="block-title" style="font-size: 24px;">Еда и напитки</h2>
             </div>
             
             <div class="scroll-content">
@@ -1074,7 +1189,7 @@
                 <div class="completion-container">
                     <div class="completion-icon">🏆</div>
                     <div class="completion-title">Блок пройден!</div>
-                    <div class="completion-subtitle" id="complete-block-name">Глаголы</div>
+                    <div class="completion-subtitle" id="complete-block-name">Еда и напитки</div>
                     <div class="completion-buttons">
                         <button class="red-button" id="review-10-btn" style="width: 100%; margin: 0;">Повторить 10 слов</button>
                         <button class="red-button-outline" id="back-to-blocks-complete" style="width: 100%; margin: 0;">К списку блоков</button>
@@ -1087,11 +1202,11 @@
     <!-- Модальное окно карточки слова -->
     <div id="word-modal" class="modal-overlay">
         <div class="modal-card">
-            <div class="modal-char" id="modal-char">结束</div>
-            <div class="modal-pinyin" id="modal-pinyin">jié shù</div>
-            <div class="modal-translation" id="modal-translation">заканчиваться, завершать</div>
-            <div class="modal-example-chinese" id="modal-example">1. 会议结束了。 2. 我们结束了这个项目。</div>
-            <div class="modal-example-translation" id="modal-example-trans">1. Собрание закончилось. 2. Мы завершили этот проект.</div>
+            <div class="modal-char" id="modal-char">干杯</div>
+            <div class="modal-pinyin" id="modal-pinyin">gān bēi</div>
+            <div class="modal-translation" id="modal-translation">чокаться</div>
+            <div class="modal-example-chinese" id="modal-example">我们来干杯！</div>
+            <div class="modal-example-translation" id="modal-example-trans">Давайте чокнемся!</div>
             <div class="modal-audio" id="modal-audio">🔊</div>
             <button class="modal-close" id="modal-close">Закрыть</button>
         </div>
@@ -1100,6 +1215,93 @@
     <div id="feedback-overlay" class="feedback-overlay" style="display: none;"></div>
 
     <script>
+        // ============================================
+        // СИСТЕМА АВТОРИЗАЦИИ
+        // ============================================
+        
+        let users = {};
+        let currentUser = null;
+        
+        function loadUsers() {
+            const saved = localStorage.getItem('hsk4_users');
+            if (saved) {
+                users = JSON.parse(saved);
+            } else {
+                users = {
+                    'vladamalova@example.com': {
+                        name: 'Влада',
+                        email: 'vladamalova@example.com',
+                        password: '123456',
+                        progress: {}
+                    }
+                };
+                saveUsers();
+            }
+        }
+        
+        function saveUsers() {
+            localStorage.setItem('hsk4_users', JSON.stringify(users));
+        }
+        
+        function loadUserProgress() {
+            if (!currentUser) return;
+            
+            const user = users[currentUser];
+            if (user && user.progress) {
+                wordsData.forEach(word => {
+                    if (user.progress[word.id]) {
+                        word.mastered = user.progress[word.id].mastered || 0;
+                        word.timesReviewed = user.progress[word.id].timesReviewed || 0;
+                        word.correctCount = user.progress[word.id].correctCount || 0;
+                        word.lastReviewed = user.progress[word.id].lastReviewed || null;
+                    } else {
+                        word.mastered = 0;
+                        word.timesReviewed = 0;
+                        word.correctCount = 0;
+                        word.lastReviewed = null;
+                    }
+                });
+            }
+        }
+        
+        function saveUserProgress() {
+            if (!currentUser) return;
+            
+            const progress = {};
+            wordsData.forEach(word => {
+                progress[word.id] = {
+                    mastered: word.mastered,
+                    timesReviewed: word.timesReviewed,
+                    correctCount: word.correctCount,
+                    lastReviewed: word.lastReviewed
+                };
+            });
+            
+            if (users[currentUser]) {
+                users[currentUser].progress = progress;
+                saveUsers();
+            }
+        }
+        
+        function updateUserUI() {
+            const user = currentUser ? users[currentUser] : null;
+            const userInitial = user ? user.name.charAt(0).toUpperCase() : 'Г';
+            const userEmail = user ? user.email : 'Гость';
+            
+            document.querySelectorAll('[id^="user-avatar"]').forEach(el => {
+                el.textContent = userInitial;
+            });
+            
+            document.querySelectorAll('[id^="user-email"]').forEach(el => {
+                el.textContent = userEmail;
+            });
+        }
+        
+        function logout() {
+            saveUserProgress();
+            currentUser = null;
+            showScreen('auth-screen');
+        }
 
         // ============================================
         // СЛОВА HSK 3 (ваша лексика)
@@ -2183,10 +2385,7 @@
             { id: 27, name: "Глаголы", icon: "🔨", count: 15 }
         ];
 
-        // ============================================
-        // СОСТОЯНИЕ ПРИЛОЖЕНИЯ
-        // ============================================
-
+        // Состояние приложения
         let currentHSK = 3;
         let currentBlock = 1;
         let studyWords = [];
@@ -2197,15 +2396,46 @@
         let currentUser = null;
 
         // ============================================
-        // ФУНКЦИИ ДЛЯ УПРАЖНЕНИЙ
+        // ФУНКЦИИ ДЛЯ РАБОТЫ С ПРОГРЕССОМ
         // ============================================
+        
+        function getWordsByBlock(blockId) {
+            return wordsData.filter(w => w.listId === blockId);
+        }
 
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
+        function getBlockStats(blockId) {
+            const words = getWordsByBlock(blockId);
+            const total = words.length;
+            const mastered = words.filter(w => w.mastered >= 5).length;
+            return { total, mastered };
+        }
+
+        function getTotalStats() {
+            const total = wordsData.length;
+            const mastered = wordsData.filter(w => w.mastered >= 5).length;
+            return { total, mastered };
+        }
+
+        function getWordsForReview() {
+            const now = Date.now();
+            const twoDays = 2 * 24 * 60 * 60 * 1000;
+            return wordsData.filter(word => {
+                if (word.mastered >= 5) return false;
+                if (!word.lastReviewed) return false;
+                return (now - word.lastReviewed) >= twoDays;
+            });
+        }
+
+        function updateReviewBanner() {
+            const reviewWords = getWordsForReview();
+            const banner = document.getElementById('review-banner');
+            const countSpan = document.getElementById('review-count');
+            if (reviewWords.length > 0) {
+                banner.style.display = 'flex';
+                countSpan.textContent = reviewWords.length;
+            } else {
+                banner.style.display = 'none';
             }
-            return array;
         }
 
         function speak(text) {
@@ -2223,225 +2453,46 @@
             setTimeout(() => overlay.style.display = 'none', 500);
         }
 
-        // ============================================
-        // ТИПЫ УПРАЖНЕНИЙ (ОБНОВЛЕННЫЕ)
-        // ============================================
-
-        // 6. Сборка иероглифа из частей (с кнопкой очистки)
-        function showComposeCard(word) {
-            const chars = word.characters.split('');
-            const shuffledChars = shuffleArray([...chars]);
-            
-            document.getElementById('card-content').innerHTML = `
-                <div class="choice-char-trans-only">
-                    <div class="translation">${word.translation}</div>
-                    <div class="char-options" id="char-options-container">
-                        ${shuffledChars.map(char => `
-                            <div class="char-btn" onclick="selectChar(this, '${char}')">${char}</div>
-                        `).join('')}
-                    </div>
-                    <div style="margin: 20px; min-height: 70px; padding: 15px; background: white; border-radius: 12px; text-align: center; font-size: 32px; border: 2px solid #FFE4E1;" id="composed-word"></div>
-                    <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
-                        <button class="red-button" onclick="checkComposedWord('${word.characters}', '${word.id}')" style="width: auto; padding: 12px 24px;">Проверить</button>
-                        <button class="red-button-outline" onclick="resetCompose()" style="width: auto; padding: 12px 24px;">Очистить</button>
-                    </div>
-                </div>
-            `;
-            window.selectedChars = [];
+        function updateCircleProgress(percentage) {
+            const circle = document.getElementById('circle-progress');
+            const circumference = 2 * Math.PI * 50;
+            const offset = circumference - (percentage / 100) * circumference;
+            circle.style.strokeDasharray = `${circumference}`;
+            circle.style.strokeDashoffset = offset;
+            document.getElementById('circle-percentage').textContent = `${Math.round(percentage)}%`;
         }
 
-        // Сброс собранного слова
-        function resetCompose() {
-            window.selectedChars = [];
-            document.getElementById('composed-word').textContent = '';
-            document.querySelectorAll('.char-btn').forEach(btn => {
-                btn.classList.remove('disabled');
-            });
-        }
-
-        // Выбор иероглифа для сборки
-        function selectChar(btn, char) {
-            if (!window.selectedChars) window.selectedChars = [];
-            if (btn.classList.contains('disabled')) return;
+        function startStudy(blockId, newWords = true) {
+            studyBlockId = blockId;
+            const allWords = getWordsByBlock(blockId);
             
-            window.selectedChars.push(char);
-            document.getElementById('composed-word').textContent = window.selectedChars.join('');
-            btn.classList.add('disabled');
-        }
-
-        // Проверка собранного слова
-        function checkComposedWord(correct, wordId) {
-            const word = wordsData.find(w => w.id == wordId);
-            const composed = window.selectedChars ? window.selectedChars.join('') : '';
-            
-            if (composed === correct) {
-                showFeedback(true);
-                word.correctCount++;
-                word.timesReviewed++;
-                word.lastReviewed = Date.now();
-                if (word.correctCount >= 5) word.mastered = 5;
-                saveUserProgress();
-                
-                setTimeout(() => {
-                    currentIndex++;
-                    showTask();
-                }, 1000);
+            if (newWords) {
+                const unmastered = allWords.filter(w => w.mastered < 5);
+                unmastered.sort((a, b) => a.correctCount - b.correctCount);
+                studyWords = unmastered.slice(0, 3);
             } else {
-                showFeedback(false);
+                const inProgress = allWords.filter(w => w.mastered > 0 && w.mastered < 5);
+                inProgress.sort((a, b) => a.correctCount - b.correctCount);
+                studyWords = inProgress.slice(0, 3);
             }
-        }
-
-        // 7. НОВОЕ ЗАДАНИЕ: соответствие всех слов из тренировки
-        function showMatchingAllCard(words) {
-            const shuffledWords = shuffleArray([...words]);
-            const shuffledTranslations = shuffleArray([...words.map(w => w.translation)]);
             
-            let html = `
-                <div class="matching-section">
-                    <div class="matching-title">Соедините иероглифы с переводом</div>
-                    <div style="display: flex; gap: 20px; justify-content: space-between; margin-bottom: 20px;">
-                        <div style="flex: 1;">
-                            ${shuffledWords.map((word, index) => `
-                                <div class="char-pinyin-row" style="margin-bottom: 10px; cursor: pointer;" 
-                                     onclick="selectMatchingChar(${index}, '${word.id}')"
-                                     id="char-${index}">
-                                    <span class="char">${word.characters}</span>
-                                    <span class="pinyin-small" style="margin-left: 10px;">${word.pinyin}</span>
-                                </div>
-                            `).join('')}
-                        </div>
-                        <div style="flex: 1;">
-                            ${shuffledTranslations.map((trans, index) => `
-                                <div class="char-pinyin-row" style="margin-bottom: 10px; cursor: pointer;"
-                                     onclick="selectMatchingTrans(${index}, '${trans}')"
-                                     id="trans-${index}">
-                                    <span class="char" style="font-size: 18px;">${trans}</span>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                    <div id="matching-status" style="text-align: center; margin: 15px; color: #666;">
-                        Выберите иероглиф, затем перевод
-                    </div>
-                    <button class="red-button" onclick="checkMatchingAll('${words.map(w => w.id).join(',')}')" style="width: 100%;">
-                        Проверить все
-                    </button>
-                    <button class="red-button-outline" onclick="resetMatchingAll()" style="width: 100%; margin-top: 10px;">
-                        Сбросить
-                    </button>
-                </div>
-            `;
-            
-            document.getElementById('card-content').innerHTML = html;
-            
-            // Инициализация состояния для соответствия
-            window.matchingState = {
-                selectedChar: null,
-                pairs: {},
-                words: words
-            };
-        }
-
-        // Выбор иероглифа для соответствия
-        function selectMatchingChar(index, wordId) {
-            // Сброс подсветки всех иероглифов
-            document.querySelectorAll('[id^="char-"]').forEach(el => {
-                el.style.background = '';
-            });
-            
-            // Подсветка выбранного
-            const charEl = document.getElementById(`char-${index}`);
-            charEl.style.background = '#FFE4E1';
-            
-            window.matchingState.selectedChar = { index, wordId };
-        }
-
-        // Выбор перевода для соответствия
-        function selectMatchingTrans(index, translation) {
-            if (!window.matchingState.selectedChar) {
-                alert('Сначала выберите иероглиф');
+            if (studyWords.length === 0) {
+                alert('Все слова в этом блоке уже выучены!');
                 return;
             }
             
-            const charId = window.matchingState.selectedChar.wordId;
-            const word = wordsData.find(w => w.id == charId);
+            createStudyQueue();
+            currentIndex = 0;
             
-            // Проверяем, правильный ли перевод
-            if (word.translation === translation) {
-                // Правильное соответствие
-                document.getElementById(`char-${window.matchingState.selectedChar.index}`).style.background = '#4CAF50';
-                document.getElementById(`trans-${index}`).style.background = '#4CAF50';
-                
-                // Сохраняем пару
-                window.matchingState.pairs[charId] = true;
-                
-                // Делаем элементы неактивными
-                document.getElementById(`char-${window.matchingState.selectedChar.index}`).style.pointerEvents = 'none';
-                document.getElementById(`trans-${index}`).style.pointerEvents = 'none';
-                
-                showFeedback(true);
-            } else {
-                // Неправильное соответствие
-                document.getElementById(`trans-${index}`).style.background = '#f44336';
-                setTimeout(() => {
-                    document.getElementById(`trans-${index}`).style.background = '';
-                }, 500);
-                showFeedback(false);
-            }
+            document.getElementById('block-detail-screen').classList.remove('active');
+            document.getElementById('study-screen').classList.add('active');
             
-            // Сбрасываем выбор
-            window.matchingState.selectedChar = null;
+            updateProgressDots();
+            showTask();
         }
 
-        // Сброс задания на соответствие
-        function resetMatchingAll() {
-            document.querySelectorAll('[id^="char-"], [id^="trans-"]').forEach(el => {
-                el.style.background = '';
-                el.style.pointerEvents = 'auto';
-            });
-            window.matchingState.selectedChar = null;
-            window.matchingState.pairs = {};
-            document.getElementById('matching-status').textContent = 'Выберите иероглиф, затем перевод';
-            document.getElementById('matching-status').style.color = '#666';
-        }
-
-        // Проверка всех соответствий
-        function checkMatchingAll(wordIdsString) {
-            const wordIds = wordIdsString.split(',');
-            const allMatched = wordIds.every(id => window.matchingState.pairs[id]);
-            
-            if (allMatched) {
-                showFeedback(true);
-                
-                // Начисляем очки за каждое слово
-                wordIds.forEach(id => {
-                    const word = wordsData.find(w => w.id == id);
-                    word.correctCount++;
-                    word.timesReviewed++;
-                    word.lastReviewed = Date.now();
-                    if (word.correctCount >= 5) word.mastered = 5;
-                });
-                saveUserProgress();
-                
-                document.getElementById('matching-status').textContent = 'Отлично! Все правильно!';
-                document.getElementById('matching-status').style.color = '#4CAF50';
-                
-                setTimeout(() => {
-                    currentIndex++;
-                    showTask();
-                }, 1500);
-            } else {
-                showFeedback(false);
-                document.getElementById('matching-status').textContent = 'Не все слова соединены правильно. Попробуйте еще!';
-                document.getElementById('matching-status').style.color = '#f44336';
-            }
-        }
-
-        // Обновляем функцию createStudyQueue, чтобы добавить новое задание
         function createStudyQueue() {
             studyQueue = [];
-            
-            // Добавляем каждое слово по отдельности
             studyWords.forEach(word => {
                 studyQueue.push({ type: 'intro', word: word });
                 studyQueue.push({ type: 'choice_char', word: word });
@@ -2449,20 +2500,22 @@
                 studyQueue.push({ type: 'char_from_trans', word: word });
                 studyQueue.push({ type: 'listening', word: word });
                 studyQueue.push({ type: 'compose', word: word });
-            });
-            
-            // Добавляем общее задание на соответствие для всех слов
-            studyQueue.push({ type: 'matching_all', words: studyWords });
-            
-            // Добавляем финальное повторение для каждого слова
-            studyWords.forEach(word => {
+                studyQueue.push({ type: 'matching', word: word });
                 studyQueue.push({ type: 'review', word: word });
             });
-            
             studyQueue = shuffleArray(studyQueue);
         }
 
-        // Обновляем функцию showTask для нового типа задания
+        function updateProgressDots() {
+            const container = document.getElementById('progress-dots');
+            container.innerHTML = '';
+            for (let i = 0; i < studyQueue.length; i++) {
+                const dot = document.createElement('span');
+                dot.className = `progress-dot ${i < currentIndex ? 'completed' : ''}`;
+                container.appendChild(dot);
+            }
+        }
+
         function showTask() {
             if (currentIndex >= studyQueue.length) {
                 endStudy();
@@ -2479,8 +2532,642 @@
                 case 'char_from_trans': showCharFromTransCard(task.word); break;
                 case 'listening': showListeningCard(task.word); break;
                 case 'compose': showComposeCard(task.word); break;
-                case 'matching_all': showMatchingAllCard(task.words); break;
+                case 'matching': showMatchingCard(task.word); break;
                 case 'review': showReviewCard(task.word); break;
             }
         }
-       
+
+        function showIntroCard(word) {
+            document.getElementById('card-content').innerHTML = `
+                <div class="choice-char-trans-only">
+                    <div class="chinese-char">${word.characters}</div>
+                    <div class="pinyin">${word.pinyin}</div>
+                    <div class="translation">${word.translation}</div>
+                    <div class="audio-btn" onclick="speak('${word.characters}')">🔊</div>
+                    <div class="example-box">
+                        <div class="example-chinese">${word.example}</div>
+                        <div class="example-translation">${word.exampleTranslation}</div>
+                    </div>
+                    <button class="red-button" onclick="handleIntro('${word.id}')">Далее</button>
+                </div>
+            `;
+        }
+
+        function handleIntro(wordId) {
+            const word = wordsData.find(w => w.id == wordId);
+            word.timesReviewed++;
+            word.lastReviewed = Date.now();
+            saveUserProgress();
+            currentIndex++;
+            showTask();
+        }
+
+        function showChoiceCharCard(word) {
+            const blockWords = getWordsByBlock(word.listId).filter(w => w.id !== word.id);
+            const options = shuffleArray([word, ...shuffleArray(blockWords).slice(0, 3)]);
+            
+            document.getElementById('card-content').innerHTML = `
+                <div class="choice-char-trans-only">
+                    <div class="translation-big">${word.translation}</div>
+                    <div class="options-vertical">
+                        ${options.map(opt => `
+                            <div class="option-vertical-item" onclick="checkCharAnswer(this, '${opt.characters}', '${word.characters}', '${word.id}')">
+                                <span class="chinese-small">${opt.characters}</span>
+                                <span class="pinyin-small">${opt.pinyin}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function showChoiceTransCard(word) {
+            const blockWords = getWordsByBlock(word.listId).filter(w => w.id !== word.id);
+            const options = shuffleArray([word, ...shuffleArray(blockWords).slice(0, 3)]);
+            
+            document.getElementById('card-content').innerHTML = `
+                <div class="choice-char-trans-only">
+                    <div class="chinese-char">${word.characters}</div>
+                    <div class="audio-btn" onclick="speak('${word.characters}')">🔊</div>
+                    <div class="options-vertical">
+                        ${options.map(opt => `
+                            <div class="option-vertical-item" onclick="checkTranslationAnswer(this, '${opt.translation}', '${word.translation}', '${word.id}')">
+                                <span class="pinyin-small">${opt.translation}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function showCharFromTransCard(word) {
+            const blockWords = getWordsByBlock(word.listId).filter(w => w.id !== word.id);
+            const options = shuffleArray([word, ...shuffleArray(blockWords).slice(0, 3)]);
+            
+            document.getElementById('card-content').innerHTML = `
+                <div class="choice-char-trans-only">
+                    <div class="translation-big">${word.translation}</div>
+                    <div class="options-vertical">
+                        ${options.map(opt => `
+                            <div class="option-vertical-item" onclick="checkCharAnswer(this, '${opt.characters}', '${word.characters}', '${word.id}')">
+                                <span class="chinese-small">${opt.characters}</span>
+                                <span class="pinyin-small">${opt.pinyin}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function showListeningCard(word) {
+            const blockWords = getWordsByBlock(word.listId).filter(w => w.id !== word.id);
+            const options = shuffleArray([word, ...shuffleArray(blockWords).slice(0, 3)]);
+            
+            setTimeout(() => speak(word.characters), 500);
+            
+            document.getElementById('card-content').innerHTML = `
+                <div class="choice-char-trans-only">
+                    <div class="audio-btn" onclick="speak('${word.characters}')">🔊</div>
+                    <div style="text-align: center; margin: 20px; color: #666;">Прослушайте и выберите слово</div>
+                    <div class="options-vertical">
+                        ${options.map(opt => `
+                            <div class="option-vertical-item" onclick="checkCharAnswer(this, '${opt.characters}', '${word.characters}', '${word.id}')">
+                                <span class="chinese-small">${opt.characters}</span>
+                                <span class="pinyin-small">${opt.pinyin}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function showComposeCard(word) {
+            const chars = word.characters.split('');
+            const shuffledChars = shuffleArray([...chars]);
+            
+            document.getElementById('card-content').innerHTML = `
+                <div class="choice-char-trans-only">
+                    <div class="translation">${word.translation}</div>
+                    <div class="char-options">
+                        ${shuffledChars.map(char => `
+                            <div class="char-btn" onclick="selectChar(this, '${char}')">${char}</div>
+                        `).join('')}
+                    </div>
+                    <div style="margin: 20px; min-height: 70px; padding: 15px; background: white; border-radius: 12px; text-align: center; font-size: 32px; border: 2px solid #FFE4E1;" id="composed-word"></div>
+                    <button class="red-button" onclick="checkComposedWord('${word.characters}', '${word.id}')">Проверить</button>
+                </div>
+            `;
+            window.selectedChars = [];
+        }
+
+        function showMatchingCard(word) {
+            const chars = word.characters.split('');
+            const pinyins = word.pinyin.split(' ');
+            
+            let html = `
+                <div class="matching-section">
+                    <div class="matching-title">Шаг 1: Сопоставьте иероглифы со слогами</div>
+                    <div class="char-pinyin-grid" id="step1-grid">
+            `;
+            
+            chars.forEach((char, index) => {
+                const pinyinOptions = [pinyins[index]];
+                const otherWords = getWordsByBlock(word.listId).filter(w => w.id !== word.id);
+                for (let i = 0; i < 2; i++) {
+                    if (otherWords[i]) {
+                        const otherPinyins = otherWords[i].pinyin.split(' ');
+                        pinyinOptions.push(otherPinyins[0]);
+                    }
+                }
+                const shuffledPinyins = shuffleArray(pinyinOptions);
+                
+                html += `
+                    <div class="char-pinyin-row" data-char-index="${index}">
+                        <span class="char">${char}</span>
+                        <div class="pinyin-options">
+                `;
+                
+                shuffledPinyins.forEach(p => {
+                    html += `<span class="pinyin-option" onclick="selectPinyin(this, ${index}, '${pinyins[index]}')">${p}</span>`;
+                });
+                
+                html += `</div></div>`;
+            });
+            
+            html += `
+                    </div>
+                    <div class="matching-title" style="margin-top: 20px;">Шаг 2: Сопоставьте слово с переводом</div>
+                    <div class="word-translation-grid" id="step2-grid">
+            `;
+            
+            const transOptions = [word.translation];
+            const otherWords = getWordsByBlock(word.listId).filter(w => w.id !== word.id);
+            for (let i = 0; i < 2; i++) {
+                if (otherWords[i]) {
+                    transOptions.push(otherWords[i].translation);
+                }
+            }
+            const shuffledTrans = shuffleArray(transOptions);
+            
+            html += `
+                        <div class="word-translation-row">
+                            <span class="word">${word.characters}</span>
+                            <div class="trans-options">
+            `;
+            
+            shuffledTrans.forEach(t => {
+                html += `<span class="trans-option" onclick="selectTranslation(this, '${word.translation}', '${word.id}')">${t}</span>`;
+            });
+            
+            html += `</div></div></div></div>`;
+            
+            document.getElementById('card-content').innerHTML = html;
+        }
+
+        function showReviewCard(word) {
+            document.getElementById('card-content').innerHTML = `
+                <div class="choice-char-trans-only">
+                    <div class="chinese-char">${word.characters}</div>
+                    <div class="pinyin">${word.pinyin}</div>
+                    <div class="translation">${word.translation}</div>
+                    <div class="audio-btn" onclick="speak('${word.characters}')">🔊</div>
+                    <div style="display: flex; gap: 10px; padding: 20px; width: 100%;">
+                        <button class="red-button" onclick="handleReview('${word.id}', true)" style="flex: 1;">Помню</button>
+                        <button class="red-button-outline" onclick="handleReview('${word.id}', false)" style="flex: 1;">Не помню</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        window.checkCharAnswer = function(element, selected, correct, wordId) {
+            const word = wordsData.find(w => w.id == wordId);
+            
+            document.querySelectorAll('.option-vertical-item').forEach(el => {
+                el.classList.remove('correct', 'wrong');
+            });
+            
+            if (selected === correct) {
+                element.classList.add('correct');
+                showFeedback(true);
+                word.correctCount++;
+                word.timesReviewed++;
+                word.lastReviewed = Date.now();
+                if (word.correctCount >= 5) word.mastered = 5;
+                saveUserProgress();
+                
+                setTimeout(() => {
+                    showIntroCard(word);
+                }, 1000);
+            } else {
+                element.classList.add('wrong');
+                showFeedback(false);
+                setTimeout(() => element.classList.remove('wrong'), 500);
+            }
+        };
+
+        window.checkTranslationAnswer = function(element, selected, correct, wordId) {
+            const word = wordsData.find(w => w.id == wordId);
+            
+            document.querySelectorAll('.option-vertical-item').forEach(el => {
+                el.classList.remove('correct', 'wrong');
+            });
+            
+            if (selected === correct) {
+                element.classList.add('correct');
+                showFeedback(true);
+                word.correctCount++;
+                word.timesReviewed++;
+                word.lastReviewed = Date.now();
+                if (word.correctCount >= 5) word.mastered = 5;
+                saveUserProgress();
+                
+                setTimeout(() => {
+                    showIntroCard(word);
+                }, 1000);
+            } else {
+                element.classList.add('wrong');
+                showFeedback(false);
+                setTimeout(() => element.classList.remove('wrong'), 500);
+            }
+        };
+
+        function selectChar(btn, char) {
+            if (!window.selectedChars) window.selectedChars = [];
+            window.selectedChars.push(char);
+            document.getElementById('composed-word').textContent = window.selectedChars.join('');
+            btn.classList.add('disabled');
+        }
+
+        function checkComposedWord(correct, wordId) {
+            const word = wordsData.find(w => w.id == wordId);
+            const composed = window.selectedChars ? window.selectedChars.join('') : '';
+            
+            if (composed === correct) {
+                showFeedback(true);
+                word.correctCount++;
+                word.timesReviewed++;
+                word.lastReviewed = Date.now();
+                if (word.correctCount >= 5) word.mastered = 5;
+                saveUserProgress();
+                
+                setTimeout(() => {
+                    showIntroCard(word);
+                }, 1000);
+            } else {
+                showFeedback(false);
+            }
+        }
+
+        window.selectPinyin = function(element, charIndex, correctPinyin) {
+            if (element.classList.contains('matched')) return;
+            
+            const row = element.closest('.char-pinyin-row');
+            const rowOptions = row.querySelectorAll('.pinyin-option');
+            
+            rowOptions.forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            
+            if (element.textContent === correctPinyin) {
+                element.classList.remove('selected');
+                element.classList.add('matched');
+                showFeedback(true);
+            } else {
+                showFeedback(false);
+                setTimeout(() => element.classList.remove('selected'), 500);
+            }
+        };
+
+        window.selectTranslation = function(element, correctTranslation, wordId) {
+            if (element.classList.contains('matched')) return;
+            
+            const transOptions = document.querySelectorAll('.trans-option');
+            transOptions.forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            
+            if (element.textContent === correctTranslation) {
+                element.classList.remove('selected');
+                element.classList.add('matched');
+                showFeedback(true);
+                
+                const word = wordsData.find(w => w.id == wordId);
+                word.correctCount++;
+                word.timesReviewed++;
+                word.lastReviewed = Date.now();
+                if (word.correctCount >= 5) word.mastered = 5;
+                saveUserProgress();
+                
+                setTimeout(() => {
+                    showIntroCard(word);
+                }, 1000);
+            } else {
+                showFeedback(false);
+                setTimeout(() => element.classList.remove('selected'), 500);
+            }
+        };
+
+        function handleReview(wordId, remembered) {
+            const word = wordsData.find(w => w.id == wordId);
+            
+            if (remembered) {
+                showFeedback(true);
+                word.correctCount++;
+                word.timesReviewed++;
+                word.lastReviewed = Date.now();
+                if (word.correctCount >= 5) word.mastered = 5;
+                saveUserProgress();
+            } else {
+                showFeedback(false);
+            }
+            
+            setTimeout(() => {
+                currentIndex++;
+                showTask();
+            }, 1000);
+        }
+
+        function endStudy() {
+            saveUserProgress();
+            document.getElementById('study-screen').classList.remove('active');
+            document.getElementById('post-study-screen').classList.add('active');
+            document.getElementById('study-result').textContent = 
+                `За тренировку вы выполнили ${currentIndex} заданий`;
+            renderBlocksScreen();
+            updateReviewBanner();
+        }
+
+        function renderBlocksScreen() {
+            const stats = getTotalStats();
+            document.getElementById('total-mastered').textContent = stats.mastered;
+            document.getElementById('total-words').textContent = stats.total;
+            document.getElementById('total-progress').style.width = (stats.mastered / stats.total * 100) + '%';
+            
+            const container = document.getElementById('blocks-container');
+            container.innerHTML = '';
+            
+            blocks.forEach(block => {
+                const blockStats = getBlockStats(block.id);
+                const progress = (blockStats.mastered / block.count * 100) || 0;
+                
+                container.innerHTML += `
+                    <div class="block-card" data-block="${block.id}">
+                        <div class="block-header">
+                            <span class="block-icon">${block.icon}</span>
+                            <span class="block-name">${block.name}</span>
+                        </div>
+                        <div class="block-stats">
+                            <span>${blockStats.mastered}/${block.count}</span>
+                            <span>${Math.round(progress)}%</span>
+                        </div>
+                        <div class="block-progress">
+                            <div class="block-progress-fill" style="width: ${progress}%"></div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            document.querySelectorAll('.block-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const blockId = parseInt(card.dataset.block);
+                    showBlockDetail(blockId);
+                });
+            });
+            
+            updateReviewBanner();
+        }
+
+        function showBlockDetail(blockId) {
+            currentBlock = blockId;
+            const block = blocks.find(b => b.id === blockId);
+            document.getElementById('block-title').textContent = block.name;
+            
+            const stats = getBlockStats(blockId);
+            document.getElementById('block-mastered-circle').textContent = stats.mastered;
+            document.getElementById('block-total-circle').textContent = block.count;
+            
+            const percentage = (stats.mastered / block.count * 100) || 0;
+            updateCircleProgress(percentage);
+            
+            const words = getWordsByBlock(blockId);
+            const container = document.getElementById('words-list-container');
+            container.innerHTML = '';
+            
+            words.slice(0, 30).forEach(word => {
+                container.innerHTML += `
+                    <div class="word-item" onclick="openWordModal('${word.id}')">
+                        <div class="word-item-left">
+                            <span class="chinese">${word.characters}</span>
+                            <span class="pinyin-small">${word.pinyin}</span>
+                            <span class="translation-small">${word.translation}</span>
+                        </div>
+                        ${word.mastered >= 5 ? 
+                            '<span class="mastered-badge">✓ Выучено</span>' : 
+                            '<span class="not-mastered-badge">В процессе</span>'}
+                    </div>
+                `;
+            });
+            
+            document.getElementById('blocks-screen').classList.remove('active');
+            document.getElementById('block-detail-screen').classList.add('active');
+
+            // Проверяем, все ли слова выучены
+            if (stats.mastered === stats.total && stats.total > 0) {
+                showBlockCompleteScreen(block.name);
+            }
+        }
+
+        // Новая функция: открытие модальной карточки слова
+        window.openWordModal = function(wordId) {
+            const word = wordsData.find(w => w.id == wordId);
+            document.getElementById('modal-char').textContent = word.characters;
+            document.getElementById('modal-pinyin').textContent = word.pinyin;
+            document.getElementById('modal-translation').textContent = word.translation;
+            document.getElementById('modal-example').textContent = word.example;
+            document.getElementById('modal-example-trans').textContent = word.exampleTranslation;
+            document.getElementById('modal-audio').onclick = () => speak(word.characters);
+            document.getElementById('word-modal').classList.add('active');
+        };
+
+        // Новая функция: экран завершения блока
+        function showBlockCompleteScreen(blockName) {
+            document.getElementById('complete-block-name').textContent = blockName;
+            document.getElementById('block-detail-screen').classList.remove('active');
+            document.getElementById('block-complete-screen').classList.add('active');
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        // Инициализация
+        loadUsers();
+        loadUserProgress();
+
+        // Обработчики событий авторизации
+        document.getElementById('login-btn').addEventListener('click', () => {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            if (users[email] && users[email].password === password) {
+                currentUser = email;
+                loadUserProgress();
+                updateUserUI();
+                showScreen('hsk-screen');
+            } else {
+                alert('Неверный email или пароль');
+            }
+        });
+
+        document.getElementById('register-btn').addEventListener('click', () => {
+            showScreen('register-screen');
+        });
+
+        document.getElementById('back-to-auth').addEventListener('click', () => {
+            showScreen('auth-screen');
+        });
+
+        document.getElementById('register-submit-btn').addEventListener('click', () => {
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirm = document.getElementById('register-confirm').value;
+            
+            if (!name || !email || !password) {
+                alert('Заполните все поля');
+                return;
+            }
+            
+            if (password !== confirm) {
+                alert('Пароли не совпадают');
+                return;
+            }
+            
+            if (users[email]) {
+                alert('Пользователь с таким email уже существует');
+                return;
+            }
+            
+            users[email] = {
+                name: name,
+                email: email,
+                password: password,
+                progress: {}
+            };
+            
+            saveUsers();
+            alert('Регистрация успешна! Теперь вы можете войти.');
+            showScreen('auth-screen');
+        });
+
+        document.getElementById('guest-link').addEventListener('click', () => {
+            currentUser = null;
+            updateUserUI();
+            showScreen('hsk-screen');
+        });
+
+        // Обработчики выхода
+        document.querySelectorAll('[id^="logout-btn"]').forEach(btn => {
+            btn.addEventListener('click', logout);
+        });
+
+        // Обработчики навигации
+        document.querySelectorAll('.hsk-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.hsk-card').forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                currentHSK = parseInt(card.dataset.hsk);
+            });
+        });
+
+        document.getElementById('select-hsk-btn').addEventListener('click', () => {
+            renderBlocksScreen();
+            showScreen('blocks-screen');
+        });
+
+        document.getElementById('back-to-hsk').addEventListener('click', () => {
+            showScreen('hsk-screen');
+        });
+
+        document.getElementById('back-to-blocks').addEventListener('click', () => {
+            showScreen('blocks-screen');
+        });
+
+        document.getElementById('study-block-btn').addEventListener('click', () => {
+            startStudy(currentBlock, true);
+        });
+
+        document.getElementById('skip-btn').addEventListener('click', () => {
+            currentIndex++;
+            showTask();
+        });
+
+        document.getElementById('continue-study').addEventListener('click', () => {
+            startStudy(studyBlockId, false);
+        });
+
+        document.getElementById('back-to-block-after').addEventListener('click', () => {
+            showScreen('block-detail-screen');
+            showBlockDetail(studyBlockId);
+        });
+
+        document.getElementById('review-banner').addEventListener('click', () => {
+            const reviewWords = getWordsForReview();
+            if (reviewWords.length > 0) {
+                studyWords = reviewWords.slice(0, 3);
+                createStudyQueue();
+                currentIndex = 0;
+                showScreen('study-screen');
+                updateProgressDots();
+                showTask();
+            }
+        });
+
+        // Закрытие модального окна
+        document.getElementById('modal-close').addEventListener('click', () => {
+            document.getElementById('word-modal').classList.remove('active');
+        });
+        document.getElementById('word-modal').addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal-overlay')) {
+                document.getElementById('word-modal').classList.remove('active');
+            }
+        });
+
+        // Обработчики для экрана завершения блока
+        document.getElementById('review-10-btn').addEventListener('click', () => {
+            // Тренировка с выученными словами (повторение)
+            const allWords = getWordsByBlock(currentBlock);
+            studyWords = allWords.filter(w => w.mastered >= 5).slice(0, 10);
+            if (studyWords.length === 0) {
+                alert('Нет слов для повторения');
+                return;
+            }
+            createStudyQueue();
+            currentIndex = 0;
+            document.getElementById('block-complete-screen').classList.remove('active');
+            document.getElementById('study-screen').classList.add('active');
+            updateProgressDots();
+            showTask();
+        });
+
+        document.getElementById('back-to-blocks-complete').addEventListener('click', () => {
+            showScreen('blocks-screen');
+        });
+
+        window.addEventListener('beforeunload', () => {
+            saveUserProgress();
+        });
+        
+        window.speechSynthesis.getVoices();
+    </script>
+</body>
+</html>
