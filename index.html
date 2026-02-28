@@ -1185,9 +1185,9 @@
                     
                     <!-- Кнопки отладки -->
                     <div style="margin-top: 20px; text-align: center; font-size: 12px; color: #999;">
-                        <span onclick="debugAuth()" style="text-decoration: underline; cursor: pointer;">🔧 Отладка</span>
-                        <span onclick="clearAppCache()" style="text-decoration: underline; cursor: pointer; margin-left: 15px;">🗑️ Очистить кэш</span>
-                    </div>
+    <span onclick="window.debugAuthPWA ? debugAuthPWA() : alert('Функция отладки временно отключена')" style="text-decoration: underline; cursor: pointer;">🔧 Отладка</span>
+    <span onclick="window.clearAppCache ? clearAppCache() : alert('Функция очистки временно отключена')" style="text-decoration: underline; cursor: pointer; margin-left: 15px;">🗑️ Очистить кэш</span>
+</div>
 
                     <!-- КНОПКА ОТЛАДКИ PWA -->
                     <div style="position: fixed; bottom: 20px; right: 20px; z-index: 10000;">
@@ -3615,10 +3615,30 @@ function loadUsers() {
             alert('✅ Информация в консоли (нажмите F12)');
         };
 
-    <!-- Исправление для кнопок в PWA -->
+     <!-- ИСПРАВЛЕНИЕ ДЛЯ КНОПОК В PWA -->
     <script>
         (function fixButtonsForPWA() {
             console.log('🔧 Запуск исправления для кнопок...');
+            
+            // Глобальные функции для отладки (чтобы убрать ошибку debugAuth)
+            window.debugAuth = function() {
+                console.log('=== 🔍 ОТЛАДКА ===');
+                console.log('users:', users);
+                console.log('localStorage:', localStorage.getItem('hsk_users'));
+                alert('Информация в консоли');
+            };
+            
+            window.clearAppCache = window.clearAppCache || function() {
+                if ('caches' in window) {
+                    caches.keys().then(names => {
+                        names.forEach(name => {
+                            caches.delete(name);
+                            console.log('🗑️ Кэш удалён:', name);
+                        });
+                    });
+                    alert('✅ Кэш очищен! Перезапустите приложение.');
+                }
+            };
             
             function setupButtons() {
                 console.log('🔄 Настройка кнопок...');
@@ -3697,7 +3717,7 @@ function loadUsers() {
                                         if (typeof showScreen === 'function') showScreen('hsk-screen');
                                         console.log('✅ Вход успешен!');
                                     } else {
-                                        alert('Неверный email или пароль');
+                                        alert('Неверный email или пароль. Попробуйте: vladamalova@example.com / 123456');
                                         console.log('❌ Ошибка входа');
                                     }
                                 } 
