@@ -1035,6 +1035,9 @@
     <div id="app">
         <!-- Экран входа -->
         <div id="auth-screen" class="screen active">
+    ... существующий код ...
+        </div>
+        <div id="auth-screen" class="screen active">
             <div class="status-bar">
                 <span>9:41</span>
                 <span>🔋 100%</span>
@@ -1061,6 +1064,9 @@
                     <div style="margin-top: 30px; text-align: center;">
                         <span class="auth-link" id="guest-link">Продолжить как гость</span>
                     </div>
+                    <div style="margin-top: 20px; text-align: center; font-size: 12px; color: #999;">
+    <span onclick="debugAuth()" style="text-decoration: underline; cursor: pointer;">🔧 Отладка</span>
+    <span onclick="clearAppCache()" style="text-decoration: underline; cursor: pointer; margin-left: 15px;">🗑️ Очистить кэш</span>
                 </div>
             </div>
         </div>
@@ -1322,26 +1328,29 @@
         // СИСТЕМА АВТОРИЗАЦИИ
         // ============================================
         
-        let users = {};
-        let currentUser = null;
-        let currentHSK = 3;
-        
-        function loadUsers() {
-            const saved = localStorage.getItem('hsk_users');
-            if (saved) {
-                users = JSON.parse(saved);
-            } else {
-                users = {
-                    'vladamalova@example.com': {
-                        name: 'Влада',
-                        email: 'vladamalova@example.com',
-                        password: '123456',
-                        progress: {}
-                    }
-                };
-                saveUsers();
-            }
+function loadUsers() {
+    try {
+        const saved = localStorage.getItem('hsk_users');
+        if (saved) {
+            users = JSON.parse(saved);
+            console.log('Пользователи загружены:', users);
+        } else {
+            users = {
+                'vladamalova@example.com': {
+                    name: 'Влада',
+                    email: 'vladamalova@example.com',
+                    password: '123456',
+                    progress: {}
+                }
+            };
+            saveUsers();
+            console.log('Созданы тестовые пользователи');
         }
+    } catch (e) {
+        console.error('Ошибка загрузки пользователей:', e);
+        users = {};
+    }
+}
         
         function saveUsers() {
             localStorage.setItem('hsk_users', JSON.stringify(users));
@@ -3247,19 +3256,27 @@
         loadUserProgress();
 
         // Обработчики событий авторизации
-        document.getElementById('login-btn').addEventListener('click', () => {
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-            
-            if (users[email] && users[email].password === password) {
-                currentUser = email;
-                loadUserProgress();
-                updateUserUI();
-                showScreen('hsk-screen');
-            } else {
-                alert('Неверный email или пароль');
-            }
-        });
+            document.getElementById('login-btn').addEventListener('click', () => {
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+    
+                console.log('=== ПОПЫТКА ВХОДА ===');
+                console.log('Email:', email);
+                console.log('Пароль:', password);
+                console.log('Текущие пользователи в системе:', users);
+                console.log('localStorage.getItem("hsk_users"):', localStorage.getItem('hsk_users'));
+    
+                if (users[email] && users[email].password === password) {
+                    console.log('УСПЕХ! Входим...');
+                    currentUser = email;
+                    loadUserProgress();
+                    updateUserUI();
+                    showScreen('hsk-screen');
+                } else {
+                    console.log('ОШИБКА: пользователь не найден или пароль неверный');
+                    alert('Неверный email или пароль. Проверьте консоль для отладки.');
+                }
+             });
 
         document.getElementById('register-btn').addEventListener('click', () => {
             showScreen('register-screen');
@@ -3408,5 +3425,59 @@
             });
         }
     </script>
+
+    <!-- Регистрация Service Worker с правильным путём -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                // Пробуем разные пути для совместимости
+                const swPath = './sw.js'; // относительный путь
+                
+                navigator.serviceWorker.register(swPath)
+                    .then(reg => {
+                        console.log('✅ Service Worker зарегистрирован:', reg);
+                        
+                        // Очищаем старый кэш при обновлении
+                        reg.addEventListener('updatefound', () => {
+                            const newWorker = reg.installing;
+                            console.log('Новая версия SW устанавливается...');
+                        });
+                    })
+                    .catch(err => {
+                        console.error('❌ Ошибка регистрации Service Worker:', err);
+                        // Пробуем альтернативный путь
+                        navigator.serviceWorker.register('sw.js')
+                            .then(reg => console.log('✅ Вторая попытка успешна:', reg))
+                            .catch(err2 => console.error('❌ Вторая попытка тоже провалилась:', err2));
+                    });
+            });
+        } else {
+            console.log('Service Worker не поддерживается');
+        }
+    </script>
+
+    <!-- Очистка кэша при проблемах (можно вызвать вручную) -->
+    <script>
+        window.clearAppCache = function() {
+            if ('caches' in window) {
+                caches.keys().then(names => {
+                    names.forEach(name => {
+                        caches.delete(name);
+                        console.log('Кэш удалён:', name);
+                    });
+                });
+            }
+            alert('Кэш очищен! Перезапустите приложение.');
+        };
+        // Функция отладки
+         window.debugAuth = function() {
+             console.log('=== ОТЛАДОЧНАЯ ИНФОРМАЦИЯ ===');
+             console.log('users:', typeof users !== 'undefined' ? users : 'не определено');
+             console.log('localStorage:', localStorage.getItem('hsk_users'));
+             console.log('currentUser:', typeof currentUser !== 'undefined' ? currentUser : 'не определено');
+             alert('Информация в консоли (нажмите F12)');
+         };
+    </script>
+
 </body>
 </html>
