@@ -1042,10 +1042,7 @@
 </head>
 <body>
     <div id="app">
-        <!-- Экран входа -->
-        <div id="auth-screen" class="screen active">
-    ... существующий код ...
-        </div>
+        <!-- ЭКРАН ВХОДА -->
         <div id="auth-screen" class="screen active">
             <div class="status-bar">
                 <span>9:41</span>
@@ -1057,7 +1054,7 @@
                     <div class="auth-logo">
                         <img src="images/logo.png" alt="HSK Logo" style="width: 90px; height: 110px;">
                     </div>
-                    <div class="auth-title">🀄️HSK🀄️</div>
+                    <div class="auth-title">🀄️ HSK 🀄️</div>
                     <div class="auth-subtitle">Войдите, чтобы сохранить прогресс</div>
                     
                     <div style="width: 100%;">
@@ -1073,14 +1070,37 @@
                     <div style="margin-top: 30px; text-align: center;">
                         <span class="auth-link" id="guest-link">Продолжить как гость</span>
                     </div>
+                    
+                    <!-- Кнопки отладки -->
                     <div style="margin-top: 20px; text-align: center; font-size: 12px; color: #999;">
-    <span onclick="debugAuth()" style="text-decoration: underline; cursor: pointer;">🔧 Отладка</span>
-    <span onclick="clearAppCache()" style="text-decoration: underline; cursor: pointer; margin-left: 15px;">🗑️ Очистить кэш</span>
+                        <span onclick="debugAuth()" style="text-decoration: underline; cursor: pointer;">🔧 Отладка</span>
+                        <span onclick="clearAppCache()" style="text-decoration: underline; cursor: pointer; margin-left: 15px;">🗑️ Очистить кэш</span>
+                    </div>
+
+                    <!-- КНОПКА ОТЛАДКИ PWA -->
+                    <div style="position: fixed; bottom: 20px; right: 20px; z-index: 10000;">
+                        <button onclick="toggleDebugConsole()" style="background: #8B0000; color: white; border: none; border-radius: 30px; padding: 15px 25px; font-size: 16px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                            🐛 ОТЛАДКА PWA
+                        </button>
+                    </div>
+
+                    <!-- КОНСОЛЬ ОТЛАДКИ (СКРЫТА) -->
+                    <div id="debugConsole" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; padding: 20px; overflow-y: auto; color: #00ff00; font-family: monospace; font-size: 12px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 15px; position: sticky; top: 0; background: #000; padding: 10px;">
+                            <span style="color: white; font-size: 18px; font-weight: bold;">🔍 КОНСОЛЬ PWA</span>
+                            <button onclick="toggleDebugConsole()" style="background: #8B0000; color: white; border: none; border-radius: 20px; padding: 8px 20px; font-size: 14px;">✕ ЗАКРЫТЬ</button>
+                        </div>
+                        <div id="debugLogs" style="white-space: pre-wrap; word-break: break-all; margin-bottom: 20px;"></div>
+                        <div style="position: sticky; bottom: 0; background: #000; padding: 15px; display: flex; gap: 10px;">
+                            <button onclick="testLogin()" style="background: #4CAF50; color: white; border: none; border-radius: 10px; padding: 15px; flex: 1; font-size: 14px;">🔑 ТЕСТ ВХОДА</button>
+                            <button onclick="clearDebugLogs()" style="background: #f44336; color: white; border: none; border-radius: 10px; padding: 15px; flex: 1; font-size: 14px;">🗑️ ОЧИСТИТЬ</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Экран регистрации -->
+        <!-- ЭКРАН РЕГИСТРАЦИИ -->
         <div id="register-screen" class="screen">
             <div class="status-bar">
                 <span>22:11</span>
@@ -1108,7 +1128,7 @@
             </div>
         </div>
 
-        <!-- Главный экран с HSK уровнями -->
+        <!-- ГЛАВНЫЙ ЭКРАН С HSK УРОВНЯМИ -->
         <div id="hsk-screen" class="screen">
             <div class="user-profile">
                 <div class="user-avatar" id="user-avatar">В</div>
@@ -1126,6 +1146,7 @@
                     <h1 style="font-size: 32px; color: #8B0000; margin-bottom: 5px;">HSK 汉语</h1>
                     <p style="color: #666; margin-bottom: 20px;">Выберите уровень</p>
                 </div>
+                
                 <div class="hsk-grid" id="hsk-grid">
                     <div class="hsk-card" data-hsk="1">
                         <div class="level">HSK 1</div>
@@ -1156,13 +1177,14 @@
                 <div style="padding: 20px;">
                     <button class="red-button" id="select-hsk-btn" style="width: 100%;">Выбрать HSK</button>
                 </div>
-                 <div style="display: flex; justify-content: center; align-items: center; padding: 20px 0 40px 0;">
-                     <img src="images/menu-bg.jpg" alt="Menu decoration" 
-                          style="max-width: 80%; height: auto; border-radius: 20px; opacity: 0.8; box-shadow: 0 4px 15px rgba(139,0,0,0.2);">
-                 </div>
+                
+                <!-- ДЕКОРАТИВНАЯ КАРТИНКА -->
+                <div style="display: flex; justify-content: center; align-items: center; padding: 20px 0 40px 0;">
+                    <img src="images/menu-bg.jpg" alt="Menu decoration" 
+                         style="max-width: 80%; height: auto; border-radius: 20px; opacity: 0.8; box-shadow: 0 4px 15px rgba(139,0,0,0.2);">
+                </div>
             </div>
         </div>
-
         <!-- Экран с блоками слов HSK -->
         <div id="blocks-screen" class="screen">
             <div class="user-profile">
@@ -3435,7 +3457,7 @@ function loadUsers() {
         }
     </script>
 
-       <!-- Регистрация Service Worker -->
+    <!-- Регистрация Service Worker -->
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
@@ -3491,30 +3513,51 @@ function loadUsers() {
                 const loginBtn = document.getElementById('login-btn');
                 const registerBtn = document.getElementById('register-btn');
                 const guestLink = document.getElementById('guest-link');
+                const registerSubmitBtn = document.getElementById('register-submit-btn');
+                const backToAuth = document.getElementById('back-to-auth');
+                const selectHskBtn = document.getElementById('select-hsk-btn');
                 
-                // Усиленная обработка для кнопки входа
-                if (loginBtn) {
-                    loginBtn.addEventListener('touchstart', (e) => {
+                // Функция усиленной обработки для кнопки
+                function enhanceButton(btn) {
+                    if (!btn) return;
+                    
+                    // Удаляем старые обработчики
+                    btn.removeEventListener('touchstart', btn._touchHandler);
+                    
+                    // Создаём новый обработчик
+                    btn._touchHandler = (e) => {
                         e.preventDefault();
-                        loginBtn.click();
-                    }, {passive: false});
+                        e.stopPropagation();
+                        btn.click();
+                    };
+                    
+                    // Добавляем новый обработчик
+                    btn.addEventListener('touchstart', btn._touchHandler, {passive: false});
+                    
+                    // Визуальная обратная связь
+                    btn.addEventListener('touchstart', () => {
+                        btn.style.opacity = '0.7';
+                    }, {passive: true});
+                    
+                    btn.addEventListener('touchend', () => {
+                        btn.style.opacity = '1';
+                    }, {passive: true});
+                    
+                    btn.addEventListener('touchcancel', () => {
+                        btn.style.opacity = '1';
+                    }, {passive: true});
                 }
                 
-                // Усиленная обработка для кнопки регистрации
-                if (registerBtn) {
-                    registerBtn.addEventListener('touchstart', (e) => {
-                        e.preventDefault();
-                        registerBtn.click();
-                    }, {passive: false});
-                }
+                // Применяем ко всем кнопкам
+                enhanceButton(loginBtn);
+                enhanceButton(registerBtn);
+                enhanceButton(guestLink);
+                enhanceButton(registerSubmitBtn);
+                enhanceButton(backToAuth);
+                enhanceButton(selectHskBtn);
                 
-                // Усиленная обработка для гостевой ссылки
-                if (guestLink) {
-                    guestLink.addEventListener('touchstart', (e) => {
-                        e.preventDefault();
-                        guestLink.click();
-                    }, {passive: false});
-                }
+                // Дополнительно для ссылок
+                document.querySelectorAll('.auth-link, .back-btn').forEach(enhanceButton);
             }
             
             // Запускаем несколько раз для надёжности
@@ -3526,6 +3569,151 @@ function loadUsers() {
             window.addEventListener('load', setupButtons);
             setTimeout(setupButtons, 500);
             setTimeout(setupButtons, 1000);
+            setTimeout(setupButtons, 2000);
+        })();
+    </script>
+
+    <!-- СКРИПТ ДЛЯ КОНСОЛИ ОТЛАДКИ -->
+    <script>
+        // Перехватываем все console.log
+        window.debugLogs = [];
+        window.originalConsoleLog = console.log;
+        window.originalConsoleError = console.error;
+
+        console.log = function(...args) {
+            window.originalConsoleLog.apply(console, args);
+            window.debugLogs.push('📗 ' + args.map(arg => {
+                if (typeof arg === 'object') {
+                    try {
+                        return JSON.stringify(arg);
+                    } catch(e) {
+                        return String(arg);
+                    }
+                }
+                return String(arg);
+            }).join(' '));
+            updateDebugDisplay();
+        };
+
+        console.error = function(...args) {
+            window.originalConsoleError.apply(console, args);
+            window.debugLogs.push('📕 ' + args.map(String).join(' '));
+            updateDebugDisplay();
+        };
+
+        function updateDebugDisplay() {
+            const display = document.getElementById('debugLogs');
+            if (display) {
+                display.innerHTML = window.debugLogs.slice(-30).join('<br>');
+            }
+        }
+
+        window.toggleDebugConsole = function() {
+            const console = document.getElementById('debugConsole');
+            if (console) {
+                if (console.style.display === 'none' || console.style.display === '') {
+                    console.style.display = 'block';
+                    updateDebugDisplay();
+                    
+                    // Добавляем информацию о состоянии приложения
+                    console.log('=== 🚀 СОСТОЯНИЕ ПРИЛОЖЕНИЯ ===');
+                    console.log('📱 PWA режим:', window.navigator.standalone ? 'ДА' : 'НЕТ');
+                    console.log('🔗 URL:', window.location.href);
+                    console.log('🕒 Время загрузки:', new Date().toLocaleTimeString());
+                } else {
+                    console.style.display = 'none';
+                }
+            }
+        };
+
+        window.clearDebugLogs = function() {
+            window.debugLogs = [];
+            updateDebugDisplay();
+        };
+
+        window.testLogin = function() {
+            console.log('=== 🔍 ТЕСТ ВХОДА ===');
+            console.log('1️⃣ users объект:', typeof users !== 'undefined' ? 'Есть (' + Object.keys(users).length + ' пользователей)' : '❌ НЕТ');
+            console.log('2️⃣ localStorage:', localStorage.getItem('hsk_users') ? '✅ Есть данные' : '❌ Нет данных');
+            
+            const email = document.getElementById('login-email')?.value;
+            const password = document.getElementById('login-password')?.value;
+            console.log('3️⃣ Введённый email:', email || '❌ не введён');
+            console.log('4️⃣ Введённый пароль:', password ? '✅ введён' : '❌ не введён');
+            
+            if (users && users[email]) {
+                console.log('5️⃣ Пользователь найден в users');
+                console.log('6️⃣ Хранимый пароль:', users[email].password);
+                console.log('7️⃣ Пароль совпадает:', users[email].password === password ? '✅ ДА' : '❌ НЕТ');
+                console.log('8️⃣ Имя пользователя:', users[email].name || 'не указано');
+            } else {
+                console.log('5️⃣ Пользователь НЕ найден в users');
+                if (users) {
+                    console.log('6️⃣ Доступные email:', Object.keys(users).join(', ') || 'нет пользователей');
+                } else {
+                    console.log('6️⃣ users не определен - вызываем loadUsers()');
+                    if (typeof loadUsers === 'function') {
+                        loadUsers();
+                        console.log('✅ loadUsers() вызван');
+                    } else {
+                        console.log('❌ loadUsers() не найдена');
+                    }
+                }
+            }
+            
+            // Проверка наличия всех кнопок
+            console.log('9️⃣ Проверка кнопок:');
+            console.log('   - login-btn:', document.getElementById('login-btn') ? '✅' : '❌');
+            console.log('   - register-btn:', document.getElementById('register-btn') ? '✅' : '❌');
+            console.log('   - guest-link:', document.getElementById('guest-link') ? '✅' : '❌');
+            console.log('   - debugConsole:', document.getElementById('debugConsole') ? '✅' : '❌');
+        };
+
+        // Логируем ошибки
+        window.addEventListener('error', (e) => {
+            console.error('❌ ОШИБКА: ' + e.message + ' в ' + e.filename + ':' + e.lineno);
+        });
+
+        // Логируем необработанные промисы
+        window.addEventListener('unhandledrejection', (e) => {
+            console.error('❌ НЕОБРАБОТАННЫЙ ПРОМИС:', e.reason);
+        });
+
+        // Автоматическая диагностика при загрузке
+        window.addEventListener('load', () => {
+            console.log('✅ Страница полностью загружена');
+            console.log('📱 PWA режим:', window.navigator.standalone ? 'ДА' : 'НЕТ');
+            
+            // Проверяем users через секунду
+            setTimeout(() => {
+                console.log('⏱️ Проверка users после загрузки:', users ? '✅ OK (' + Object.keys(users).length + ')' : '❌ НЕТ');
+                if (!users && typeof loadUsers === 'function') {
+                    console.log('🔄 Вызываем loadUsers()...');
+                    loadUsers();
+                    console.log('✅ После loadUsers():', users ? 'OK' : 'всё ещё нет');
+                }
+            }, 1000);
+        });
+
+        // Принудительная инициализация
+        (function initialize() {
+            console.log('🚀 Инициализация приложения...');
+            
+            // Пробуем загрузить пользователей
+            if (typeof loadUsers === 'function') {
+                loadUsers();
+                console.log('✅ loadUsers() выполнен');
+            } else {
+                console.log('⚠️ loadUsers() не найдена - возможно, она ещё не определена');
+                
+                // Пробуем ещё раз позже
+                setTimeout(() => {
+                    if (typeof loadUsers === 'function') {
+                        loadUsers();
+                        console.log('✅ loadUsers() выполнен (повторно)');
+                    }
+                }, 500);
+            }
         })();
     </script>
 
