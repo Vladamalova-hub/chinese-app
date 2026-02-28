@@ -16,6 +16,7 @@
     <title>HSK | Китайский тренажер</title>
     
     <style>
+        /* БАЗОВЫЕ СТИЛИ */
         * {
             margin: 0;
             padding: 0;
@@ -53,6 +54,7 @@
             overflow: hidden;
         }
 
+        /* ОСНОВНЫЕ ЭКРАНЫ */
         .screen {
             position: absolute;
             top: 0;
@@ -82,6 +84,7 @@
             flex-shrink: 0;
         }
 
+        /* КНОПКИ */
         .red-button {
             background: #8B0000;
             color: white;
@@ -104,6 +107,7 @@
             border: 2px solid #8B0000;
         }
 
+        /* АВТОРИЗАЦИЯ */
         .auth-container {
             padding: 40px 20px;
             display: flex;
@@ -142,6 +146,8 @@
             background: white;
             -webkit-user-select: text;
             user-select: text;
+            -webkit-appearance: none;
+            appearance: none;
         }
 
         .auth-input:focus {
@@ -187,6 +193,7 @@
             background: #FFE4E1;
         }
 
+        /* ПРОФИЛЬ */
         .user-profile {
             display: flex;
             align-items: center;
@@ -231,6 +238,7 @@
             flex-shrink: 0;
         }
 
+        /* HSK ГРИД */
         .hsk-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -265,6 +273,7 @@
             color: #666;
         }
 
+        /* БЛОКИ ТЕМ */
         .section-title {
             padding: 0 20px 10px;
             font-size: 18px;
@@ -331,6 +340,7 @@
             width: 0%;
         }
 
+        /* БАННЕР ПОВТОРЕНИЯ */
         .review-banner {
             background: #8B0000;
             margin: 15px 20px;
@@ -351,6 +361,7 @@
             100% { transform: scale(1); }
         }
 
+        /* ПРОГРЕСС */
         .progress-circle {
             position: relative;
             width: 120px;
@@ -400,6 +411,7 @@
             color: #666;
         }
 
+        /* КАРТОЧКИ ТРЕНИРОВКИ */
         .card-header {
             padding: 15px 20px;
             display: flex;
@@ -465,6 +477,7 @@
             font-size: 15px;
         }
 
+        /* ЗАДАНИЯ */
         .choice-char-trans-only {
             padding: 20px;
             text-align: center;
@@ -534,6 +547,7 @@
             color: white;
         }
 
+        /* СПИСОК СЛОВ */
         .words-list {
             padding: 0 20px 20px;
         }
@@ -549,6 +563,7 @@
             align-items: center;
             cursor: pointer;
         }
+
         .word-item:active {
             background: #FFE4E1;
         }
@@ -590,6 +605,7 @@
             font-size: 12px;
         }
 
+        /* МОДАЛЬНОЕ ОКНО */
         .modal-overlay {
             position: absolute;
             top: 0;
@@ -602,9 +618,11 @@
             align-items: center;
             z-index: 1000;
         }
+
         .modal-overlay.active {
             display: flex;
         }
+
         .modal-card {
             background: white;
             width: 85%;
@@ -615,17 +633,20 @@
             box-shadow: 0 10px 30px rgba(139,0,0,0.3);
             border: 2px solid #8B0000;
         }
+
         .modal-char {
             font-size: 64px;
             font-weight: 700;
             color: #8B0000;
             margin-bottom: 10px;
         }
+
         .modal-pinyin {
             font-size: 24px;
             color: #A52A2A;
             margin-bottom: 10px;
         }
+
         .modal-translation {
             font-size: 22px;
             color: #8B0000;
@@ -634,16 +655,19 @@
             padding-bottom: 20px;
             border-bottom: 1px solid #FFE4E1;
         }
+
         .modal-example-chinese {
             font-size: 18px;
             color: #333;
             margin-bottom: 5px;
         }
+
         .modal-example-translation {
             font-size: 15px;
             color: #666;
             margin-bottom: 20px;
         }
+
         .modal-audio {
             width: 60px;
             height: 60px;
@@ -657,6 +681,7 @@
             font-size: 28px;
             color: white;
         }
+
         .modal-close {
             margin-top: 20px;
             padding: 10px 30px;
@@ -669,6 +694,7 @@
             cursor: pointer;
         }
 
+        /* ЗАДАНИЕ НА СОПОСТАВЛЕНИЕ */
         .matching-section {
             background: white;
             border-radius: 16px;
@@ -788,6 +814,7 @@
             cursor: default;
         }
 
+        /* НОВОЕ ЗАДАНИЕ: СОЕДИНИТЬ ВСЕ СЛОВА */
         .match-all-section {
             background: white;
             border-radius: 16px;
@@ -867,6 +894,7 @@
             cursor: default;
         }
 
+        /* АУДИО КНОПКА */
         .audio-btn {
             width: 60px;
             height: 60px;
@@ -886,6 +914,7 @@
             transform: scale(0.95);
         }
 
+        /* ЗАДАНИЕ СОСТАВИТЬ СЛОВО */
         .char-options {
             display: flex;
             flex-wrap: wrap;
@@ -919,6 +948,7 @@
             pointer-events: none;
         }
 
+        /* НИЖНЯЯ НАВИГАЦИЯ */
         .bottom-nav {
             display: flex;
             justify-content: space-around;
@@ -958,6 +988,7 @@
             opacity: 0.7;
         }
 
+        /* СКРОЛЛ */
         .scroll-content {
             flex: 1;
             overflow-y: auto;
@@ -966,6 +997,7 @@
             padding-bottom: 20px;
         }
 
+        /* ОБРАТНАЯ СВЯЗЬ */
         .feedback-overlay {
             position: fixed;
             top: 50%;
@@ -983,6 +1015,7 @@
             100% { transform: translate(-50%, -50%) scale(1); }
         }
 
+        /* ЭКРАН ЗАВЕРШЕНИЯ */
         .completion-container {
             display: flex;
             flex-direction: column;
@@ -991,20 +1024,24 @@
             padding: 40px 20px;
             text-align: center;
         }
+
         .completion-icon {
             font-size: 80px;
             margin-bottom: 20px;
         }
+
         .completion-title {
             font-size: 28px;
             color: #8B0000;
             font-weight: 700;
             margin-bottom: 10px;
         }
+
         .completion-subtitle {
             color: #666;
             margin-bottom: 40px;
         }
+
         .completion-buttons {
             display: flex;
             flex-direction: column;
@@ -1012,6 +1049,7 @@
             width: 100%;
         }
 
+        /* УПРАВЛЕНИЕ COMPOSE */
         .compose-controls {
             display: flex;
             gap: 10px;
@@ -1037,6 +1075,80 @@
         .check-btn {
             background: #8B0000;
             color: white;
+        }
+
+        /* ====== СПЕЦИАЛЬНО ДЛЯ PWA ====== */
+        button, 
+        .auth-button, 
+        .red-button,
+        .auth-link,
+        .back-btn,
+        .block-card,
+        .hsk-card,
+        .word-item,
+        .option-vertical-item,
+        .char-btn,
+        .pinyin-option,
+        .trans-option,
+        .match-trans-item,
+        .nav-item,
+        [onclick] {
+            cursor: pointer !important;
+            touch-action: manipulation !important;
+            -webkit-tap-highlight-color: transparent !important;
+            user-select: none !important;
+            -webkit-user-select: none !important;
+            min-height: 44px !important;
+            position: relative !important;
+            z-index: 10 !important;
+        }
+
+        /* Убираем стандартное поведение iOS */
+        input, 
+        textarea,
+        button,
+        a {
+            -webkit-appearance: none;
+            appearance: none;
+            border-radius: 0;
+        }
+
+        /* Увеличиваем область нажатия для ссылок */
+        .auth-link {
+            display: inline-block !important;
+            padding: 12px 20px !important;
+            margin: -12px -20px !important;
+        }
+
+        /* Исправление для гостевой ссылки */
+        #guest-link {
+            display: inline-block !important;
+            padding: 15px 25px !important;
+            margin: -15px -25px !important;
+        }
+
+        /* Анимация нажатия */
+        .auth-button:active,
+        .red-button:active,
+        button:active,
+        .block-card:active,
+        .hsk-card:active,
+        .word-item:active {
+            transform: scale(0.97);
+            opacity: 0.8;
+            transition: all 0.1s;
+        }
+
+        /* Исправление для кнопки отладки */
+        #debugConsole button {
+            min-height: 44px !important;
+            padding: 12px 20px !important;
+        }
+
+        /* Убираем задержку нажатия на iOS */
+        * {
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
         }
     </style>
 </head>
@@ -3503,73 +3615,199 @@ function loadUsers() {
             alert('✅ Информация в консоли (нажмите F12)');
         };
 
-        // Исправление для кнопок в PWA
+    <!-- Исправление для кнопок в PWA -->
+    <script>
         (function fixButtonsForPWA() {
-            if (!window.navigator.standalone) return; // Только для PWA
-            
-            console.log('📱 PWA режим: применяем исправления для кнопок');
+            console.log('🔧 Запуск исправления для кнопок...');
             
             function setupButtons() {
-                const loginBtn = document.getElementById('login-btn');
-                const registerBtn = document.getElementById('register-btn');
-                const guestLink = document.getElementById('guest-link');
-                const registerSubmitBtn = document.getElementById('register-submit-btn');
-                const backToAuth = document.getElementById('back-to-auth');
-                const selectHskBtn = document.getElementById('select-hsk-btn');
+                console.log('🔄 Настройка кнопок...');
                 
-                // Функция усиленной обработки для кнопки
-                function enhanceButton(btn) {
-                    if (!btn) return;
-                    
+                // Находим все возможные кнопки
+                const allButtons = [
+                    document.getElementById('login-btn'),
+                    document.getElementById('register-btn'),
+                    document.getElementById('guest-link'),
+                    document.getElementById('register-submit-btn'),
+                    document.getElementById('back-to-auth'),
+                    document.getElementById('select-hsk-btn'),
+                    ...document.querySelectorAll('.auth-button, .red-button, .auth-link, .back-btn')
+                ].filter(btn => btn !== null);
+                
+                console.log(`🔍 Найдено кнопок: ${allButtons.length}`);
+                
+                allButtons.forEach(btn => {
                     // Удаляем старые обработчики
-                    btn.removeEventListener('touchstart', btn._touchHandler);
+                    if (btn._touchStartHandler) {
+                        btn.removeEventListener('touchstart', btn._touchStartHandler);
+                    }
+                    if (btn._touchEndHandler) {
+                        btn.removeEventListener('touchend', btn._touchEndHandler);
+                    }
+                    if (btn._touchCancelHandler) {
+                        btn.removeEventListener('touchcancel', btn._touchCancelHandler);
+                    }
                     
-                    // Создаём новый обработчик
-                    btn._touchHandler = (e) => {
+                    // Создаём новые обработчики
+                    btn._touchStartHandler = (e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        btn.click();
+                        
+                        // Визуальная обратная связь
+                        btn.style.transform = 'scale(0.95)';
+                        btn.style.opacity = '0.7';
+                        btn.style.transition = 'all 0.1s';
+                        
+                        // Запоминаем, что начали нажатие
+                        btn._touchStarted = true;
+                        btn._touchStartTime = Date.now();
                     };
                     
-                    // Добавляем новый обработчик
-                    btn.addEventListener('touchstart', btn._touchHandler, {passive: false});
-                    
-                    // Визуальная обратная связь
-                    btn.addEventListener('touchstart', () => {
-                        btn.style.opacity = '0.7';
-                    }, {passive: true});
-                    
-                    btn.addEventListener('touchend', () => {
+                    btn._touchEndHandler = (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        // Возвращаем визуальный стиль
+                        btn.style.transform = 'scale(1)';
                         btn.style.opacity = '1';
-                    }, {passive: true});
+                        
+                        // Проверяем, было ли нажатие на этой кнопке
+                        if (btn._touchStarted) {
+                            btn._touchStarted = false;
+                            
+                            // Вычисляем длительность нажатия
+                            const touchDuration = Date.now() - (btn._touchStartTime || 0);
+                            
+                            // Если нажатие было коротким (меньше 500мс) - обрабатываем
+                            if (touchDuration < 500) {
+                                console.log('✅ Нажата кнопка:', btn.id || btn.className || 'безымянная');
+                                
+                                // Вызываем соответствующий обработчик
+                                if (btn.id === 'login-btn') {
+                                    const email = document.getElementById('login-email')?.value;
+                                    const password = document.getElementById('login-password')?.value;
+                                    
+                                    console.log('📧 Email:', email);
+                                    console.log('🔑 Пароль:', password ? 'введён' : 'пустой');
+                                    
+                                    if (users && users[email] && users[email].password === password) {
+                                        currentUser = email;
+                                        if (typeof loadUserProgress === 'function') loadUserProgress();
+                                        if (typeof updateUserUI === 'function') updateUserUI();
+                                        if (typeof showScreen === 'function') showScreen('hsk-screen');
+                                        console.log('✅ Вход успешен!');
+                                    } else {
+                                        alert('Неверный email или пароль');
+                                        console.log('❌ Ошибка входа');
+                                    }
+                                } 
+                                else if (btn.id === 'register-btn') {
+                                    console.log('📝 Переход к регистрации');
+                                    if (typeof showScreen === 'function') showScreen('register-screen');
+                                }
+                                else if (btn.id === 'guest-link') {
+                                    console.log('👤 Гостевой вход');
+                                    currentUser = null;
+                                    if (typeof updateUserUI === 'function') updateUserUI();
+                                    if (typeof showScreen === 'function') showScreen('hsk-screen');
+                                }
+                                else if (btn.id === 'back-to-auth') {
+                                    console.log('⬅️ Назад к авторизации');
+                                    if (typeof showScreen === 'function') showScreen('auth-screen');
+                                }
+                                else if (btn.id === 'register-submit-btn') {
+                                    console.log('📝 Регистрация нового пользователя');
+                                    
+                                    const name = document.getElementById('register-name')?.value;
+                                    const email = document.getElementById('register-email')?.value;
+                                    const password = document.getElementById('register-password')?.value;
+                                    const confirm = document.getElementById('register-confirm')?.value;
+                                    
+                                    if (!name || !email || !password) {
+                                        alert('Заполните все поля');
+                                        return;
+                                    }
+                                    
+                                    if (password !== confirm) {
+                                        alert('Пароли не совпадают');
+                                        return;
+                                    }
+                                    
+                                    if (users && users[email]) {
+                                        alert('Пользователь с таким email уже существует');
+                                        return;
+                                    }
+                                    
+                                    // Создаём нового пользователя
+                                    if (!users) users = {};
+                                    users[email] = {
+                                        name: name,
+                                        email: email,
+                                        password: password,
+                                        progress: {}
+                                    };
+                                    
+                                    if (typeof saveUsers === 'function') saveUsers();
+                                    alert('✅ Регистрация успешна! Теперь вы можете войти.');
+                                    if (typeof showScreen === 'function') showScreen('auth-screen');
+                                }
+                                else if (btn.id === 'select-hsk-btn') {
+                                    console.log('🎯 Выбор HSK уровня');
+                                    if (typeof renderBlocksScreen === 'function') renderBlocksScreen();
+                                    if (typeof showScreen === 'function') showScreen('blocks-screen');
+                                }
+                                else {
+                                    // Для остальных кнопок просто вызываем click
+                                    console.log('🔄 Эмуляция click для:', btn.id || btn.className);
+                                    btn.click();
+                                }
+                            }
+                        }
+                    };
                     
-                    btn.addEventListener('touchcancel', () => {
+                    btn._touchCancelHandler = (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        // Возвращаем визуальный стиль
+                        btn.style.transform = 'scale(1)';
                         btn.style.opacity = '1';
-                    }, {passive: true});
-                }
-                
-                // Применяем ко всем кнопкам
-                enhanceButton(loginBtn);
-                enhanceButton(registerBtn);
-                enhanceButton(guestLink);
-                enhanceButton(registerSubmitBtn);
-                enhanceButton(backToAuth);
-                enhanceButton(selectHskBtn);
-                
-                // Дополнительно для ссылок
-                document.querySelectorAll('.auth-link, .back-btn').forEach(enhanceButton);
+                        btn._touchStarted = false;
+                    };
+                    
+                    // Добавляем обработчики
+                    btn.addEventListener('touchstart', btn._touchStartHandler, {passive: false});
+                    btn.addEventListener('touchend', btn._touchEndHandler, {passive: false});
+                    btn.addEventListener('touchcancel', btn._touchCancelHandler, {passive: false});
+                    
+                    // Добавляем CSS-свойства для лучшего отклика
+                    btn.style.cursor = 'pointer';
+                    btn.style.touchAction = 'manipulation';
+                    btn.style.WebkitTapHighlightColor = 'transparent';
+                    btn.style.userSelect = 'none';
+                    btn.style.WebkitUserSelect = 'none';
+                    btn.style.minHeight = '48px';
+                    btn.style.minWidth = '48px';
+                });
             }
             
-            // Запускаем несколько раз для надёжности
+            // Запускаем много раз для надёжности
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', setupButtons);
             } else {
                 setupButtons();
             }
             window.addEventListener('load', setupButtons);
-            setTimeout(setupButtons, 500);
-            setTimeout(setupButtons, 1000);
-            setTimeout(setupButtons, 2000);
+            
+            // Запускаем с задержками
+            const delays = [500, 1000, 2000, 3000];
+            delays.forEach(delay => {
+                setTimeout(setupButtons, delay);
+            });
+            
+            // Также запускаем при изменении DOM
+            const observer = new MutationObserver(setupButtons);
+            observer.observe(document.body, { childList: true, subtree: true });
         })();
     </script>
 
@@ -3582,46 +3820,51 @@ function loadUsers() {
 
         console.log = function(...args) {
             window.originalConsoleLog.apply(console, args);
-            window.debugLogs.push('📗 ' + args.map(arg => {
-                if (typeof arg === 'object') {
-                    try {
-                        return JSON.stringify(arg);
-                    } catch(e) {
-                        return String(arg);
+            try {
+                window.debugLogs.push('📗 ' + args.map(arg => {
+                    if (typeof arg === 'object') {
+                        try {
+                            return JSON.stringify(arg);
+                        } catch(e) {
+                            return String(arg);
+                        }
                     }
-                }
-                return String(arg);
-            }).join(' '));
-            updateDebugDisplay();
+                    return String(arg);
+                }).join(' '));
+                updateDebugDisplay();
+            } catch(e) {}
         };
 
         console.error = function(...args) {
             window.originalConsoleError.apply(console, args);
-            window.debugLogs.push('📕 ' + args.map(String).join(' '));
-            updateDebugDisplay();
+            try {
+                window.debugLogs.push('📕 ' + args.map(String).join(' '));
+                updateDebugDisplay();
+            } catch(e) {}
         };
 
         function updateDebugDisplay() {
-            const display = document.getElementById('debugLogs');
-            if (display) {
-                display.innerHTML = window.debugLogs.slice(-30).join('<br>');
-            }
+            try {
+                const display = document.getElementById('debugLogs');
+                if (display) {
+                    display.innerHTML = window.debugLogs.slice(-30).join('<br>');
+                }
+            } catch(e) {}
         }
 
         window.toggleDebugConsole = function() {
-            const console = document.getElementById('debugConsole');
-            if (console) {
-                if (console.style.display === 'none' || console.style.display === '') {
-                    console.style.display = 'block';
+            const consoleEl = document.getElementById('debugConsole');
+            if (consoleEl) {
+                if (consoleEl.style.display === 'none' || consoleEl.style.display === '') {
+                    consoleEl.style.display = 'block';
                     updateDebugDisplay();
                     
-                    // Добавляем информацию о состоянии приложения
                     console.log('=== 🚀 СОСТОЯНИЕ ПРИЛОЖЕНИЯ ===');
                     console.log('📱 PWA режим:', window.navigator.standalone ? 'ДА' : 'НЕТ');
                     console.log('🔗 URL:', window.location.href);
-                    console.log('🕒 Время загрузки:', new Date().toLocaleTimeString());
+                    console.log('🕒 Время:', new Date().toLocaleTimeString());
                 } else {
-                    console.style.display = 'none';
+                    consoleEl.style.display = 'none';
                 }
             }
         };
@@ -3651,21 +3894,15 @@ function loadUsers() {
                 if (users) {
                     console.log('6️⃣ Доступные email:', Object.keys(users).join(', ') || 'нет пользователей');
                 } else {
-                    console.log('6️⃣ users не определен - вызываем loadUsers()');
-                    if (typeof loadUsers === 'function') {
-                        loadUsers();
-                        console.log('✅ loadUsers() вызван');
-                    } else {
-                        console.log('❌ loadUsers() не найдена');
-                    }
+                    console.log('6️⃣ users не определен');
                 }
             }
             
-            // Проверка наличия всех кнопок
             console.log('9️⃣ Проверка кнопок:');
             console.log('   - login-btn:', document.getElementById('login-btn') ? '✅' : '❌');
             console.log('   - register-btn:', document.getElementById('register-btn') ? '✅' : '❌');
             console.log('   - guest-link:', document.getElementById('guest-link') ? '✅' : '❌');
+            console.log('   - register-submit-btn:', document.getElementById('register-submit-btn') ? '✅' : '❌');
             console.log('   - debugConsole:', document.getElementById('debugConsole') ? '✅' : '❌');
         };
 
@@ -3674,45 +3911,25 @@ function loadUsers() {
             console.error('❌ ОШИБКА: ' + e.message + ' в ' + e.filename + ':' + e.lineno);
         });
 
-        // Логируем необработанные промисы
         window.addEventListener('unhandledrejection', (e) => {
             console.error('❌ НЕОБРАБОТАННЫЙ ПРОМИС:', e.reason);
         });
 
-        // Автоматическая диагностика при загрузке
+        // Автоматическая диагностика
         window.addEventListener('load', () => {
             console.log('✅ Страница полностью загружена');
             console.log('📱 PWA режим:', window.navigator.standalone ? 'ДА' : 'НЕТ');
             
-            // Проверяем users через секунду
             setTimeout(() => {
-                console.log('⏱️ Проверка users после загрузки:', users ? '✅ OK (' + Object.keys(users).length + ')' : '❌ НЕТ');
-                if (!users && typeof loadUsers === 'function') {
-                    console.log('🔄 Вызываем loadUsers()...');
-                    loadUsers();
-                    console.log('✅ После loadUsers():', users ? 'OK' : 'всё ещё нет');
-                }
+                console.log('⏱️ Проверка users:', users ? '✅ OK (' + Object.keys(users).length + ')' : '❌ НЕТ');
             }, 1000);
         });
 
         // Принудительная инициализация
         (function initialize() {
             console.log('🚀 Инициализация приложения...');
-            
-            // Пробуем загрузить пользователей
             if (typeof loadUsers === 'function') {
                 loadUsers();
-                console.log('✅ loadUsers() выполнен');
-            } else {
-                console.log('⚠️ loadUsers() не найдена - возможно, она ещё не определена');
-                
-                // Пробуем ещё раз позже
-                setTimeout(() => {
-                    if (typeof loadUsers === 'function') {
-                        loadUsers();
-                        console.log('✅ loadUsers() выполнен (повторно)');
-                    }
-                }, 500);
             }
         })();
     </script>
