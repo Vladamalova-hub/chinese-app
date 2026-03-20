@@ -4,12 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
-    <!-- Мета-теги для PWA (важно для iOS) -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="format-detection" content="telephone=no">
     
-    <!-- Манифест и иконки -->
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="icons/icon-192x192.png">
     
@@ -54,7 +52,6 @@
             overflow: hidden;
         }
 
-        /* ОСНОВНЫЕ ЭКРАНЫ */
         .screen {
             position: absolute;
             top: 0;
@@ -84,7 +81,6 @@
             flex-shrink: 0;
         }
 
-        /* КНОПКИ */
         .red-button {
             background: #8B0000;
             color: white;
@@ -107,7 +103,6 @@
             border: 2px solid #8B0000;
         }
 
-        /* АВТОРИЗАЦИЯ */
         .auth-container {
             padding: 40px 20px;
             display: flex;
@@ -193,7 +188,6 @@
             background: #FFE4E1;
         }
 
-        /* ПРОФИЛЬ */
         .user-profile {
             display: flex;
             align-items: center;
@@ -238,7 +232,6 @@
             flex-shrink: 0;
         }
 
-        /* HSK ГРИД */
         .hsk-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -273,7 +266,6 @@
             color: #666;
         }
 
-        /* БЛОКИ ТЕМ */
         .section-title {
             padding: 0 20px 10px;
             font-size: 18px;
@@ -284,63 +276,359 @@
             flex-shrink: 0;
         }
 
-        .blocks-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            padding: 0 14px 14px;
+        /* НОВЫЕ СТИЛИ ДЛЯ БЛОКОВ УРОВНЯ */
+        .level-blocks-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 20px;
             flex-shrink: 0;
         }
 
-        .block-card {
+        .level-block-card {
             background: white;
-            border-radius: 16px;
-            padding: 16px;
-            border: 1px solid #FFE4E1;
+            border-radius: 20px;
+            padding: 20px;
+            border: 2px solid #FFE4E1;
             cursor: pointer;
-            display: flex;
-            flex-direction: column;
+            transition: all 0.3s;
         }
 
-        .block-header {
+        .level-block-card:active {
+            transform: scale(0.98);
+        }
+
+        .level-block-header {
             display: flex;
             align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
+            gap: 12px;
+            margin-bottom: 10px;
         }
 
-        .block-icon {
+        .level-block-icon {
+            font-size: 32px;
+        }
+
+        .level-block-title {
             font-size: 20px;
+            font-weight: 700;
+            color: #8B0000;
         }
 
-        .block-name {
+        .level-block-desc {
+            color: #666;
             font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .level-block-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #8B0000;
+        }
+
+        /* СТИЛИ ДЛЯ МОЕГО СПИСКА */
+        .custom-words-list {
+            padding: 20px;
+        }
+
+        .add-word-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 28px;
+            background: #8B0000;
+            color: white;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(139, 0, 0, 0.3);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .add-word-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* МОДАЛЬНОЕ ОКНО ДОБАВЛЕНИЯ СЛОВА */
+        .add-word-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .add-word-modal.active {
+            display: flex;
+        }
+
+        .add-word-card {
+            background: white;
+            width: 90%;
+            max-width: 340px;
+            border-radius: 24px;
+            padding: 24px;
+            max-height: 80%;
+            overflow-y: auto;
+        }
+
+        .add-word-card h3 {
+            color: #8B0000;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .add-word-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #FFE4E1;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            -webkit-user-select: text;
+            user-select: text;
+        }
+
+        .add-word-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #FFE4E1;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            min-height: 80px;
+            -webkit-user-select: text;
+            user-select: text;
+            font-family: inherit;
+        }
+
+        /* СТИЛИ ДЛЯ КВИЗА */
+        .quiz-screen {
+            background: #FFF5F5;
+        }
+
+        .quiz-header {
+            padding: 15px 20px;
+            background: white;
+            border-bottom: 1px solid #FFE4E1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .quiz-score {
+            font-size: 18px;
             font-weight: 600;
             color: #8B0000;
         }
 
-        .block-stats {
+        .quiz-card-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            perspective: 1000px;
+            min-height: 400px;
+        }
+
+        .quiz-card {
+            width: 100%;
+            max-width: 300px;
+            height: 400px;
+            position: relative;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .quiz-card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .quiz-card-front, .quiz-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .quiz-card-front {
+            transform: rotateY(0deg);
+        }
+
+        .quiz-card-back {
+            transform: rotateY(180deg);
+        }
+
+        .quiz-card .chinese {
+            font-size: 48px;
+            font-weight: 700;
+            color: #8B0000;
+            margin-bottom: 20px;
+        }
+
+        .quiz-card .pinyin {
+            font-size: 24px;
+            color: #A52A2A;
+            margin-bottom: 15px;
+        }
+
+        .quiz-card .translation {
+            font-size: 20px;
+            color: #666;
+        }
+
+        .quiz-controls {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #FFE4E1;
+        }
+
+        .swipe-btn {
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            flex: 1;
+            margin: 0 10px;
+        }
+
+        .swipe-correct {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .swipe-wrong {
+            background: #f44336;
+            color: white;
+        }
+
+        .quiz-mode-select {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            padding: 20px;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .quiz-mode-btn {
+            padding: 16px 32px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            width: 80%;
+            max-width: 250px;
+        }
+
+        .quiz-mode-chinese {
+            background: #8B0000;
+            color: white;
+        }
+
+        .quiz-mode-russian {
+            background: white;
+            color: #8B0000;
+            border: 2px solid #8B0000;
+        }
+
+        .delete-word-btn {
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        /* ОСТАЛЬНЫЕ СТИЛИ */
+        .words-list {
+            padding: 0 20px 20px;
+        }
+
+        .word-item {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 1px solid #FFE4E1;
             display: flex;
             justify-content: space-between;
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 10px;
+            align-items: center;
+            cursor: pointer;
         }
 
-        .block-progress {
-            height: 6px;
+        .word-item:active {
             background: #FFE4E1;
-            border-radius: 3px;
-            overflow: hidden;
         }
 
-        .block-progress-fill {
-            height: 100%;
-            background: #8B0000;
-            width: 0%;
+        .word-item-left {
+            display: flex;
+            flex-direction: column;
         }
 
-        /* БАННЕР ПОВТОРЕНИЯ */
+        .word-item .chinese {
+            font-size: 18px;
+            font-weight: 600;
+            color: #8B0000;
+        }
+
+        .word-item .pinyin-small {
+            font-size: 14px;
+            color: #A52A2A;
+        }
+
+        .word-item .translation-small {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .mastered-badge {
+            background: #4CAF50;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        .not-mastered-badge {
+            background: #FFE4E1;
+            color: #8B0000;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
         .review-banner {
             background: #8B0000;
             margin: 15px 20px;
@@ -361,7 +649,6 @@
             100% { transform: scale(1); }
         }
 
-        /* ПРОГРЕСС */
         .progress-circle {
             position: relative;
             width: 120px;
@@ -411,7 +698,6 @@
             color: #666;
         }
 
-        /* КАРТОЧКИ ТРЕНИРОВКИ */
         .card-header {
             padding: 15px 20px;
             display: flex;
@@ -477,7 +763,6 @@
             font-size: 15px;
         }
 
-        /* ЗАДАНИЯ */
         .choice-char-trans-only {
             padding: 20px;
             text-align: center;
@@ -547,154 +832,66 @@
             color: white;
         }
 
-        /* СПИСОК СЛОВ */
-        .words-list {
-            padding: 0 20px 20px;
-        }
-
-        .word-item {
-            background: white;
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 10px;
-            border: 1px solid #FFE4E1;
+        .char-options {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        .word-item:active {
-            background: #FFE4E1;
-        }
-
-        .word-item-left {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .word-item .chinese {
-            font-size: 18px;
-            font-weight: 600;
-            color: #8B0000;
-        }
-
-        .word-item .pinyin-small {
-            font-size: 14px;
-            color: #A52A2A;
-        }
-
-        .word-item .translation-small {
-            font-size: 14px;
-            color: #666;
-        }
-
-        .word-item .mastered-badge {
-            background: #4CAF50;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 12px;
-        }
-
-        .word-item .not-mastered-badge {
-            background: #FFE4E1;
-            color: #8B0000;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 12px;
-        }
-
-        /* МОДАЛЬНОЕ ОКНО */
-        .modal-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            display: none;
+            flex-wrap: wrap;
+            gap: 10px;
             justify-content: center;
-            align-items: center;
-            z-index: 1000;
+            padding: 20px;
         }
 
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-card {
+        .char-btn {
+            width: 70px;
+            height: 70px;
             background: white;
-            width: 85%;
-            max-width: 340px;
-            border-radius: 32px;
-            padding: 30px 20px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(139,0,0,0.3);
-            border: 2px solid #8B0000;
-        }
-
-        .modal-char {
-            font-size: 64px;
-            font-weight: 700;
-            color: #8B0000;
-            margin-bottom: 10px;
-        }
-
-        .modal-pinyin {
-            font-size: 24px;
-            color: #A52A2A;
-            margin-bottom: 10px;
-        }
-
-        .modal-translation {
-            font-size: 22px;
-            color: #8B0000;
-            font-weight: 500;
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #FFE4E1;
-        }
-
-        .modal-example-chinese {
-            font-size: 18px;
-            color: #333;
-            margin-bottom: 5px;
-        }
-
-        .modal-example-translation {
-            font-size: 15px;
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        .modal-audio {
-            width: 60px;
-            height: 60px;
-            border-radius: 30px;
-            background: #8B0000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 10px auto 0;
-            cursor: pointer;
+            border: 2px solid #FFE4E1;
+            border-radius: 12px;
             font-size: 28px;
-            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #8B0000;
+            touch-action: manipulation;
         }
 
-        .modal-close {
-            margin-top: 20px;
-            padding: 10px 30px;
+        .char-btn:active {
+            transform: scale(0.95);
             background: #FFE4E1;
-            color: #8B0000;
+        }
+
+        .char-btn.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .compose-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        .compose-controls button {
+            padding: 12px 20px;
             border: none;
-            border-radius: 30px;
+            border-radius: 10px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
         }
 
-        /* ЗАДАНИЕ НА СОПОСТАВЛЕНИЕ */
+        .clear-btn {
+            background: #FFE4E1;
+            color: #8B0000;
+            border: 1px solid #8B0000;
+        }
+
+        .check-btn {
+            background: #8B0000;
+            color: white;
+        }
+
         .matching-section {
             background: white;
             border-radius: 16px;
@@ -814,7 +1011,6 @@
             cursor: default;
         }
 
-        /* НОВОЕ ЗАДАНИЕ: СОЕДИНИТЬ ВСЕ СЛОВА */
         .match-all-section {
             background: white;
             border-radius: 16px;
@@ -894,7 +1090,6 @@
             cursor: default;
         }
 
-        /* АУДИО КНОПКА */
         .audio-btn {
             width: 60px;
             height: 60px;
@@ -914,108 +1109,94 @@
             transform: scale(0.95);
         }
 
-        /* ЗАДАНИЕ СОСТАВИТЬ СЛОВО */
-        .char-options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
             justify-content: center;
-            padding: 20px;
-        }
-
-        .char-btn {
-            width: 70px;
-            height: 70px;
-            background: white;
-            border: 2px solid #FFE4E1;
-            border-radius: 12px;
-            font-size: 28px;
-            display: flex;
             align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: #8B0000;
-            touch-action: manipulation;
-        }
-
-        .char-btn:active {
-            transform: scale(0.95);
-            background: #FFE4E1;
-        }
-
-        .char-btn.disabled {
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
-        /* НИЖНЯЯ НАВИГАЦИЯ */
-        .bottom-nav {
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            border-top: 1px solid #FFE4E1;
-            background: white;
-            margin-top: auto;
-            flex-shrink: 0;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #999;
-            font-size: 12px;
-            cursor: pointer;
-            touch-action: manipulation;
-        }
-
-        .nav-item:active {
-            color: #8B0000;
-        }
-
-        .nav-item.active {
-            color: #8B0000;
-        }
-
-        .back-btn {
-            font-size: 24px;
-            cursor: pointer;
-            color: white;
-            touch-action: manipulation;
-        }
-
-        .back-btn:active {
-            opacity: 0.7;
-        }
-
-        /* СКРОЛЛ */
-        .scroll-content {
-            flex: 1;
-            overflow-y: auto;
-            overflow-x: hidden;
-            -webkit-overflow-scrolling: touch;
-            padding-bottom: 20px;
-        }
-
-        /* ОБРАТНАЯ СВЯЗЬ */
-        .feedback-overlay {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 80px;
             z-index: 1000;
-            animation: popIn 0.5s;
-            pointer-events: none;
         }
 
-        @keyframes popIn {
-            0% { transform: translate(-50%, -50%) scale(0); }
-            80% { transform: translate(-50%, -50%) scale(1.2); }
-            100% { transform: translate(-50%, -50%) scale(1); }
+        .modal-overlay.active {
+            display: flex;
         }
 
-        /* ЭКРАН ЗАВЕРШЕНИЯ */
+        .modal-card {
+            background: white;
+            width: 85%;
+            max-width: 340px;
+            border-radius: 32px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(139,0,0,0.3);
+            border: 2px solid #8B0000;
+        }
+
+        .modal-char {
+            font-size: 64px;
+            font-weight: 700;
+            color: #8B0000;
+            margin-bottom: 10px;
+        }
+
+        .modal-pinyin {
+            font-size: 24px;
+            color: #A52A2A;
+            margin-bottom: 10px;
+        }
+
+        .modal-translation {
+            font-size: 22px;
+            color: #8B0000;
+            font-weight: 500;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #FFE4E1;
+        }
+
+        .modal-example-chinese {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .modal-example-translation {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .modal-audio {
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            background: #8B0000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px auto 0;
+            cursor: pointer;
+            font-size: 28px;
+            color: white;
+        }
+
+        .modal-close {
+            margin-top: 20px;
+            padding: 10px 30px;
+            background: #FFE4E1;
+            color: #8B0000;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
         .completion-container {
             display: flex;
             flex-direction: column;
@@ -1049,35 +1230,42 @@
             width: 100%;
         }
 
-        /* УПРАВЛЕНИЕ COMPOSE */
-        .compose-controls {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin: 10px 0;
-        }
-
-        .compose-controls button {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
+        .back-btn {
+            font-size: 24px;
             cursor: pointer;
-        }
-
-        .clear-btn {
-            background: #FFE4E1;
-            color: #8B0000;
-            border: 1px solid #8B0000;
-        }
-
-        .check-btn {
-            background: #8B0000;
             color: white;
+            touch-action: manipulation;
         }
 
-        /* ====== СПЕЦИАЛЬНО ДЛЯ PWA ====== */
+        .back-btn:active {
+            opacity: 0.7;
+        }
+
+        .scroll-content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 20px;
+        }
+
+        .feedback-overlay {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 80px;
+            z-index: 1000;
+            animation: popIn 0.5s;
+            pointer-events: none;
+        }
+
+        @keyframes popIn {
+            0% { transform: translate(-50%, -50%) scale(0); }
+            80% { transform: translate(-50%, -50%) scale(1.2); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
         button, 
         .auth-button, 
         .red-button,
@@ -1091,7 +1279,6 @@
         .pinyin-option,
         .trans-option,
         .match-trans-item,
-        .nav-item,
         [onclick] {
             cursor: pointer !important;
             touch-action: manipulation !important;
@@ -1103,7 +1290,6 @@
             z-index: 10 !important;
         }
 
-        /* Убираем стандартное поведение iOS */
         input, 
         textarea,
         button,
@@ -1113,21 +1299,18 @@
             border-radius: 0;
         }
 
-        /* Увеличиваем область нажатия для ссылок */
         .auth-link {
             display: inline-block !important;
             padding: 12px 20px !important;
             margin: -12px -20px !important;
         }
 
-        /* Исправление для гостевой ссылки */
         #guest-link {
             display: inline-block !important;
             padding: 15px 25px !important;
             margin: -15px -25px !important;
         }
 
-        /* Анимация нажатия */
         .auth-button:active,
         .red-button:active,
         button:active,
@@ -1139,308 +1322,15 @@
             transition: all 0.1s;
         }
 
-        /* Исправление для кнопки отладки */
         #debugConsole button {
             min-height: 44px !important;
             padding: 12px 20px !important;
         }
 
-        /* Убираем задержку нажатия на iOS */
         * {
             -webkit-touch-callout: none;
             -webkit-tap-highlight-color: rgba(0,0,0,0);
         }
-        /* НОВЫЕ СТИЛИ ДЛЯ БЛОКОВ УРОВНЯ */
-.level-blocks-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    padding: 20px;
-    flex-shrink: 0;
-}
-
-.level-block-card {
-    background: white;
-    border-radius: 20px;
-    padding: 20px;
-    border: 2px solid #FFE4E1;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.level-block-card:active {
-    transform: scale(0.98);
-}
-
-.level-block-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 10px;
-}
-
-.level-block-icon {
-    font-size: 32px;
-}
-
-.level-block-title {
-    font-size: 20px;
-    font-weight: 700;
-    color: #8B0000;
-}
-
-.level-block-desc {
-    color: #666;
-    font-size: 14px;
-    margin-bottom: 12px;
-}
-
-.level-block-stats {
-    display: flex;
-    justify-content: space-between;
-    font-size: 13px;
-    color: #8B0000;
-}
-
-.custom-words-list {
-    padding: 20px;
-}
-
-.add-word-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 56px;
-    height: 56px;
-    border-radius: 28px;
-    background: #8B0000;
-    color: white;
-    border: none;
-    font-size: 28px;
-    cursor: pointer;
-    box-shadow: 0 2px 10px rgba(139, 0, 0, 0.3);
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.add-word-btn:active {
-    transform: scale(0.95);
-}
-
-.add-word-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.add-word-modal.active {
-    display: flex;
-}
-
-.add-word-card {
-    background: white;
-    width: 90%;
-    max-width: 340px;
-    border-radius: 24px;
-    padding: 24px;
-    max-height: 80%;
-    overflow-y: auto;
-}
-
-.add-word-card h3 {
-    color: #8B0000;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.add-word-input {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid #FFE4E1;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    font-size: 14px;
-    -webkit-user-select: text;
-    user-select: text;
-}
-
-.add-word-textarea {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid #FFE4E1;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    font-size: 14px;
-    min-height: 80px;
-    -webkit-user-select: text;
-    user-select: text;
-    font-family: inherit;
-}
-
-.quiz-screen {
-    background: #FFF5F5;
-}
-
-.quiz-header {
-    padding: 15px 20px;
-    background: white;
-    border-bottom: 1px solid #FFE4E1;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.quiz-score {
-    font-size: 18px;
-    font-weight: 600;
-    color: #8B0000;
-}
-
-.quiz-card-container {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    perspective: 1000px;
-    min-height: 400px;
-}
-
-.quiz-card {
-    width: 100%;
-    max-width: 300px;
-    height: 400px;
-    position: relative;
-    cursor: pointer;
-    transform-style: preserve-3d;
-    transition: transform 0.6s;
-}
-
-.quiz-card.flipped {
-    transform: rotateY(180deg);
-}
-
-.quiz-card-front, .quiz-card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    background: white;
-    border-radius: 24px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    text-align: center;
-}
-
-.quiz-card-front {
-    transform: rotateY(0deg);
-}
-
-.quiz-card-back {
-    transform: rotateY(180deg);
-}
-
-.quiz-card .chinese {
-    font-size: 48px;
-    font-weight: 700;
-    color: #8B0000;
-    margin-bottom: 20px;
-}
-
-.quiz-card .pinyin {
-    font-size: 24px;
-    color: #A52A2A;
-    margin-bottom: 15px;
-}
-
-.quiz-card .translation {
-    font-size: 20px;
-    color: #666;
-}
-
-.quiz-controls {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    padding: 20px;
-    background: white;
-    border-top: 1px solid #FFE4E1;
-}
-
-.swipe-btn {
-    padding: 12px 24px;
-    border-radius: 30px;
-    font-size: 16px;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-    flex: 1;
-    margin: 0 10px;
-}
-
-.swipe-correct {
-    background: #4CAF50;
-    color: white;
-}
-
-.swipe-wrong {
-    background: #f44336;
-    color: white;
-}
-
-.quiz-mode-select {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    padding: 20px;
-    flex-direction: column;
-    align-items: center;
-}
-
-.quiz-mode-btn {
-    padding: 16px 32px;
-    border-radius: 30px;
-    font-size: 18px;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-    width: 80%;
-    max-width: 250px;
-}
-
-.quiz-mode-chinese {
-    background: #8B0000;
-    color: white;
-}
-
-.quiz-mode-russian {
-    background: white;
-    color: #8B0000;
-    border: 2px solid #8B0000;
-}
-
-.delete-word-btn {
-    background: #f44336;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 6px 12px;
-    font-size: 12px;
-    cursor: pointer;
-}
     </style>
 </head>
 <body>
@@ -1474,20 +1364,17 @@
                         <span class="auth-link" id="guest-link">Продолжить как гость</span>
                     </div>
                     
-                    <!-- Кнопки отладки -->
                     <div style="margin-top: 20px; text-align: center; font-size: 12px; color: #999;">
                         <span onclick="debugAuth()" style="text-decoration: underline; cursor: pointer;">🔧 Отладка</span>
                         <span onclick="clearAppCache()" style="text-decoration: underline; cursor: pointer; margin-left: 15px;">🗑️ Очистить кэш</span>
                     </div>
 
-                    <!-- КНОПКА ОТЛАДКИ PWA -->
                     <div style="position: fixed; bottom: 20px; right: 20px; z-index: 10000;">
                         <button onclick="toggleDebugConsole()" style="background: #8B0000; color: white; border: none; border-radius: 30px; padding: 15px 25px; font-size: 16px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
                             🐛 ОТЛАДКА PWA
                         </button>
                     </div>
 
-                    <!-- КОНСОЛЬ ОТЛАДКИ (СКРЫТА) -->
                     <div id="debugConsole" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; padding: 20px; overflow-y: auto; color: #00ff00; font-family: monospace; font-size: 12px;">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 15px; position: sticky; top: 0; background: #000; padding: 10px;">
                             <span style="color: white; font-size: 18px; font-weight: bold;">🔍 КОНСОЛЬ PWA</span>
@@ -1581,7 +1468,6 @@
                     <button class="red-button" id="select-hsk-btn" style="width: 100%;">Выбрать HSK</button>
                 </div>
                 
-                <!-- ДЕКОРАТИВНАЯ КАРТИНКА -->
                 <div style="display: flex; justify-content: center; align-items: center; padding: 20px 0 40px 0;">
                     <img src="images/menu-bg.jpg" alt="Menu decoration" 
                          style="max-width: 80%; height: auto; border-radius: 20px; opacity: 0.8; box-shadow: 0 4px 15px rgba(139,0,0,0.2);">
@@ -1589,7 +1475,7 @@
             </div>
         </div>
 
-        <!-- Экран с блоками слов HSK -->
+        <!-- Экран с блоками HSK (3 блока) -->
         <div id="blocks-screen" class="screen">
             <div class="user-profile">
                 <div class="user-avatar" id="user-avatar-blocks">В</div>
@@ -1629,18 +1515,63 @@
                     </div>
                 </div>
                 
-                <div class="section-title">Темы</div>
-                <div class="blocks-grid" id="blocks-container"></div>
+                <div class="section-title">Меню</div>
+                <div id="blocks-container" class="level-blocks-container"></div>
             </div>
         </div>
 
-        <!-- Экран детального блока -->
+        <!-- Экран детального блока (списки слов) -->
         <div id="block-detail-screen" class="screen">
             <div class="user-profile">
                 <div class="user-avatar" id="user-avatar-detail">В</div>
                 <div class="user-email" id="user-email-detail">vladamalova@example.com</div>
                 <button class="logout-btn" id="logout-btn-detail">Выйти</button>
-                        <!-- ЭКРАН МОЕГО СПИСКА -->
+            </div>
+            
+            <div class="status-bar">
+                <span>9:41</span>
+                <span>🔋 100%</span>
+            </div>
+            <div style="background: #8B0000; color: white; padding: 15px; display: flex; align-items: center; gap: 15px; flex-shrink: 0;">
+                <span class="back-btn" id="back-to-blocks">←</span>
+                <h2 id="block-title" style="font-size: 24px;">Глаголы</h2>
+            </div>
+            
+            <div class="scroll-content">
+                <div style="padding: 20px;">
+                    <div style="background: white; border-radius: 20px; padding: 20px; border: 1px solid #FFE4E1;">
+                        <div class="progress-circle" id="progress-circle">
+                            <svg viewBox="0 0 120 120">
+                                <circle class="bg-circle" cx="60" cy="60" r="50"></circle>
+                                <circle class="progress-circle-fill" cx="60" cy="60" r="50" id="circle-progress"></circle>
+                            </svg>
+                            <div class="progress-text">
+                                <div class="percentage" id="circle-percentage">0%</div>
+                                <div class="label">выучено</div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 20px; text-align: center;">
+                            <div style="flex: 1;">
+                                <div style="font-size: 24px; color: #8B0000; font-weight: 600;" id="block-mastered-circle">0</div>
+                                <div style="font-size: 12px; color: #666;">выучено</div>
+                            </div>
+                            <div style="flex: 1;">
+                                <div style="font-size: 24px; color: #666;" id="block-total-circle">0</div>
+                                <div style="font-size: 12px; color: #666;">всего</div>
+                            </div>
+                        </div>
+                        
+                        <button class="red-button" id="study-block-btn" style="width: 100%;">Учить слова</button>
+                    </div>
+                </div>
+                
+                <div class="section-title">Список слов</div>
+                <div class="words-list" id="words-list-container"></div>
+            </div>
+        </div>
+
+        <!-- ЭКРАН МОЕГО СПИСКА -->
         <div id="my-list-screen" class="screen">
             <div class="user-profile">
                 <div class="user-avatar" id="user-avatar-mylist">В</div>
@@ -1735,50 +1666,6 @@
                 Нажмите на карточку, чтобы перевернуть
             </div>
         </div>
-            </div>
-            
-            <div class="status-bar">
-                <span>9:41</span>
-                <span>🔋 100%</span>
-            </div>
-            <div style="background: #8B0000; color: white; padding: 15px; display: flex; align-items: center; gap: 15px; flex-shrink: 0;">
-                <span class="back-btn" id="back-to-blocks">←</span>
-                <h2 id="block-title" style="font-size: 24px;">Глаголы</h2>
-            </div>
-            
-            <div class="scroll-content">
-                <div style="padding: 20px;">
-                    <div style="background: white; border-radius: 20px; padding: 20px; border: 1px solid #FFE4E1;">
-                        <div class="progress-circle" id="progress-circle">
-                            <svg viewBox="0 0 120 120">
-                                <circle class="bg-circle" cx="60" cy="60" r="50"></circle>
-                                <circle class="progress-circle-fill" cx="60" cy="60" r="50" id="circle-progress"></circle>
-                            </svg>
-                            <div class="progress-text">
-                                <div class="percentage" id="circle-percentage">0%</div>
-                                <div class="label">выучено</div>
-                            </div>
-                        </div>
-                        
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 20px; text-align: center;">
-                            <div style="flex: 1;">
-                                <div style="font-size: 24px; color: #8B0000; font-weight: 600;" id="block-mastered-circle">0</div>
-                                <div style="font-size: 12px; color: #666;">выучено</div>
-                            </div>
-                            <div style="flex: 1;">
-                                <div style="font-size: 24px; color: #666;" id="block-total-circle">0</div>
-                                <div style="font-size: 12px; color: #666;">всего</div>
-                            </div>
-                        </div>
-                        
-                        <button class="red-button" id="study-block-btn" style="width: 100%;">Учить слова</button>
-                    </div>
-                </div>
-                
-                <div class="section-title">Список слов</div>
-                <div class="words-list" id="words-list-container"></div>
-            </div>
-        </div>
 
         <!-- Экран тренировки -->
         <div id="study-screen" class="screen">
@@ -1816,7 +1703,7 @@
             </div>
         </div>
 
-        <!-- Экран завершения блока (все слова выучены) -->
+        <!-- Экран завершения блока -->
         <div id="block-complete-screen" class="screen">
             <div class="user-profile">
                 <div class="user-avatar" id="user-avatar-complete">В</div>
@@ -1861,13 +1748,20 @@
         let users = {};
         let currentUser = null;
         let currentHSK = 3;
+        
+        // НОВЫЕ ПЕРЕМЕННЫЕ
+        let customWords = [];
+        let quizWords = [];
+        let currentQuizIndex = 0;
+        let quizScore = 0;
+        let quizMode = 'chinese';
+        let isCardFlipped = false;
 
         function loadUsers() {
             try {
                 const saved = localStorage.getItem('hsk_users');
                 if (saved) {
                     users = JSON.parse(saved);
-                    console.log('Пользователи загружены:', users);
                 } else {
                     users = {
                         'vladamalova@example.com': {
@@ -1878,7 +1772,6 @@
                         }
                     };
                     saveUsers();
-                    console.log('Созданы тестовые пользователи');
                 }
             } catch (e) {
                 console.error('Ошибка загрузки пользователей:', e);
@@ -1929,267 +1822,7 @@
                 saveUsers();
             }
         }
-                // ============================================
-        // ФУНКЦИИ ДЛЯ РАБОТЫ С ПОЛЬЗОВАТЕЛЬСКИМИ СЛОВАМИ
-        // ============================================
         
-        function loadCustomWords() {
-            const key = currentUser ? `hsk_custom_words_${currentUser}` : 'hsk_custom_words_guest';
-            const saved = localStorage.getItem(key);
-            if (saved) {
-                customWords = JSON.parse(saved);
-            } else {
-                customWords = [];
-            }
-        }
-        
-        function saveCustomWords() {
-            const key = currentUser ? `hsk_custom_words_${currentUser}` : 'hsk_custom_words_guest';
-            localStorage.setItem(key, JSON.stringify(customWords));
-        }
-        
-        function addCustomWord(characters, pinyin, translation, example, exampleTranslation) {
-            const newWord = {
-                id: Date.now(),
-                characters: characters,
-                pinyin: pinyin,
-                translation: translation,
-                example: example || characters,
-                exampleTranslation: exampleTranslation || translation,
-                listId: 999,
-                hskLevel: currentHSK,
-                mastered: 0,
-                timesReviewed: 0,
-                correctCount: 0,
-                lastReviewed: null,
-                isCustom: true
-            };
-            customWords.push(newWord);
-            saveCustomWords();
-            renderCustomWordsList();
-        }
-        
-        function deleteCustomWord(wordId) {
-            customWords = customWords.filter(w => w.id !== wordId);
-            saveCustomWords();
-            renderCustomWordsList();
-        }
-        
-        function renderCustomWordsList() {
-            const container = document.getElementById('custom-words-container');
-            if (!container) return;
-            
-            if (customWords.length === 0) {
-                container.innerHTML = `
-                    <div style="text-align: center; padding: 40px; color: #666;">
-                        <div style="font-size: 48px; margin-bottom: 10px;">📝</div>
-                        <p>У вас пока нет добавленных слов</p>
-                        <p style="font-size: 12px; margin-top: 10px;">Нажмите кнопку + чтобы добавить слово</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            container.innerHTML = customWords.map(word => `
-                <div class="word-item" onclick="openWordModal(${word.id})">
-                    <div class="word-item-left">
-                        <span class="chinese">${word.characters}</span>
-                        <span class="pinyin-small">${word.pinyin}</span>
-                        <span class="translation-small">${word.translation}</span>
-                    </div>
-                    <button class="delete-word-btn" onclick="event.stopPropagation(); deleteCustomWord(${word.id})">Удалить</button>
-                </div>
-            `).join('');
-        }
-
-        // ============================================
-        // ФУНКЦИИ ДЛЯ КВИЗА
-        // ============================================
-        
-        function startQuiz(mode) {
-            quizMode = mode;
-            quizScore = 0;
-            currentQuizIndex = 0;
-            
-            const allHskWords = wordsData.filter(w => w.hskLevel === currentHSK);
-            const shuffled = shuffleArray([...allHskWords]);
-            quizWords = shuffled.slice(0, 30);
-            
-            updateQuizScore();
-            showQuizCard();
-            document.getElementById('quiz-mode-screen').classList.remove('active');
-            document.getElementById('quiz-screen').classList.add('active');
-        }
-        
-        function showQuizCard() {
-            if (currentQuizIndex >= quizWords.length) {
-                finishQuiz();
-                return;
-            }
-            
-            const word = quizWords[currentQuizIndex];
-            const frontDiv = document.getElementById('quiz-card-front');
-            const backDiv = document.getElementById('quiz-card-back');
-            const card = document.getElementById('quiz-card');
-            
-            card.classList.remove('flipped');
-            isCardFlipped = false;
-            
-            if (quizMode === 'chinese') {
-                frontDiv.innerHTML = `
-                    <div class="chinese">${word.characters}</div>
-                    <div class="pinyin" style="font-size: 18px; color: #999; margin-top: 10px;">(нажмите для ответа)</div>
-                `;
-                backDiv.innerHTML = `
-                    <div class="translation">${word.translation}</div>
-                    <div class="pinyin" style="font-size: 18px; margin-top: 15px;">${word.pinyin}</div>
-                `;
-            } else {
-                frontDiv.innerHTML = `
-                    <div class="translation" style="font-size: 28px;">${word.translation}</div>
-                    <div class="pinyin" style="font-size: 18px; color: #999; margin-top: 10px;">(нажмите для ответа)</div>
-                `;
-                backDiv.innerHTML = `
-                    <div class="chinese">${word.characters}</div>
-                    <div class="pinyin" style="font-size: 18px; margin-top: 15px;">${word.pinyin}</div>
-                `;
-            }
-        }
-        
-        function flipCard() {
-            const card = document.getElementById('quiz-card');
-            card.classList.add('flipped');
-            isCardFlipped = true;
-        }
-        
-        function correctAnswer() {
-            quizScore++;
-            updateQuizScore();
-            nextCard();
-        }
-        
-        function wrongAnswer() {
-            quizScore = Math.max(0, quizScore - 1);
-            updateQuizScore();
-            nextCard();
-        }
-        
-        function nextCard() {
-            currentQuizIndex++;
-            if (currentQuizIndex < quizWords.length) {
-                showQuizCard();
-            } else {
-                finishQuiz();
-            }
-        }
-        
-        function updateQuizScore() {
-            document.getElementById('quiz-score').textContent = `Счёт: ${quizScore}`;
-        }
-        
-        function finishQuiz() {
-            alert(`Квиз завершён!\nВаш счёт: ${quizScore} из ${quizWords.length}\n${quizScore >= 20 ? 'Отличный результат! 🎉' : 'Попробуйте ещё раз! 💪'}`);
-            document.getElementById('quiz-screen').classList.remove('active');
-            showScreen('hsk-screen');
-        }
-
-        // ============================================
-        // ФУНКЦИЯ ДЛЯ ЗАДАНИЯ С ПИНЬИНЬ (с разными тонами)
-        // ============================================
-        
-        function generateToneVariants(pinyin) {
-            const syllables = pinyin.split(' ');
-            const variants = [];
-            
-            const toneMap = {
-                'a': ['ā', 'á', 'ǎ', 'à'],
-                'e': ['ē', 'é', 'ě', 'è'],
-                'i': ['ī', 'í', 'ǐ', 'ì'],
-                'o': ['ō', 'ó', 'ǒ', 'ò'],
-                'u': ['ū', 'ú', 'ǔ', 'ù'],
-                'ü': ['ǖ', 'ǘ', 'ǚ', 'ǜ']
-            };
-            
-            syllables.forEach(syllable => {
-                let hasVariant = false;
-                for (let vowel in toneMap) {
-                    if (syllable.includes(vowel)) {
-                        const variantsForVowel = toneMap[vowel];
-                        variantsForVowel.forEach(variant => {
-                            const newSyllable = syllable.replace(vowel, variant);
-                            variants.push(newSyllable);
-                        });
-                        hasVariant = true;
-                        break;
-                    }
-                }
-                if (!hasVariant) {
-                    variants.push(syllable);
-                }
-            });
-            
-            return [...new Set(variants)];
-        }
-        
-        function showChoicePinyinCard(word) {
-            const basePinyin = word.pinyin;
-            const toneVariants = generateToneVariants(basePinyin);
-            
-            let options = [basePinyin];
-            for (let variant of toneVariants) {
-                if (variant !== basePinyin && options.length < 4) {
-                    options.push(variant);
-                }
-            }
-            while (options.length < 4) {
-                const randomWord = wordsData[Math.floor(Math.random() * wordsData.length)];
-                if (!options.includes(randomWord.pinyin)) {
-                    options.push(randomWord.pinyin);
-                }
-            }
-            options = shuffleArray(options);
-            
-            document.getElementById('card-content').innerHTML = `
-                <div class="choice-char-trans-only">
-                    <div class="chinese-char">${word.characters}</div>
-                    <div class="audio-btn" onclick="speak('${word.characters}')">🔊</div>
-                    <div class="options-vertical">
-                        ${options.map(opt => `
-                            <div class="option-vertical-item" onclick="checkPinyinAnswer(this, '${opt}', '${word.pinyin}', '${word.id}')">
-                                <span class="pinyin-small">${opt}</span>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-        }
-        
-        window.checkPinyinAnswer = function(element, selected, correct, wordId) {
-            const word = wordsData.find(w => w.id == wordId);
-            
-            document.querySelectorAll('.option-vertical-item').forEach(el => {
-                el.classList.remove('correct', 'wrong');
-            });
-            
-            if (selected === correct) {
-                element.classList.add('correct');
-                showFeedback(true);
-                word.correctCount++;
-                word.timesReviewed++;
-                word.lastReviewed = Date.now();
-                if (word.correctCount >= 5) word.mastered = 5;
-                saveUserProgress();
-                
-                setTimeout(() => {
-                    currentIndex++;
-                    showTask();
-                }, 1000);
-            } else {
-                element.classList.add('wrong');
-                showFeedback(false);
-                setTimeout(() => element.classList.remove('wrong'), 500);
-            }
-        };
         function updateUserUI() {
             const user = currentUser ? users[currentUser] : null;
             const userInitial = user ? user.name.charAt(0).toUpperCase() : 'Г';
@@ -2211,7 +1844,7 @@
         }
 
         // ============================================
-        // СЛОВА HSK 3 (315 слов)
+        // СЛОВА - ВСТАВЬТЕ ВАШИ СЛОВА ЗДЕСЬ
         // ============================================
         
         const hsk3Words = [
@@ -3297,16 +2930,278 @@
         ];
 
         // Состояние приложения
-        // НОВЫЕ ПЕРЕМЕННЫЕ
-        let customWords = [];
-        let quizWords = [];
-        let currentQuizIndex = 0;
-        let quizScore = 0;
-        let quizMode = 'chinese';
-        let isCardFlipped = false;
+        let currentBlock = 1;
+        let studyWords = [];
+        let studyQueue = [];
+        let currentIndex = 0;
+        let studyBlockId = 1;
+        let selectedChars = [];
+        let currentMatchAllPairs = [];
 
         // ============================================
-        // ФУНКЦИИ ДЛЯ РАБОТЫ С ПРОГРЕССОМ
+        // ФУНКЦИИ ДЛЯ РАБОТЫ С ПОЛЬЗОВАТЕЛЬСКИМИ СЛОВАМИ
+        // ============================================
+        
+        function loadCustomWords() {
+            const key = currentUser ? `hsk_custom_words_${currentUser}` : 'hsk_custom_words_guest';
+            const saved = localStorage.getItem(key);
+            if (saved) {
+                customWords = JSON.parse(saved);
+            } else {
+                customWords = [];
+            }
+        }
+        
+        function saveCustomWords() {
+            const key = currentUser ? `hsk_custom_words_${currentUser}` : 'hsk_custom_words_guest';
+            localStorage.setItem(key, JSON.stringify(customWords));
+        }
+        
+        function addCustomWord(characters, pinyin, translation, example, exampleTranslation) {
+            const newWord = {
+                id: Date.now(),
+                characters: characters,
+                pinyin: pinyin,
+                translation: translation,
+                example: example || characters,
+                exampleTranslation: exampleTranslation || translation,
+                listId: 999,
+                hskLevel: currentHSK,
+                mastered: 0,
+                timesReviewed: 0,
+                correctCount: 0,
+                lastReviewed: null,
+                isCustom: true
+            };
+            customWords.push(newWord);
+            saveCustomWords();
+            renderCustomWordsList();
+        }
+        
+        function deleteCustomWord(wordId) {
+            customWords = customWords.filter(w => w.id !== wordId);
+            saveCustomWords();
+            renderCustomWordsList();
+        }
+        
+        function renderCustomWordsList() {
+            const container = document.getElementById('custom-words-container');
+            if (!container) return;
+            
+            if (customWords.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #666;">
+                        <div style="font-size: 48px; margin-bottom: 10px;">📝</div>
+                        <p>У вас пока нет добавленных слов</p>
+                        <p style="font-size: 12px; margin-top: 10px;">Нажмите кнопку + чтобы добавить слово</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = customWords.map(word => `
+                <div class="word-item" onclick="openWordModal(${word.id})">
+                    <div class="word-item-left">
+                        <span class="chinese">${word.characters}</span>
+                        <span class="pinyin-small">${word.pinyin}</span>
+                        <span class="translation-small">${word.translation}</span>
+                    </div>
+                    <button class="delete-word-btn" onclick="event.stopPropagation(); deleteCustomWord(${word.id})">Удалить</button>
+                </div>
+            `).join('');
+        }
+
+        // ============================================
+        // ФУНКЦИИ ДЛЯ КВИЗА
+        // ============================================
+        
+        function startQuiz(mode) {
+            quizMode = mode;
+            quizScore = 0;
+            currentQuizIndex = 0;
+            
+            const allHskWords = wordsData.filter(w => w.hskLevel === currentHSK);
+            const shuffled = shuffleArray([...allHskWords]);
+            quizWords = shuffled.slice(0, 30);
+            
+            updateQuizScore();
+            showQuizCard();
+            document.getElementById('quiz-mode-screen').classList.remove('active');
+            document.getElementById('quiz-screen').classList.add('active');
+        }
+        
+        function showQuizCard() {
+            if (currentQuizIndex >= quizWords.length) {
+                finishQuiz();
+                return;
+            }
+            
+            const word = quizWords[currentQuizIndex];
+            const frontDiv = document.getElementById('quiz-card-front');
+            const backDiv = document.getElementById('quiz-card-back');
+            const card = document.getElementById('quiz-card');
+            
+            card.classList.remove('flipped');
+            isCardFlipped = false;
+            
+            if (quizMode === 'chinese') {
+                frontDiv.innerHTML = `
+                    <div class="chinese">${word.characters}</div>
+                    <div class="pinyin" style="font-size: 18px; color: #999; margin-top: 10px;">(нажмите для ответа)</div>
+                `;
+                backDiv.innerHTML = `
+                    <div class="translation">${word.translation}</div>
+                    <div class="pinyin" style="font-size: 18px; margin-top: 15px;">${word.pinyin}</div>
+                `;
+            } else {
+                frontDiv.innerHTML = `
+                    <div class="translation" style="font-size: 28px;">${word.translation}</div>
+                    <div class="pinyin" style="font-size: 18px; color: #999; margin-top: 10px;">(нажмите для ответа)</div>
+                `;
+                backDiv.innerHTML = `
+                    <div class="chinese">${word.characters}</div>
+                    <div class="pinyin" style="font-size: 18px; margin-top: 15px;">${word.pinyin}</div>
+                `;
+            }
+        }
+        
+        function flipCard() {
+            const card = document.getElementById('quiz-card');
+            card.classList.add('flipped');
+            isCardFlipped = true;
+        }
+        
+        function correctAnswer() {
+            quizScore++;
+            updateQuizScore();
+            nextCard();
+        }
+        
+        function wrongAnswer() {
+            quizScore = Math.max(0, quizScore - 1);
+            updateQuizScore();
+            nextCard();
+        }
+        
+        function nextCard() {
+            currentQuizIndex++;
+            if (currentQuizIndex < quizWords.length) {
+                showQuizCard();
+            } else {
+                finishQuiz();
+            }
+        }
+        
+        function updateQuizScore() {
+            document.getElementById('quiz-score').textContent = `Счёт: ${quizScore}`;
+        }
+        
+        function finishQuiz() {
+            alert(`Квиз завершён!\nВаш счёт: ${quizScore} из ${quizWords.length}\n${quizScore >= 20 ? 'Отличный результат! 🎉' : 'Попробуйте ещё раз! 💪'}`);
+            document.getElementById('quiz-screen').classList.remove('active');
+            showScreen('hsk-screen');
+        }
+
+        // ============================================
+        // ФУНКЦИЯ ДЛЯ ЗАДАНИЯ С ПИНЬИНЬ (с разными тонами)
+        // ============================================
+        
+        function generateToneVariants(pinyin) {
+            const syllables = pinyin.split(' ');
+            const variants = [];
+            
+            const toneMap = {
+                'a': ['ā', 'á', 'ǎ', 'à'],
+                'e': ['ē', 'é', 'ě', 'è'],
+                'i': ['ī', 'í', 'ǐ', 'ì'],
+                'o': ['ō', 'ó', 'ǒ', 'ò'],
+                'u': ['ū', 'ú', 'ǔ', 'ù'],
+                'ü': ['ǖ', 'ǘ', 'ǚ', 'ǜ']
+            };
+            
+            syllables.forEach(syllable => {
+                let hasVariant = false;
+                for (let vowel in toneMap) {
+                    if (syllable.includes(vowel)) {
+                        const variantsForVowel = toneMap[vowel];
+                        variantsForVowel.forEach(variant => {
+                            const newSyllable = syllable.replace(vowel, variant);
+                            variants.push(newSyllable);
+                        });
+                        hasVariant = true;
+                        break;
+                    }
+                }
+                if (!hasVariant) {
+                    variants.push(syllable);
+                }
+            });
+            
+            return [...new Set(variants)];
+        }
+        
+        function showChoicePinyinCard(word) {
+            const basePinyin = word.pinyin;
+            const toneVariants = generateToneVariants(basePinyin);
+            
+            let options = [basePinyin];
+            for (let variant of toneVariants) {
+                if (variant !== basePinyin && options.length < 4) {
+                    options.push(variant);
+                }
+            }
+            while (options.length < 4) {
+                const randomWord = wordsData[Math.floor(Math.random() * wordsData.length)];
+                if (!options.includes(randomWord.pinyin)) {
+                    options.push(randomWord.pinyin);
+                }
+            }
+            options = shuffleArray(options);
+            
+            document.getElementById('card-content').innerHTML = `
+                <div class="choice-char-trans-only">
+                    <div class="chinese-char">${word.characters}</div>
+                    <div class="audio-btn" onclick="speak('${word.characters}')">🔊</div>
+                    <div class="options-vertical">
+                        ${options.map(opt => `
+                            <div class="option-vertical-item" onclick="checkPinyinAnswer(this, '${opt}', '${word.pinyin}', '${word.id}')">
+                                <span class="pinyin-small">${opt}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+        
+        window.checkPinyinAnswer = function(element, selected, correct, wordId) {
+            const word = wordsData.find(w => w.id == wordId);
+            
+            document.querySelectorAll('.option-vertical-item').forEach(el => {
+                el.classList.remove('correct', 'wrong');
+            });
+            
+            if (selected === correct) {
+                element.classList.add('correct');
+                showFeedback(true);
+                word.correctCount++;
+                word.timesReviewed++;
+                word.lastReviewed = Date.now();
+                if (word.correctCount >= 5) word.mastered = 5;
+                saveUserProgress();
+                
+                setTimeout(() => {
+                    currentIndex++;
+                    showTask();
+                }, 1000);
+            } else {
+                element.classList.add('wrong');
+                showFeedback(false);
+                setTimeout(() => element.classList.remove('wrong'), 500);
+            }
+        };
+
+        // ============================================
+        // ОСНОВНЫЕ ФУНКЦИИ
         // ============================================
         
         function getWordsByLevelAndBlock(hskLevel, blockId) {
@@ -3403,11 +3298,11 @@
             showTask();
         }
 
-                function createStudyQueue() {
+        function createStudyQueue() {
             studyQueue = [];
             studyWords.forEach(word => {
                 studyQueue.push({ type: 'intro', word: word });
-                studyQueue.push({ type: 'choice_pinyin', word: word }); // НОВОЕ ЗАДАНИЕ
+                studyQueue.push({ type: 'choice_pinyin', word: word });
                 studyQueue.push({ type: 'choice_char', word: word });
                 studyQueue.push({ type: 'choice_trans', word: word });
                 studyQueue.push({ type: 'char_from_trans', word: word });
@@ -3445,6 +3340,7 @@
             
             switch(task.type) {
                 case 'intro': showIntroCard(task.word); break;
+                case 'choice_pinyin': showChoicePinyinCard(task.word); break;
                 case 'choice_char': showChoiceCharCard(task.word); break;
                 case 'choice_trans': showChoiceTransCard(task.word); break;
                 case 'char_from_trans': showCharFromTransCard(task.word); break;
@@ -3453,7 +3349,6 @@
                 case 'matching': showMatchingCard(task.word); break;
                 case 'match_all': showMatchAllCard(task.words); break;
                 case 'review': showReviewCard(task.word); break;
-                case 'choice_pinyin': showChoicePinyinCard(task.word); break;
             }
         }
 
@@ -3591,6 +3486,34 @@
             });
         };
 
+        window.selectChar = function(btn, char) {
+            if (!window.selectedChars) window.selectedChars = [];
+            window.selectedChars.push(char);
+            document.getElementById('composed-word').textContent = window.selectedChars.join('');
+            btn.classList.add('disabled');
+        };
+
+        window.checkComposedWord = function(correct, wordId) {
+            const word = wordsData.find(w => w.id == wordId);
+            const composed = window.selectedChars ? window.selectedChars.join('') : '';
+            
+            if (composed === correct) {
+                showFeedback(true);
+                word.correctCount++;
+                word.timesReviewed++;
+                word.lastReviewed = Date.now();
+                if (word.correctCount >= 5) word.mastered = 5;
+                saveUserProgress();
+                
+                setTimeout(() => {
+                    currentIndex++;
+                    showTask();
+                }, 1000);
+            } else {
+                showFeedback(false);
+            }
+        };
+
         function showMatchingCard(word) {
             const chars = word.characters.split('');
             const pinyins = word.pinyin.split(' ');
@@ -3654,6 +3577,54 @@
             
             document.getElementById('card-content').innerHTML = html;
         }
+
+        window.selectPinyin = function(element, charIndex, correctPinyin) {
+            if (element.classList.contains('matched')) return;
+            
+            const row = element.closest('.char-pinyin-row');
+            const rowOptions = row.querySelectorAll('.pinyin-option');
+            
+            rowOptions.forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            
+            if (element.textContent === correctPinyin) {
+                element.classList.remove('selected');
+                element.classList.add('matched');
+                showFeedback(true);
+            } else {
+                showFeedback(false);
+                setTimeout(() => element.classList.remove('selected'), 500);
+            }
+        };
+
+        window.selectTranslation = function(element, correctTranslation, wordId) {
+            if (element.classList.contains('matched')) return;
+            
+            const transOptions = document.querySelectorAll('.trans-option');
+            transOptions.forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            
+            if (element.textContent === correctTranslation) {
+                element.classList.remove('selected');
+                element.classList.add('matched');
+                showFeedback(true);
+                
+                const word = wordsData.find(w => w.id == wordId);
+                word.correctCount++;
+                word.timesReviewed++;
+                word.lastReviewed = Date.now();
+                if (word.correctCount >= 5) word.mastered = 5;
+                saveUserProgress();
+                
+                setTimeout(() => {
+                    currentIndex++;
+                    showTask();
+                }, 1000);
+            } else {
+                showFeedback(false);
+                setTimeout(() => element.classList.remove('selected'), 500);
+            }
+        };
 
         function showMatchAllCard(words) {
             currentMatchAllPairs = words.map(word => ({
@@ -3773,6 +3744,26 @@
             `;
         }
 
+        function handleReview(wordId, remembered) {
+            const word = wordsData.find(w => w.id == wordId);
+            
+            if (remembered) {
+                showFeedback(true);
+                word.correctCount++;
+                word.timesReviewed++;
+                word.lastReviewed = Date.now();
+                if (word.correctCount >= 5) word.mastered = 5;
+                saveUserProgress();
+            } else {
+                showFeedback(false);
+            }
+            
+            setTimeout(() => {
+                currentIndex++;
+                showTask();
+            }, 1000);
+        }
+
         window.checkCharAnswer = function(element, selected, correct, wordId) {
             const word = wordsData.find(w => w.id == wordId);
             
@@ -3826,102 +3817,6 @@
                 setTimeout(() => element.classList.remove('wrong'), 500);
             }
         };
-
-        window.selectChar = function(btn, char) {
-            if (!window.selectedChars) window.selectedChars = [];
-            window.selectedChars.push(char);
-            document.getElementById('composed-word').textContent = window.selectedChars.join('');
-            btn.classList.add('disabled');
-        };
-
-        window.checkComposedWord = function(correct, wordId) {
-            const word = wordsData.find(w => w.id == wordId);
-            const composed = window.selectedChars ? window.selectedChars.join('') : '';
-            
-            if (composed === correct) {
-                showFeedback(true);
-                word.correctCount++;
-                word.timesReviewed++;
-                word.lastReviewed = Date.now();
-                if (word.correctCount >= 5) word.mastered = 5;
-                saveUserProgress();
-                
-                setTimeout(() => {
-                    currentIndex++;
-                    showTask();
-                }, 1000);
-            } else {
-                showFeedback(false);
-            }
-        };
-
-        window.selectPinyin = function(element, charIndex, correctPinyin) {
-            if (element.classList.contains('matched')) return;
-            
-            const row = element.closest('.char-pinyin-row');
-            const rowOptions = row.querySelectorAll('.pinyin-option');
-            
-            rowOptions.forEach(opt => opt.classList.remove('selected'));
-            element.classList.add('selected');
-            
-            if (element.textContent === correctPinyin) {
-                element.classList.remove('selected');
-                element.classList.add('matched');
-                showFeedback(true);
-            } else {
-                showFeedback(false);
-                setTimeout(() => element.classList.remove('selected'), 500);
-            }
-        };
-
-        window.selectTranslation = function(element, correctTranslation, wordId) {
-            if (element.classList.contains('matched')) return;
-            
-            const transOptions = document.querySelectorAll('.trans-option');
-            transOptions.forEach(opt => opt.classList.remove('selected'));
-            element.classList.add('selected');
-            
-            if (element.textContent === correctTranslation) {
-                element.classList.remove('selected');
-                element.classList.add('matched');
-                showFeedback(true);
-                
-                const word = wordsData.find(w => w.id == wordId);
-                word.correctCount++;
-                word.timesReviewed++;
-                word.lastReviewed = Date.now();
-                if (word.correctCount >= 5) word.mastered = 5;
-                saveUserProgress();
-                
-                setTimeout(() => {
-                    currentIndex++;
-                    showTask();
-                }, 1000);
-            } else {
-                showFeedback(false);
-                setTimeout(() => element.classList.remove('selected'), 500);
-            }
-        };
-
-        function handleReview(wordId, remembered) {
-            const word = wordsData.find(w => w.id == wordId);
-            
-            if (remembered) {
-                showFeedback(true);
-                word.correctCount++;
-                word.timesReviewed++;
-                word.lastReviewed = Date.now();
-                if (word.correctCount >= 5) word.mastered = 5;
-                saveUserProgress();
-            } else {
-                showFeedback(false);
-            }
-            
-            setTimeout(() => {
-                currentIndex++;
-                showTask();
-            }, 1000);
-        }
 
         function endStudy() {
             saveUserProgress();
@@ -4070,14 +3965,19 @@
         }
 
         window.openWordModal = function(wordId) {
-            const word = wordsData.find(w => w.id == wordId);
-            document.getElementById('modal-char').textContent = word.characters;
-            document.getElementById('modal-pinyin').textContent = word.pinyin;
-            document.getElementById('modal-translation').textContent = word.translation;
-            document.getElementById('modal-example').textContent = word.example;
-            document.getElementById('modal-example-trans').textContent = word.exampleTranslation;
-            document.getElementById('modal-audio').onclick = () => speak(word.characters);
-            document.getElementById('word-modal').classList.add('active');
+            let word = wordsData.find(w => w.id == wordId);
+            if (!word) {
+                word = customWords.find(w => w.id == wordId);
+            }
+            if (word) {
+                document.getElementById('modal-char').textContent = word.characters;
+                document.getElementById('modal-pinyin').textContent = word.pinyin;
+                document.getElementById('modal-translation').textContent = word.translation;
+                document.getElementById('modal-example').textContent = word.example;
+                document.getElementById('modal-example-trans').textContent = word.exampleTranslation;
+                document.getElementById('modal-audio').onclick = () => speak(word.characters);
+                document.getElementById('word-modal').classList.add('active');
+            }
         };
 
         function showBlockCompleteScreen(blockName) {
@@ -4110,7 +4010,95 @@
         // ОБРАБОТЧИКИ СОБЫТИЙ
         // ============================================
 
-                document.getElementById('back-to-hsk-from-mylist').addEventListener('click', () => {
+        document.getElementById('login-btn').addEventListener('click', () => {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            if (users[email] && users[email].password === password) {
+                currentUser = email;
+                loadUserProgress();
+                updateUserUI();
+                showScreen('hsk-screen');
+            } else {
+                alert('Неверный email или пароль');
+            }
+        });
+
+        document.getElementById('register-btn').addEventListener('click', () => {
+            showScreen('register-screen');
+        });
+
+        document.getElementById('back-to-auth').addEventListener('click', () => {
+            showScreen('auth-screen');
+        });
+
+        document.getElementById('register-submit-btn').addEventListener('click', () => {
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirm = document.getElementById('register-confirm').value;
+            
+            if (!name || !email || !password) {
+                alert('Заполните все поля');
+                return;
+            }
+            
+            if (password !== confirm) {
+                alert('Пароли не совпадают');
+                return;
+            }
+            
+            if (users[email]) {
+                alert('Пользователь с таким email уже существует');
+                return;
+            }
+            
+            users[email] = {
+                name: name,
+                email: email,
+                password: password,
+                progress: {}
+            };
+            
+            saveUsers();
+            alert('Регистрация успешна! Теперь вы можете войти.');
+            showScreen('auth-screen');
+        });
+
+        document.getElementById('guest-link').addEventListener('click', () => {
+            currentUser = null;
+            updateUserUI();
+            showScreen('hsk-screen');
+        });
+
+        document.querySelectorAll('[id^="logout-btn"]').forEach(btn => {
+            btn.addEventListener('click', logout);
+        });
+
+        document.querySelectorAll('.hsk-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.hsk-card').forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                currentHSK = parseInt(card.dataset.hsk);
+            });
+        });
+
+        document.getElementById('select-hsk-btn').addEventListener('click', () => {
+            document.getElementById('hsk-level-title').textContent = `HSK ${currentHSK}`;
+            renderBlocksScreen();
+            showScreen('blocks-screen');
+        });
+
+        document.getElementById('back-to-hsk').addEventListener('click', () => {
+            showScreen('hsk-screen');
+        });
+
+        document.getElementById('back-to-blocks').addEventListener('click', () => {
+            renderBlocksScreen();
+            showScreen('blocks-screen');
+        });
+
+        document.getElementById('back-to-hsk-from-mylist').addEventListener('click', () => {
             showScreen('hsk-screen');
         });
 
@@ -4120,6 +4108,36 @@
 
         document.getElementById('back-to-quiz-mode').addEventListener('click', () => {
             showScreen('quiz-mode-screen');
+        });
+
+        document.getElementById('study-block-btn').addEventListener('click', () => {
+            startStudy(currentHSK, currentBlock, true);
+        });
+
+        document.getElementById('skip-btn').addEventListener('click', () => {
+            currentIndex++;
+            showTask();
+        });
+
+        document.getElementById('continue-study').addEventListener('click', () => {
+            startStudy(currentHSK, studyBlockId, false);
+        });
+
+        document.getElementById('back-to-block-after').addEventListener('click', () => {
+            showScreen('block-detail-screen');
+            showBlockDetail(studyBlockId);
+        });
+
+        document.getElementById('review-banner').addEventListener('click', () => {
+            const reviewWords = getWordsForReview(currentHSK);
+            if (reviewWords.length > 0) {
+                studyWords = reviewWords.slice(0, 3);
+                createStudyQueue();
+                currentIndex = 0;
+                showScreen('study-screen');
+                updateProgressDots();
+                showTask();
+            }
         });
 
         document.getElementById('show-add-word-modal').addEventListener('click', () => {
@@ -4171,138 +4189,7 @@
         document.getElementById('quiz-wrong-btn').addEventListener('click', () => {
             wrongAnswer();
         });
-        
-        // Обработчики авторизации
-        document.getElementById('login-btn').addEventListener('click', () => {
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
 
-            console.log('=== ПОПЫТКА ВХОДА ===');
-            console.log('Email:', email);
-            console.log('Пароль:', password);
-            console.log('Текущие пользователи в системе:', users);
-            console.log('localStorage.getItem("hsk_users"):', localStorage.getItem('hsk_users'));
-
-            if (users[email] && users[email].password === password) {
-                console.log('УСПЕХ! Входим...');
-                currentUser = email;
-                loadUserProgress();
-                updateUserUI();
-                showScreen('hsk-screen');
-            } else {
-                console.log('ОШИБКА: пользователь не найден или пароль неверный');
-                alert('Неверный email или пароль. Проверьте консоль для отладки.');
-            }
-        });
-
-        document.getElementById('register-btn').addEventListener('click', () => {
-            showScreen('register-screen');
-        });
-
-        document.getElementById('back-to-auth').addEventListener('click', () => {
-            showScreen('auth-screen');
-        });
-
-        document.getElementById('register-submit-btn').addEventListener('click', () => {
-            const name = document.getElementById('register-name').value;
-            const email = document.getElementById('register-email').value;
-            const password = document.getElementById('register-password').value;
-            const confirm = document.getElementById('register-confirm').value;
-            
-            if (!name || !email || !password) {
-                alert('Заполните все поля');
-                return;
-            }
-            
-            if (password !== confirm) {
-                alert('Пароли не совпадают');
-                return;
-            }
-            
-            if (users[email]) {
-                alert('Пользователь с таким email уже существует');
-                return;
-            }
-            
-            users[email] = {
-                name: name,
-                email: email,
-                password: password,
-                progress: {}
-            };
-            
-            saveUsers();
-            alert('Регистрация успешна! Теперь вы можете войти.');
-            showScreen('auth-screen');
-        });
-
-        document.getElementById('guest-link').addEventListener('click', () => {
-            currentUser = null;
-            updateUserUI();
-            showScreen('hsk-screen');
-        });
-
-        // Обработчики выхода
-        document.querySelectorAll('[id^="logout-btn"]').forEach(btn => {
-            btn.addEventListener('click', logout);
-        });
-
-        // Обработчики HSK карточек
-        document.querySelectorAll('.hsk-card').forEach(card => {
-            card.addEventListener('click', () => {
-                document.querySelectorAll('.hsk-card').forEach(c => c.classList.remove('active'));
-                card.classList.add('active');
-                currentHSK = parseInt(card.dataset.hsk);
-            });
-        });
-
-        // Навигационные обработчики
-        document.getElementById('select-hsk-btn').addEventListener('click', () => {
-            document.getElementById('hsk-level-title').textContent = `HSK ${currentHSK}`;
-            renderBlocksScreen();
-            showScreen('blocks-screen');
-        });
-
-        document.getElementById('back-to-hsk').addEventListener('click', () => {
-            showScreen('hsk-screen');
-        });
-
-        document.getElementById('back-to-blocks').addEventListener('click', () => {
-            showScreen('blocks-screen');
-        });
-
-        // Обработчики тренировки
-        document.getElementById('study-block-btn').addEventListener('click', () => {
-            startStudy(currentHSK, currentBlock, true);
-        });
-
-        document.getElementById('skip-btn').addEventListener('click', () => {
-            currentIndex++;
-            showTask();
-        });
-
-        document.getElementById('continue-study').addEventListener('click', () => {
-            startStudy(currentHSK, studyBlockId, false);
-        });
-
-        document.getElementById('back-to-block-after').addEventListener('click', () => {
-            showScreen('block-detail-screen');
-            showBlockDetail(studyBlockId);
-        });
-
-        document.getElementById('review-banner').addEventListener('click', () => {
-            const reviewWords = getWordsForReview(currentHSK);
-            if (reviewWords.length > 0) {
-                studyWords = reviewWords.slice(0, 3);
-                createStudyQueue();
-                currentIndex = 0;
-                showScreen('study-screen');
-                updateProgressDots();
-                showTask();
-            }
-        });
-
-        // Модальное окно
         document.getElementById('modal-close').addEventListener('click', () => {
             document.getElementById('word-modal').classList.remove('active');
         });
@@ -4313,7 +4200,6 @@
             }
         });
 
-        // Экран завершения блока
         document.getElementById('review-10-btn').addEventListener('click', () => {
             const allWords = getWordsByLevelAndBlock(currentHSK, currentBlock);
             studyWords = allWords.filter(w => w.mastered >= 5).slice(0, 10);
@@ -4330,20 +4216,16 @@
         });
 
         document.getElementById('back-to-blocks-complete').addEventListener('click', () => {
+            renderBlocksScreen();
             showScreen('blocks-screen');
         });
 
-        // Сохранение прогресса при закрытии
         window.addEventListener('beforeunload', () => {
             saveUserProgress();
         });
         
         window.speechSynthesis.getVoices();
 
-        // ============================================
-        // SERVICE WORKER
-        // ============================================
-        
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js')
@@ -4352,37 +4234,24 @@
             });
         }
 
-        // ============================================
-        // УТИЛИТЫ ДЛЯ PWA
-        // ============================================
-        
-        // Очистка кэша
         window.clearAppCache = function() {
             if ('caches' in window) {
                 caches.keys().then(names => {
                     names.forEach(name => {
                         caches.delete(name);
-                        console.log('🗑️ Кэш удалён:', name);
                     });
                 });
                 alert('✅ Кэш очищен! Перезапустите приложение.');
             }
         };
 
-        // Отладка авторизации
         window.debugAuth = function() {
-            console.log('=== 🔍 ОТЛАДОЧНАЯ ИНФОРМАЦИЯ ===');
-            console.log('📊 users:', typeof users !== 'undefined' ? users : 'не определено');
-            console.log('💾 localStorage:', localStorage.getItem('hsk_users'));
-            console.log('👤 currentUser:', typeof currentUser !== 'undefined' ? currentUser : 'не определено');
-            console.log('📱 PWA режим:', window.navigator.standalone ? 'Да' : 'Нет');
-            alert('✅ Информация в консоли (нажмите F12)');
+            console.log('users:', users);
+            alert('Информация в консоли');
         };
     </script>
 
-    <!-- СКРИПТ ДЛЯ КОНСОЛИ ОТЛАДКИ -->
     <script>
-        // Перехватываем все console.log
         window.debugLogs = [];
         window.originalConsoleLog = console.log;
         window.originalConsoleError = console.error;
@@ -4427,11 +4296,6 @@
                 if (consoleEl.style.display === 'none' || consoleEl.style.display === '') {
                     consoleEl.style.display = 'block';
                     updateDebugDisplay();
-                    
-                    console.log('=== 🚀 СОСТОЯНИЕ ПРИЛОЖЕНИЯ ===');
-                    console.log('📱 PWA режим:', window.navigator.standalone ? 'ДА' : 'НЕТ');
-                    console.log('🔗 URL:', window.location.href);
-                    console.log('🕒 Время:', new Date().toLocaleTimeString());
                 } else {
                     consoleEl.style.display = 'none';
                 }
@@ -4444,64 +4308,15 @@
         };
 
         window.testLogin = function() {
-            console.log('=== 🔍 ТЕСТ ВХОДА ===');
-            console.log('1️⃣ users объект:', typeof users !== 'undefined' ? 'Есть (' + Object.keys(users).length + ' пользователей)' : '❌ НЕТ');
-            console.log('2️⃣ localStorage:', localStorage.getItem('hsk_users') ? '✅ Есть данные' : '❌ Нет данных');
-            
+            console.log('=== ТЕСТ ВХОДА ===');
             const email = document.getElementById('login-email')?.value;
-            const password = document.getElementById('login-password')?.value;
-            console.log('3️⃣ Введённый email:', email || '❌ не введён');
-            console.log('4️⃣ Введённый пароль:', password ? '✅ введён' : '❌ не введён');
-            
+            console.log('Email:', email);
             if (users && users[email]) {
-                console.log('5️⃣ Пользователь найден в users');
-                console.log('6️⃣ Хранимый пароль:', users[email].password);
-                console.log('7️⃣ Пароль совпадает:', users[email].password === password ? '✅ ДА' : '❌ НЕТ');
-                console.log('8️⃣ Имя пользователя:', users[email].name || 'не указано');
+                console.log('Пользователь найден');
             } else {
-                console.log('5️⃣ Пользователь НЕ найден в users');
-                if (users) {
-                    console.log('6️⃣ Доступные email:', Object.keys(users).join(', ') || 'нет пользователей');
-                } else {
-                    console.log('6️⃣ users не определен');
-                }
+                console.log('Пользователь не найден');
             }
-            
-            console.log('9️⃣ Проверка кнопок:');
-            console.log('   - login-btn:', document.getElementById('login-btn') ? '✅' : '❌');
-            console.log('   - register-btn:', document.getElementById('register-btn') ? '✅' : '❌');
-            console.log('   - guest-link:', document.getElementById('guest-link') ? '✅' : '❌');
-            console.log('   - register-submit-btn:', document.getElementById('register-submit-btn') ? '✅' : '❌');
-            console.log('   - debugConsole:', document.getElementById('debugConsole') ? '✅' : '❌');
         };
-
-        // Логируем ошибки
-        window.addEventListener('error', (e) => {
-            console.error('❌ ОШИБКА: ' + e.message + ' в ' + e.filename + ':' + e.lineno);
-        });
-
-        window.addEventListener('unhandledrejection', (e) => {
-            console.error('❌ НЕОБРАБОТАННЫЙ ПРОМИС:', e.reason);
-        });
-
-        // Автоматическая диагностика
-        window.addEventListener('load', () => {
-            console.log('✅ Страница полностью загружена');
-            console.log('📱 PWA режим:', window.navigator.standalone ? 'ДА' : 'НЕТ');
-            
-            setTimeout(() => {
-                console.log('⏱️ Проверка users:', users ? '✅ OK (' + Object.keys(users).length + ')' : '❌ НЕТ');
-            }, 1000);
-        });
-
-        // Принудительная инициализация
-        (function initialize() {
-            console.log('🚀 Инициализация приложения...');
-            if (typeof loadUsers === 'function') {
-                loadUsers();
-            }
-        })();
     </script>
-
 </body>
 </html>
