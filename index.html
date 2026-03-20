@@ -1150,6 +1150,297 @@
             -webkit-touch-callout: none;
             -webkit-tap-highlight-color: rgba(0,0,0,0);
         }
+        /* НОВЫЕ СТИЛИ ДЛЯ БЛОКОВ УРОВНЯ */
+.level-blocks-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    flex-shrink: 0;
+}
+
+.level-block-card {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    border: 2px solid #FFE4E1;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.level-block-card:active {
+    transform: scale(0.98);
+}
+
+.level-block-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.level-block-icon {
+    font-size: 32px;
+}
+
+.level-block-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #8B0000;
+}
+
+.level-block-desc {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.level-block-stats {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #8B0000;
+}
+
+.custom-words-list {
+    padding: 20px;
+}
+
+.add-word-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    border-radius: 28px;
+    background: #8B0000;
+    color: white;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(139, 0, 0, 0.3);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-word-btn:active {
+    transform: scale(0.95);
+}
+
+.add-word-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.add-word-modal.active {
+    display: flex;
+}
+
+.add-word-card {
+    background: white;
+    width: 90%;
+    max-width: 340px;
+    border-radius: 24px;
+    padding: 24px;
+    max-height: 80%;
+    overflow-y: auto;
+}
+
+.add-word-card h3 {
+    color: #8B0000;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.add-word-input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #FFE4E1;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    -webkit-user-select: text;
+    user-select: text;
+}
+
+.add-word-textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #FFE4E1;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    min-height: 80px;
+    -webkit-user-select: text;
+    user-select: text;
+    font-family: inherit;
+}
+
+.quiz-screen {
+    background: #FFF5F5;
+}
+
+.quiz-header {
+    padding: 15px 20px;
+    background: white;
+    border-bottom: 1px solid #FFE4E1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.quiz-score {
+    font-size: 18px;
+    font-weight: 600;
+    color: #8B0000;
+}
+
+.quiz-card-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    perspective: 1000px;
+    min-height: 400px;
+}
+
+.quiz-card {
+    width: 100%;
+    max-width: 300px;
+    height: 400px;
+    position: relative;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+
+.quiz-card.flipped {
+    transform: rotateY(180deg);
+}
+
+.quiz-card-front, .quiz-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    background: white;
+    border-radius: 24px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+}
+
+.quiz-card-front {
+    transform: rotateY(0deg);
+}
+
+.quiz-card-back {
+    transform: rotateY(180deg);
+}
+
+.quiz-card .chinese {
+    font-size: 48px;
+    font-weight: 700;
+    color: #8B0000;
+    margin-bottom: 20px;
+}
+
+.quiz-card .pinyin {
+    font-size: 24px;
+    color: #A52A2A;
+    margin-bottom: 15px;
+}
+
+.quiz-card .translation {
+    font-size: 20px;
+    color: #666;
+}
+
+.quiz-controls {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+    background: white;
+    border-top: 1px solid #FFE4E1;
+}
+
+.swipe-btn {
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    flex: 1;
+    margin: 0 10px;
+}
+
+.swipe-correct {
+    background: #4CAF50;
+    color: white;
+}
+
+.swipe-wrong {
+    background: #f44336;
+    color: white;
+}
+
+.quiz-mode-select {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    padding: 20px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.quiz-mode-btn {
+    padding: 16px 32px;
+    border-radius: 30px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    width: 80%;
+    max-width: 250px;
+}
+
+.quiz-mode-chinese {
+    background: #8B0000;
+    color: white;
+}
+
+.quiz-mode-russian {
+    background: white;
+    color: #8B0000;
+    border: 2px solid #8B0000;
+}
+
+.delete-word-btn {
+    background: #f44336;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 12px;
+    cursor: pointer;
+}
     </style>
 </head>
 <body>
@@ -1349,6 +1640,101 @@
                 <div class="user-avatar" id="user-avatar-detail">В</div>
                 <div class="user-email" id="user-email-detail">vladamalova@example.com</div>
                 <button class="logout-btn" id="logout-btn-detail">Выйти</button>
+                        <!-- ЭКРАН МОЕГО СПИСКА -->
+        <div id="my-list-screen" class="screen">
+            <div class="user-profile">
+                <div class="user-avatar" id="user-avatar-mylist">В</div>
+                <div class="user-email" id="user-email-mylist">vladamalova@example.com</div>
+                <button class="logout-btn" id="logout-btn-mylist">Выйти</button>
+            </div>
+            
+            <div class="status-bar">
+                <span>9:41</span>
+                <span>🔋 100%</span>
+            </div>
+            <div style="background: #8B0000; color: white; padding: 15px; display: flex; align-items: center; gap: 15px; flex-shrink: 0;">
+                <span class="back-btn" id="back-to-hsk-from-mylist">←</span>
+                <h2 style="font-size: 24px;">Мой список</h2>
+            </div>
+            
+            <div class="scroll-content" style="padding-bottom: 80px;">
+                <div id="custom-words-container" class="custom-words-list"></div>
+            </div>
+            
+            <button class="add-word-btn" id="show-add-word-modal">➕</button>
+        </div>
+
+        <!-- МОДАЛЬНОЕ ОКНО ДОБАВЛЕНИЯ СЛОВА -->
+        <div id="add-word-modal" class="add-word-modal">
+            <div class="add-word-card">
+                <h3>Добавить новое слово</h3>
+                <input type="text" id="new-word-characters" class="add-word-input" placeholder="Иероглиф (например: 你好)">
+                <input type="text" id="new-word-pinyin" class="add-word-input" placeholder="Пиньинь (например: nǐ hǎo)">
+                <input type="text" id="new-word-translation" class="add-word-input" placeholder="Перевод (например: здравствуйте)">
+                <textarea id="new-word-example" class="add-word-textarea" placeholder="Пример использования (например: 你好吗？)"></textarea>
+                <textarea id="new-word-example-trans" class="add-word-textarea" placeholder="Перевод примера (например: Как дела?)"></textarea>
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <button class="red-button" id="save-word-btn" style="flex: 1; margin: 0;">Сохранить</button>
+                    <button class="red-button-outline" id="close-add-word-modal" style="flex: 1; margin: 0;">Отмена</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ЭКРАН ВЫБОРА РЕЖИМА КВИЗА -->
+        <div id="quiz-mode-screen" class="screen">
+            <div class="user-profile">
+                <div class="user-avatar" id="user-avatar-quizmode">В</div>
+                <div class="user-email" id="user-email-quizmode">vladamalova@example.com</div>
+                <button class="logout-btn" id="logout-btn-quizmode">Выйти</button>
+            </div>
+            
+            <div class="status-bar">
+                <span>9:41</span>
+                <span>🔋 100%</span>
+            </div>
+            <div style="background: #8B0000; color: white; padding: 15px; display: flex; align-items: center; gap: 15px; flex-shrink: 0;">
+                <span class="back-btn" id="back-to-hsk-from-quiz">←</span>
+                <h2 style="font-size: 24px;">Квиз</h2>
+            </div>
+            
+            <div class="scroll-content">
+                <div class="quiz-mode-select">
+                    <h3 style="color: #8B0000; margin-bottom: 20px;">Выберите режим</h3>
+                    <button class="quiz-mode-btn quiz-mode-chinese" id="quiz-mode-chinese-btn">С иероглифа</button>
+                    <button class="quiz-mode-btn quiz-mode-russian" id="quiz-mode-russian-btn">С русского</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ЭКРАН КВИЗА -->
+        <div id="quiz-screen" class="screen quiz-screen">
+            <div class="user-profile">
+                <div class="user-avatar" id="user-avatar-quiz">В</div>
+                <div class="user-email" id="user-email-quiz">vladamalova@example.com</div>
+                <button class="logout-btn" id="logout-btn-quiz">Выйти</button>
+            </div>
+            
+            <div class="quiz-header">
+                <span class="back-btn" id="back-to-quiz-mode" style="color: #8B0000; font-size: 24px; cursor: pointer;">←</span>
+                <span class="quiz-score" id="quiz-score">Счёт: 0</span>
+            </div>
+            
+            <div class="quiz-card-container" id="quiz-card-container">
+                <div class="quiz-card" id="quiz-card">
+                    <div class="quiz-card-front" id="quiz-card-front"></div>
+                    <div class="quiz-card-back" id="quiz-card-back"></div>
+                </div>
+            </div>
+            
+            <div class="quiz-controls">
+                <button class="swipe-btn swipe-wrong" id="quiz-wrong-btn">✗ Не помню</button>
+                <button class="swipe-btn swipe-correct" id="quiz-correct-btn">✓ Помню</button>
+            </div>
+            
+            <div style="text-align: center; padding: 10px; color: #999; font-size: 12px;">
+                Нажмите на карточку, чтобы перевернуть
+            </div>
+        </div>
             </div>
             
             <div class="status-bar">
@@ -1543,7 +1929,267 @@
                 saveUsers();
             }
         }
+                // ============================================
+        // ФУНКЦИИ ДЛЯ РАБОТЫ С ПОЛЬЗОВАТЕЛЬСКИМИ СЛОВАМИ
+        // ============================================
         
+        function loadCustomWords() {
+            const key = currentUser ? `hsk_custom_words_${currentUser}` : 'hsk_custom_words_guest';
+            const saved = localStorage.getItem(key);
+            if (saved) {
+                customWords = JSON.parse(saved);
+            } else {
+                customWords = [];
+            }
+        }
+        
+        function saveCustomWords() {
+            const key = currentUser ? `hsk_custom_words_${currentUser}` : 'hsk_custom_words_guest';
+            localStorage.setItem(key, JSON.stringify(customWords));
+        }
+        
+        function addCustomWord(characters, pinyin, translation, example, exampleTranslation) {
+            const newWord = {
+                id: Date.now(),
+                characters: characters,
+                pinyin: pinyin,
+                translation: translation,
+                example: example || characters,
+                exampleTranslation: exampleTranslation || translation,
+                listId: 999,
+                hskLevel: currentHSK,
+                mastered: 0,
+                timesReviewed: 0,
+                correctCount: 0,
+                lastReviewed: null,
+                isCustom: true
+            };
+            customWords.push(newWord);
+            saveCustomWords();
+            renderCustomWordsList();
+        }
+        
+        function deleteCustomWord(wordId) {
+            customWords = customWords.filter(w => w.id !== wordId);
+            saveCustomWords();
+            renderCustomWordsList();
+        }
+        
+        function renderCustomWordsList() {
+            const container = document.getElementById('custom-words-container');
+            if (!container) return;
+            
+            if (customWords.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #666;">
+                        <div style="font-size: 48px; margin-bottom: 10px;">📝</div>
+                        <p>У вас пока нет добавленных слов</p>
+                        <p style="font-size: 12px; margin-top: 10px;">Нажмите кнопку + чтобы добавить слово</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = customWords.map(word => `
+                <div class="word-item" onclick="openWordModal(${word.id})">
+                    <div class="word-item-left">
+                        <span class="chinese">${word.characters}</span>
+                        <span class="pinyin-small">${word.pinyin}</span>
+                        <span class="translation-small">${word.translation}</span>
+                    </div>
+                    <button class="delete-word-btn" onclick="event.stopPropagation(); deleteCustomWord(${word.id})">Удалить</button>
+                </div>
+            `).join('');
+        }
+
+        // ============================================
+        // ФУНКЦИИ ДЛЯ КВИЗА
+        // ============================================
+        
+        function startQuiz(mode) {
+            quizMode = mode;
+            quizScore = 0;
+            currentQuizIndex = 0;
+            
+            const allHskWords = wordsData.filter(w => w.hskLevel === currentHSK);
+            const shuffled = shuffleArray([...allHskWords]);
+            quizWords = shuffled.slice(0, 30);
+            
+            updateQuizScore();
+            showQuizCard();
+            document.getElementById('quiz-mode-screen').classList.remove('active');
+            document.getElementById('quiz-screen').classList.add('active');
+        }
+        
+        function showQuizCard() {
+            if (currentQuizIndex >= quizWords.length) {
+                finishQuiz();
+                return;
+            }
+            
+            const word = quizWords[currentQuizIndex];
+            const frontDiv = document.getElementById('quiz-card-front');
+            const backDiv = document.getElementById('quiz-card-back');
+            const card = document.getElementById('quiz-card');
+            
+            card.classList.remove('flipped');
+            isCardFlipped = false;
+            
+            if (quizMode === 'chinese') {
+                frontDiv.innerHTML = `
+                    <div class="chinese">${word.characters}</div>
+                    <div class="pinyin" style="font-size: 18px; color: #999; margin-top: 10px;">(нажмите для ответа)</div>
+                `;
+                backDiv.innerHTML = `
+                    <div class="translation">${word.translation}</div>
+                    <div class="pinyin" style="font-size: 18px; margin-top: 15px;">${word.pinyin}</div>
+                `;
+            } else {
+                frontDiv.innerHTML = `
+                    <div class="translation" style="font-size: 28px;">${word.translation}</div>
+                    <div class="pinyin" style="font-size: 18px; color: #999; margin-top: 10px;">(нажмите для ответа)</div>
+                `;
+                backDiv.innerHTML = `
+                    <div class="chinese">${word.characters}</div>
+                    <div class="pinyin" style="font-size: 18px; margin-top: 15px;">${word.pinyin}</div>
+                `;
+            }
+        }
+        
+        function flipCard() {
+            const card = document.getElementById('quiz-card');
+            card.classList.add('flipped');
+            isCardFlipped = true;
+        }
+        
+        function correctAnswer() {
+            quizScore++;
+            updateQuizScore();
+            nextCard();
+        }
+        
+        function wrongAnswer() {
+            quizScore = Math.max(0, quizScore - 1);
+            updateQuizScore();
+            nextCard();
+        }
+        
+        function nextCard() {
+            currentQuizIndex++;
+            if (currentQuizIndex < quizWords.length) {
+                showQuizCard();
+            } else {
+                finishQuiz();
+            }
+        }
+        
+        function updateQuizScore() {
+            document.getElementById('quiz-score').textContent = `Счёт: ${quizScore}`;
+        }
+        
+        function finishQuiz() {
+            alert(`Квиз завершён!\nВаш счёт: ${quizScore} из ${quizWords.length}\n${quizScore >= 20 ? 'Отличный результат! 🎉' : 'Попробуйте ещё раз! 💪'}`);
+            document.getElementById('quiz-screen').classList.remove('active');
+            showScreen('hsk-screen');
+        }
+
+        // ============================================
+        // ФУНКЦИЯ ДЛЯ ЗАДАНИЯ С ПИНЬИНЬ (с разными тонами)
+        // ============================================
+        
+        function generateToneVariants(pinyin) {
+            const syllables = pinyin.split(' ');
+            const variants = [];
+            
+            const toneMap = {
+                'a': ['ā', 'á', 'ǎ', 'à'],
+                'e': ['ē', 'é', 'ě', 'è'],
+                'i': ['ī', 'í', 'ǐ', 'ì'],
+                'o': ['ō', 'ó', 'ǒ', 'ò'],
+                'u': ['ū', 'ú', 'ǔ', 'ù'],
+                'ü': ['ǖ', 'ǘ', 'ǚ', 'ǜ']
+            };
+            
+            syllables.forEach(syllable => {
+                let hasVariant = false;
+                for (let vowel in toneMap) {
+                    if (syllable.includes(vowel)) {
+                        const variantsForVowel = toneMap[vowel];
+                        variantsForVowel.forEach(variant => {
+                            const newSyllable = syllable.replace(vowel, variant);
+                            variants.push(newSyllable);
+                        });
+                        hasVariant = true;
+                        break;
+                    }
+                }
+                if (!hasVariant) {
+                    variants.push(syllable);
+                }
+            });
+            
+            return [...new Set(variants)];
+        }
+        
+        function showChoicePinyinCard(word) {
+            const basePinyin = word.pinyin;
+            const toneVariants = generateToneVariants(basePinyin);
+            
+            let options = [basePinyin];
+            for (let variant of toneVariants) {
+                if (variant !== basePinyin && options.length < 4) {
+                    options.push(variant);
+                }
+            }
+            while (options.length < 4) {
+                const randomWord = wordsData[Math.floor(Math.random() * wordsData.length)];
+                if (!options.includes(randomWord.pinyin)) {
+                    options.push(randomWord.pinyin);
+                }
+            }
+            options = shuffleArray(options);
+            
+            document.getElementById('card-content').innerHTML = `
+                <div class="choice-char-trans-only">
+                    <div class="chinese-char">${word.characters}</div>
+                    <div class="audio-btn" onclick="speak('${word.characters}')">🔊</div>
+                    <div class="options-vertical">
+                        ${options.map(opt => `
+                            <div class="option-vertical-item" onclick="checkPinyinAnswer(this, '${opt}', '${word.pinyin}', '${word.id}')">
+                                <span class="pinyin-small">${opt}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+        
+        window.checkPinyinAnswer = function(element, selected, correct, wordId) {
+            const word = wordsData.find(w => w.id == wordId);
+            
+            document.querySelectorAll('.option-vertical-item').forEach(el => {
+                el.classList.remove('correct', 'wrong');
+            });
+            
+            if (selected === correct) {
+                element.classList.add('correct');
+                showFeedback(true);
+                word.correctCount++;
+                word.timesReviewed++;
+                word.lastReviewed = Date.now();
+                if (word.correctCount >= 5) word.mastered = 5;
+                saveUserProgress();
+                
+                setTimeout(() => {
+                    currentIndex++;
+                    showTask();
+                }, 1000);
+            } else {
+                element.classList.add('wrong');
+                showFeedback(false);
+                setTimeout(() => element.classList.remove('wrong'), 500);
+            }
+        };
         function updateUserUI() {
             const user = currentUser ? users[currentUser] : null;
             const userInitial = user ? user.name.charAt(0).toUpperCase() : 'Г';
@@ -2651,13 +3297,13 @@
         ];
 
         // Состояние приложения
-        let currentBlock = 1;
-        let studyWords = [];
-        let studyQueue = [];
-        let currentIndex = 0;
-        let studyBlockId = 1;
-        let selectedChars = [];
-        let currentMatchAllPairs = [];
+        // НОВЫЕ ПЕРЕМЕННЫЕ
+        let customWords = [];
+        let quizWords = [];
+        let currentQuizIndex = 0;
+        let quizScore = 0;
+        let quizMode = 'chinese';
+        let isCardFlipped = false;
 
         // ============================================
         // ФУНКЦИИ ДЛЯ РАБОТЫ С ПРОГРЕССОМ
@@ -2757,10 +3403,11 @@
             showTask();
         }
 
-        function createStudyQueue() {
+                function createStudyQueue() {
             studyQueue = [];
             studyWords.forEach(word => {
                 studyQueue.push({ type: 'intro', word: word });
+                studyQueue.push({ type: 'choice_pinyin', word: word }); // НОВОЕ ЗАДАНИЕ
                 studyQueue.push({ type: 'choice_char', word: word });
                 studyQueue.push({ type: 'choice_trans', word: word });
                 studyQueue.push({ type: 'char_from_trans', word: word });
@@ -2806,6 +3453,7 @@
                 case 'matching': showMatchingCard(task.word); break;
                 case 'match_all': showMatchAllCard(task.words); break;
                 case 'review': showReviewCard(task.word); break;
+                case 'choice_pinyin': showChoicePinyinCard(task.word); break;
             }
         }
 
@@ -3286,7 +3934,6 @@
         }
 
         function renderBlocksScreen() {
-            const blocks = currentHSK === 3 ? hsk3Blocks : hsk4Blocks;
             const stats = getTotalStats(currentHSK);
             
             document.getElementById('total-mastered').textContent = stats.mastered;
@@ -3294,34 +3941,89 @@
             document.getElementById('total-progress').style.width = (stats.mastered / stats.total * 100) + '%';
             
             const container = document.getElementById('blocks-container');
-            container.innerHTML = '';
-            
-            blocks.forEach(block => {
-                const blockStats = getBlockStats(currentHSK, block.id);
-                const progress = (blockStats.mastered / block.count * 100) || 0;
-                
-                container.innerHTML += `
-                    <div class="block-card" data-block="${block.id}">
-                        <div class="block-header">
-                            <span class="block-icon">${block.icon}</span>
-                            <span class="block-name">${block.name}</span>
-                        </div>
-                        <div class="block-stats">
-                            <span>${blockStats.mastered}/${block.count}</span>
-                            <span>${Math.round(progress)}%</span>
-                        </div>
-                        <div class="block-progress">
-                            <div class="block-progress-fill" style="width: ${progress}%"></div>
-                        </div>
+            container.innerHTML = `
+                <div class="level-block-card" id="words-list-block">
+                    <div class="level-block-header">
+                        <span class="level-block-icon">📚</span>
+                        <span class="level-block-title">Списки слов</span>
                     </div>
-                `;
+                    <div class="level-block-desc">Изучайте слова по темам</div>
+                    <div class="level-block-stats">
+                        <span>${stats.mastered}/${stats.total} выучено</span>
+                        <span>${Math.round((stats.mastered / stats.total) * 100)}%</span>
+                    </div>
+                </div>
+                
+                <div class="level-block-card" id="my-list-block">
+                    <div class="level-block-header">
+                        <span class="level-block-icon">📝</span>
+                        <span class="level-block-title">Мой список</span>
+                    </div>
+                    <div class="level-block-desc">Ваши собственные слова</div>
+                    <div class="level-block-stats">
+                        <span>${customWords.length} слов добавлено</span>
+                    </div>
+                </div>
+                
+                <div class="level-block-card" id="quiz-block">
+                    <div class="level-block-header">
+                        <span class="level-block-icon">🎴</span>
+                        <span class="level-block-title">Квиз</span>
+                    </div>
+                    <div class="level-block-desc">Проверьте знания в игре</div>
+                    <div class="level-block-stats">
+                        <span>30 случайных слов</span>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('words-list-block').addEventListener('click', () => {
+                const blocks = currentHSK === 3 ? hsk3Blocks : hsk4Blocks;
+                const container = document.getElementById('blocks-container');
+                container.innerHTML = '';
+                
+                blocks.forEach(block => {
+                    const blockStats = getBlockStats(currentHSK, block.id);
+                    const progress = (blockStats.mastered / block.count * 100) || 0;
+                    
+                    container.innerHTML += `
+                        <div class="level-block-card" data-block="${block.id}">
+                            <div class="level-block-header">
+                                <span class="level-block-icon">${block.icon}</span>
+                                <span class="level-block-title">${block.name}</span>
+                            </div>
+                            <div class="level-block-stats">
+                                <span>${blockStats.mastered}/${block.count}</span>
+                                <span>${Math.round(progress)}%</span>
+                            </div>
+                            <div style="height: 6px; background: #FFE4E1; border-radius: 3px; margin-top: 10px;">
+                                <div style="height: 100%; background: #8B0000; width: ${progress}%; border-radius: 3px;"></div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                document.querySelectorAll('[data-block]').forEach(card => {
+                    card.addEventListener('click', () => {
+                        const blockId = parseInt(card.dataset.block);
+                        showBlockDetail(blockId);
+                    });
+                });
+                
+                const backBtn = document.createElement('div');
+                backBtn.innerHTML = '<button class="red-button" id="back-to-main-blocks" style="margin: 20px auto;">← Назад к меню</button>';
+                container.appendChild(backBtn);
+                document.getElementById('back-to-main-blocks')?.addEventListener('click', () => renderBlocksScreen());
             });
             
-            document.querySelectorAll('.block-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    const blockId = parseInt(card.dataset.block);
-                    showBlockDetail(blockId);
-                });
+            document.getElementById('my-list-block').addEventListener('click', () => {
+                loadCustomWords();
+                renderCustomWordsList();
+                showScreen('my-list-screen');
+            });
+            
+            document.getElementById('quiz-block').addEventListener('click', () => {
+                showScreen('quiz-mode-screen');
             });
             
             updateReviewBanner(currentHSK);
@@ -3402,11 +4104,74 @@
         // Инициализация
         loadUsers();
         loadUserProgress();
+        loadCustomWords();
 
         // ============================================
         // ОБРАБОТЧИКИ СОБЫТИЙ
         // ============================================
 
+                document.getElementById('back-to-hsk-from-mylist').addEventListener('click', () => {
+            showScreen('hsk-screen');
+        });
+
+        document.getElementById('back-to-hsk-from-quiz').addEventListener('click', () => {
+            showScreen('hsk-screen');
+        });
+
+        document.getElementById('back-to-quiz-mode').addEventListener('click', () => {
+            showScreen('quiz-mode-screen');
+        });
+
+        document.getElementById('show-add-word-modal').addEventListener('click', () => {
+            document.getElementById('add-word-modal').classList.add('active');
+        });
+
+        document.getElementById('close-add-word-modal').addEventListener('click', () => {
+            document.getElementById('add-word-modal').classList.remove('active');
+        });
+
+        document.getElementById('save-word-btn').addEventListener('click', () => {
+            const characters = document.getElementById('new-word-characters').value.trim();
+            const pinyin = document.getElementById('new-word-pinyin').value.trim();
+            const translation = document.getElementById('new-word-translation').value.trim();
+            const example = document.getElementById('new-word-example').value.trim();
+            const exampleTranslation = document.getElementById('new-word-example-trans').value.trim();
+            
+            if (!characters || !pinyin || !translation) {
+                alert('Пожалуйста, заполните иероглиф, пиньинь и перевод');
+                return;
+            }
+            
+            addCustomWord(characters, pinyin, translation, example, exampleTranslation);
+            document.getElementById('add-word-modal').classList.remove('active');
+            
+            document.getElementById('new-word-characters').value = '';
+            document.getElementById('new-word-pinyin').value = '';
+            document.getElementById('new-word-translation').value = '';
+            document.getElementById('new-word-example').value = '';
+            document.getElementById('new-word-example-trans').value = '';
+        });
+
+        document.getElementById('quiz-mode-chinese-btn').addEventListener('click', () => {
+            startQuiz('chinese');
+        });
+
+        document.getElementById('quiz-mode-russian-btn').addEventListener('click', () => {
+            startQuiz('russian');
+        });
+
+        document.getElementById('quiz-card').addEventListener('click', () => {
+            flipCard();
+        });
+
+        document.getElementById('quiz-correct-btn').addEventListener('click', () => {
+            correctAnswer();
+        });
+
+        document.getElementById('quiz-wrong-btn').addEventListener('click', () => {
+            wrongAnswer();
+        });
+        
         // Обработчики авторизации
         document.getElementById('login-btn').addEventListener('click', () => {
             const email = document.getElementById('login-email').value;
