@@ -14,7 +14,6 @@
     <title>HSK | Китайский тренажер</title>
     
     <style>
-        /* БАЗОВЫЕ СТИЛИ */
         * {
             margin: 0;
             padding: 0;
@@ -276,7 +275,6 @@
             flex-shrink: 0;
         }
 
-        /* НОВЫЕ СТИЛИ ДЛЯ БЛОКОВ УРОВНЯ */
         .level-blocks-container {
             display: flex;
             flex-direction: column;
@@ -328,7 +326,6 @@
             color: #8B0000;
         }
 
-        /* СТИЛИ ДЛЯ МОЕГО СПИСКА */
         .custom-words-list {
             padding: 20px;
         }
@@ -356,7 +353,6 @@
             transform: scale(0.95);
         }
 
-        /* МОДАЛЬНОЕ ОКНО ДОБАВЛЕНИЯ СЛОВА */
         .add-word-modal {
             position: fixed;
             top: 0;
@@ -414,7 +410,6 @@
             font-family: inherit;
         }
 
-        /* СТИЛИ ДЛЯ КВИЗА */
         .quiz-screen {
             background: #FFF5F5;
         }
@@ -571,7 +566,6 @@
             cursor: pointer;
         }
 
-        /* ОСТАЛЬНЫЕ СТИЛИ */
         .words-list {
             padding: 0 20px 20px;
         }
@@ -1844,9 +1838,21 @@
         }
 
         // ============================================
-        // СЛОВА - ВСТАВЬТЕ ВАШИ СЛОВА ЗДЕСЬ
+        // СЛОВА - ВСТАВЬТЕ ВАШИ СЛОВА СЮДА
         // ============================================
         
+        const hsk3Words = [
+            // ВСТАВЬТЕ ВСЕ ВАШИ СЛОВА HSK 3 ЗДЕСЬ
+            // Формат: { id: 1, characters: "слово", pinyin: "pinyin", translation: "перевод", example: "пример", exampleTranslation: "перевод примера", listId: 1, hskLevel: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null }
+        ];
+
+        const hsk4Words = [
+            // ВСТАВЬТЕ ВСЕ ВАШИ СЛОВА HSK 4 ЗДЕСЬ
+        ];
+
+        const wordsData = [...hsk3Words, ...hsk4Words];
+
+        // БЛОКИ - ВСТАВЬТЕ ВАШИ БЛОКИ СЮДА
         const hsk3Words = [
             // Глаголы (listId: 1)
             { id: 1, characters: "结束", pinyin: "jié shù", translation: "заканчиваться, завершать", example: "1. 会议结束了。 2. 我们结束了这个项目。", exampleTranslation: "1. Собрание закончилось. 2. Мы завершили этот проект.", listId: 1, hskLevel: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
@@ -3836,6 +3842,8 @@
             document.getElementById('total-progress').style.width = (stats.mastered / stats.total * 100) + '%';
             
             const container = document.getElementById('blocks-container');
+            if (!container) return;
+            
             container.innerHTML = `
                 <div class="level-block-card" id="words-list-block">
                     <div class="level-block-header">
@@ -3872,54 +3880,62 @@
                 </div>
             `;
             
-            document.getElementById('words-list-block').addEventListener('click', () => {
-                const blocks = currentHSK === 3 ? hsk3Blocks : hsk4Blocks;
-                const container = document.getElementById('blocks-container');
-                container.innerHTML = '';
-                
-                blocks.forEach(block => {
-                    const blockStats = getBlockStats(currentHSK, block.id);
-                    const progress = (blockStats.mastered / block.count * 100) || 0;
+            const wordsListBlock = document.getElementById('words-list-block');
+            if (wordsListBlock) {
+                wordsListBlock.addEventListener('click', () => {
+                    const blocks = currentHSK === 3 ? hsk3Blocks : hsk4Blocks;
+                    container.innerHTML = '';
                     
-                    container.innerHTML += `
-                        <div class="level-block-card" data-block="${block.id}">
-                            <div class="level-block-header">
-                                <span class="level-block-icon">${block.icon}</span>
-                                <span class="level-block-title">${block.name}</span>
+                    blocks.forEach(block => {
+                        const blockStats = getBlockStats(currentHSK, block.id);
+                        const progress = (blockStats.mastered / block.count * 100) || 0;
+                        
+                        container.innerHTML += `
+                            <div class="level-block-card" data-block="${block.id}">
+                                <div class="level-block-header">
+                                    <span class="level-block-icon">${block.icon}</span>
+                                    <span class="level-block-title">${block.name}</span>
+                                </div>
+                                <div class="level-block-stats">
+                                    <span>${blockStats.mastered}/${block.count}</span>
+                                    <span>${Math.round(progress)}%</span>
+                                </div>
+                                <div style="height: 6px; background: #FFE4E1; border-radius: 3px; margin-top: 10px;">
+                                    <div style="height: 100%; background: #8B0000; width: ${progress}%; border-radius: 3px;"></div>
+                                </div>
                             </div>
-                            <div class="level-block-stats">
-                                <span>${blockStats.mastered}/${block.count}</span>
-                                <span>${Math.round(progress)}%</span>
-                            </div>
-                            <div style="height: 6px; background: #FFE4E1; border-radius: 3px; margin-top: 10px;">
-                                <div style="height: 100%; background: #8B0000; width: ${progress}%; border-radius: 3px;"></div>
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                document.querySelectorAll('[data-block]').forEach(card => {
-                    card.addEventListener('click', () => {
-                        const blockId = parseInt(card.dataset.block);
-                        showBlockDetail(blockId);
+                        `;
                     });
+                    
+                    document.querySelectorAll('[data-block]').forEach(card => {
+                        card.addEventListener('click', () => {
+                            const blockId = parseInt(card.dataset.block);
+                            showBlockDetail(blockId);
+                        });
+                    });
+                    
+                    const backBtn = document.createElement('div');
+                    backBtn.innerHTML = '<button class="red-button" id="back-to-main-blocks" style="margin: 20px auto;">← Назад к меню</button>';
+                    container.appendChild(backBtn);
+                    document.getElementById('back-to-main-blocks')?.addEventListener('click', () => renderBlocksScreen());
                 });
-                
-                const backBtn = document.createElement('div');
-                backBtn.innerHTML = '<button class="red-button" id="back-to-main-blocks" style="margin: 20px auto;">← Назад к меню</button>';
-                container.appendChild(backBtn);
-                document.getElementById('back-to-main-blocks')?.addEventListener('click', () => renderBlocksScreen());
-            });
+            }
             
-            document.getElementById('my-list-block').addEventListener('click', () => {
-                loadCustomWords();
-                renderCustomWordsList();
-                showScreen('my-list-screen');
-            });
+            const myListBlock = document.getElementById('my-list-block');
+            if (myListBlock) {
+                myListBlock.addEventListener('click', () => {
+                    loadCustomWords();
+                    renderCustomWordsList();
+                    showScreen('my-list-screen');
+                });
+            }
             
-            document.getElementById('quiz-block').addEventListener('click', () => {
-                showScreen('quiz-mode-screen');
-            });
+            const quizBlock = document.getElementById('quiz-block');
+            if (quizBlock) {
+                quizBlock.addEventListener('click', () => {
+                    showScreen('quiz-mode-screen');
+                });
+            }
             
             updateReviewBanner(currentHSK);
         }
@@ -3928,6 +3944,8 @@
             currentBlock = blockId;
             const blocks = currentHSK === 3 ? hsk3Blocks : hsk4Blocks;
             const block = blocks.find(b => b.id === blockId);
+            if (!block) return;
+            
             document.getElementById('block-title').textContent = block.name;
             
             const stats = getBlockStats(currentHSK, blockId);
@@ -3998,7 +4016,10 @@
             document.querySelectorAll('.screen').forEach(screen => {
                 screen.classList.remove('active');
             });
-            document.getElementById(screenId).classList.add('active');
+            const targetScreen = document.getElementById(screenId);
+            if (targetScreen) {
+                targetScreen.classList.add('active');
+            }
         }
 
         // Инициализация
@@ -4010,7 +4031,7 @@
         // ОБРАБОТЧИКИ СОБЫТИЙ
         // ============================================
 
-        document.getElementById('login-btn').addEventListener('click', () => {
+        document.getElementById('login-btn')?.addEventListener('click', () => {
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
 
@@ -4024,15 +4045,15 @@
             }
         });
 
-        document.getElementById('register-btn').addEventListener('click', () => {
+        document.getElementById('register-btn')?.addEventListener('click', () => {
             showScreen('register-screen');
         });
 
-        document.getElementById('back-to-auth').addEventListener('click', () => {
+        document.getElementById('back-to-auth')?.addEventListener('click', () => {
             showScreen('auth-screen');
         });
 
-        document.getElementById('register-submit-btn').addEventListener('click', () => {
+        document.getElementById('register-submit-btn')?.addEventListener('click', () => {
             const name = document.getElementById('register-name').value;
             const email = document.getElementById('register-email').value;
             const password = document.getElementById('register-password').value;
@@ -4065,7 +4086,7 @@
             showScreen('auth-screen');
         });
 
-        document.getElementById('guest-link').addEventListener('click', () => {
+        document.getElementById('guest-link')?.addEventListener('click', () => {
             currentUser = null;
             updateUserUI();
             showScreen('hsk-screen');
@@ -4083,52 +4104,52 @@
             });
         });
 
-        document.getElementById('select-hsk-btn').addEventListener('click', () => {
+        document.getElementById('select-hsk-btn')?.addEventListener('click', () => {
             document.getElementById('hsk-level-title').textContent = `HSK ${currentHSK}`;
             renderBlocksScreen();
             showScreen('blocks-screen');
         });
 
-        document.getElementById('back-to-hsk').addEventListener('click', () => {
+        document.getElementById('back-to-hsk')?.addEventListener('click', () => {
             showScreen('hsk-screen');
         });
 
-        document.getElementById('back-to-blocks').addEventListener('click', () => {
+        document.getElementById('back-to-blocks')?.addEventListener('click', () => {
             renderBlocksScreen();
             showScreen('blocks-screen');
         });
 
-        document.getElementById('back-to-hsk-from-mylist').addEventListener('click', () => {
+        document.getElementById('back-to-hsk-from-mylist')?.addEventListener('click', () => {
             showScreen('hsk-screen');
         });
 
-        document.getElementById('back-to-hsk-from-quiz').addEventListener('click', () => {
+        document.getElementById('back-to-hsk-from-quiz')?.addEventListener('click', () => {
             showScreen('hsk-screen');
         });
 
-        document.getElementById('back-to-quiz-mode').addEventListener('click', () => {
+        document.getElementById('back-to-quiz-mode')?.addEventListener('click', () => {
             showScreen('quiz-mode-screen');
         });
 
-        document.getElementById('study-block-btn').addEventListener('click', () => {
+        document.getElementById('study-block-btn')?.addEventListener('click', () => {
             startStudy(currentHSK, currentBlock, true);
         });
 
-        document.getElementById('skip-btn').addEventListener('click', () => {
+        document.getElementById('skip-btn')?.addEventListener('click', () => {
             currentIndex++;
             showTask();
         });
 
-        document.getElementById('continue-study').addEventListener('click', () => {
+        document.getElementById('continue-study')?.addEventListener('click', () => {
             startStudy(currentHSK, studyBlockId, false);
         });
 
-        document.getElementById('back-to-block-after').addEventListener('click', () => {
+        document.getElementById('back-to-block-after')?.addEventListener('click', () => {
             showScreen('block-detail-screen');
             showBlockDetail(studyBlockId);
         });
 
-        document.getElementById('review-banner').addEventListener('click', () => {
+        document.getElementById('review-banner')?.addEventListener('click', () => {
             const reviewWords = getWordsForReview(currentHSK);
             if (reviewWords.length > 0) {
                 studyWords = reviewWords.slice(0, 3);
@@ -4140,15 +4161,15 @@
             }
         });
 
-        document.getElementById('show-add-word-modal').addEventListener('click', () => {
+        document.getElementById('show-add-word-modal')?.addEventListener('click', () => {
             document.getElementById('add-word-modal').classList.add('active');
         });
 
-        document.getElementById('close-add-word-modal').addEventListener('click', () => {
+        document.getElementById('close-add-word-modal')?.addEventListener('click', () => {
             document.getElementById('add-word-modal').classList.remove('active');
         });
 
-        document.getElementById('save-word-btn').addEventListener('click', () => {
+        document.getElementById('save-word-btn')?.addEventListener('click', () => {
             const characters = document.getElementById('new-word-characters').value.trim();
             const pinyin = document.getElementById('new-word-pinyin').value.trim();
             const translation = document.getElementById('new-word-translation').value.trim();
@@ -4170,37 +4191,37 @@
             document.getElementById('new-word-example-trans').value = '';
         });
 
-        document.getElementById('quiz-mode-chinese-btn').addEventListener('click', () => {
+        document.getElementById('quiz-mode-chinese-btn')?.addEventListener('click', () => {
             startQuiz('chinese');
         });
 
-        document.getElementById('quiz-mode-russian-btn').addEventListener('click', () => {
+        document.getElementById('quiz-mode-russian-btn')?.addEventListener('click', () => {
             startQuiz('russian');
         });
 
-        document.getElementById('quiz-card').addEventListener('click', () => {
+        document.getElementById('quiz-card')?.addEventListener('click', () => {
             flipCard();
         });
 
-        document.getElementById('quiz-correct-btn').addEventListener('click', () => {
+        document.getElementById('quiz-correct-btn')?.addEventListener('click', () => {
             correctAnswer();
         });
 
-        document.getElementById('quiz-wrong-btn').addEventListener('click', () => {
+        document.getElementById('quiz-wrong-btn')?.addEventListener('click', () => {
             wrongAnswer();
         });
 
-        document.getElementById('modal-close').addEventListener('click', () => {
+        document.getElementById('modal-close')?.addEventListener('click', () => {
             document.getElementById('word-modal').classList.remove('active');
         });
         
-        document.getElementById('word-modal').addEventListener('click', (e) => {
+        document.getElementById('word-modal')?.addEventListener('click', (e) => {
             if (e.target.classList.contains('modal-overlay')) {
                 document.getElementById('word-modal').classList.remove('active');
             }
         });
 
-        document.getElementById('review-10-btn').addEventListener('click', () => {
+        document.getElementById('review-10-btn')?.addEventListener('click', () => {
             const allWords = getWordsByLevelAndBlock(currentHSK, currentBlock);
             studyWords = allWords.filter(w => w.mastered >= 5).slice(0, 10);
             if (studyWords.length === 0) {
@@ -4215,7 +4236,7 @@
             showTask();
         });
 
-        document.getElementById('back-to-blocks-complete').addEventListener('click', () => {
+        document.getElementById('back-to-blocks-complete')?.addEventListener('click', () => {
             renderBlocksScreen();
             showScreen('blocks-screen');
         });
