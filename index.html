@@ -1329,7 +1329,7 @@
 </head>
 <body>
     <div id="app">
-        <!-- ЭКРАН ВХОДА -->
+                <!-- ЭКРАН ВХОДА -->
         <div id="auth-screen" class="screen active">
             <div class="status-bar">
                 <span>9:41</span>
@@ -1836,23 +1836,10 @@
             currentUser = null;
             showScreen('auth-screen');
         }
-
-        // ============================================
-        // СЛОВА - ВСТАВЬТЕ ВАШИ СЛОВА СЮДА
+                // ============================================
+        // СЛОВА HSK 3 (вставьте ваши 315 слов)
         // ============================================
         
-        const hsk3Words = [
-            // ВСТАВЬТЕ ВСЕ ВАШИ СЛОВА HSK 3 ЗДЕСЬ
-            // Формат: { id: 1, characters: "слово", pinyin: "pinyin", translation: "перевод", example: "пример", exampleTranslation: "перевод примера", listId: 1, hskLevel: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null }
-        ];
-
-        const hsk4Words = [
-            // ВСТАВЬТЕ ВСЕ ВАШИ СЛОВА HSK 4 ЗДЕСЬ
-        ];
-
-        const wordsData = [...hsk3Words, ...hsk4Words];
-
-        // БЛОКИ - ВСТАВЬТЕ ВАШИ БЛОКИ СЮДА
         const hsk3Words = [
             // Глаголы (listId: 1)
             { id: 1, characters: "结束", pinyin: "jié shù", translation: "заканчиваться, завершать", example: "1. 会议结束了。 2. 我们结束了这个项目。", exampleTranslation: "1. Собрание закончилось. 2. Мы завершили этот проект.", listId: 1, hskLevel: 3, mastered: 0, timesReviewed: 0, correctCount: 0, lastReviewed: null },
@@ -3252,9 +3239,28 @@
         }
 
         function speak(text) {
+            if (!window.speechSynthesis) {
+                console.log('SpeechSynthesis не поддерживается');
+                return;
+            }
+            
+            window.speechSynthesis.cancel();
+            
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = 'zh-CN';
-            utterance.rate = 0.9;
+            utterance.rate = 0.8;
+            utterance.pitch = 1;
+            
+            const voices = window.speechSynthesis.getVoices();
+            const chineseVoice = voices.find(voice => voice.lang.includes('zh'));
+            if (chineseVoice) {
+                utterance.voice = chineseVoice;
+            }
+            
+            utterance.onerror = (e) => {
+                console.log('SpeechSynthesis error:', e);
+            };
+            
             window.speechSynthesis.speak(utterance);
         }
 
@@ -3880,62 +3886,53 @@
                 </div>
             `;
             
-            const wordsListBlock = document.getElementById('words-list-block');
-            if (wordsListBlock) {
-                wordsListBlock.addEventListener('click', () => {
-                    const blocks = currentHSK === 3 ? hsk3Blocks : hsk4Blocks;
-                    container.innerHTML = '';
+            document.getElementById('words-list-block').addEventListener('click', () => {
+                const blocks = currentHSK === 3 ? hsk3Blocks : hsk4Blocks;
+                container.innerHTML = '';
+                
+                blocks.forEach(block => {
+                    const blockStats = getBlockStats(currentHSK, block.id);
+                    const progress = (blockStats.mastered / block.count * 100) || 0;
                     
-                    blocks.forEach(block => {
-                        const blockStats = getBlockStats(currentHSK, block.id);
-                        const progress = (blockStats.mastered / block.count * 100) || 0;
-                        
-                        container.innerHTML += `
-                            <div class="level-block-card" data-block="${block.id}">
-                                <div class="level-block-header">
-                                    <span class="level-block-icon">${block.icon}</span>
-                                    <span class="level-block-title">${block.name}</span>
-                                </div>
-                                <div class="level-block-stats">
-                                    <span>${blockStats.mastered}/${block.count}</span>
-                                    <span>${Math.round(progress)}%</span>
-                                </div>
-                                <div style="height: 6px; background: #FFE4E1; border-radius: 3px; margin-top: 10px;">
-                                    <div style="height: 100%; background: #8B0000; width: ${progress}%; border-radius: 3px;"></div>
-                                </div>
+                    container.innerHTML += `
+                        <div class="level-block-card" data-block="${block.id}">
+                            <div class="level-block-header">
+                                <span class="level-block-icon">${block.icon}</span>
+                                <span class="level-block-title">${block.name}</span>
                             </div>
-                        `;
+                            <div class="level-block-stats">
+                                <span>${blockStats.mastered}/${block.count}</span>
+                                <span>${Math.round(progress)}%</span>
+                            </div>
+                            <div style="height: 6px; background: #FFE4E1; border-radius: 3px; margin-top: 10px;">
+                                <div style="height: 100%; background: #8B0000; width: ${progress}%; border-radius: 3px;"></div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                document.querySelectorAll('[data-block]').forEach(card => {
+                    card.addEventListener('click', () => {
+                        const blockId = parseInt(card.dataset.block);
+                        showBlockDetail(blockId);
                     });
-                    
-                    document.querySelectorAll('[data-block]').forEach(card => {
-                        card.addEventListener('click', () => {
-                            const blockId = parseInt(card.dataset.block);
-                            showBlockDetail(blockId);
-                        });
-                    });
-                    
-                    const backBtn = document.createElement('div');
-                    backBtn.innerHTML = '<button class="red-button" id="back-to-main-blocks" style="margin: 20px auto;">← Назад к меню</button>';
-                    container.appendChild(backBtn);
-                    document.getElementById('back-to-main-blocks')?.addEventListener('click', () => renderBlocksScreen());
                 });
-            }
+                
+                const backBtn = document.createElement('div');
+                backBtn.innerHTML = '<button class="red-button" id="back-to-main-blocks" style="margin: 20px auto;">← Назад к меню</button>';
+                container.appendChild(backBtn);
+                document.getElementById('back-to-main-blocks')?.addEventListener('click', () => renderBlocksScreen());
+            });
             
-            const myListBlock = document.getElementById('my-list-block');
-            if (myListBlock) {
-                myListBlock.addEventListener('click', () => {
-                    loadCustomWords();
-                    renderCustomWordsList();
-                    showScreen('my-list-screen');
-                });
-            }
+            document.getElementById('my-list-block').addEventListener('click', () => {
+                loadCustomWords();
+                renderCustomWordsList();
+                showScreen('my-list-screen');
+            });
             
-            const quizBlock = document.getElementById('quiz-block');
-            if (quizBlock) {
-                quizBlock.addEventListener('click', () => {
-                    showScreen('quiz-mode-screen');
-                });
-            }
+            document.getElementById('quiz-block').addEventListener('click', () => {
+                showScreen('quiz-mode-screen');
+            });
             
             updateReviewBanner(currentHSK);
         }
@@ -4026,8 +4023,7 @@
         loadUsers();
         loadUserProgress();
         loadCustomWords();
-
-        // ============================================
+                // ============================================
         // ОБРАБОТЧИКИ СОБЫТИЙ
         // ============================================
 
@@ -4210,6 +4206,36 @@
         document.getElementById('quiz-wrong-btn')?.addEventListener('click', () => {
             wrongAnswer();
         });
+
+        // Touch-события для свайпов на карточке квиза
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchEndX = 0;
+        let touchEndY = 0;
+        const minSwipeDistance = 50;
+        
+        const quizCardElement = document.getElementById('quiz-card');
+        if (quizCardElement) {
+            quizCardElement.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+                touchStartY = e.changedTouches[0].screenY;
+            });
+            
+            quizCardElement.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                touchEndY = e.changedTouches[0].screenY;
+                const deltaX = touchEndX - touchStartX;
+                const deltaY = touchEndY - touchStartY;
+                
+                if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
+                    if (deltaX > 0) {
+                        correctAnswer();
+                    } else {
+                        wrongAnswer();
+                    }
+                }
+            });
+        }
 
         document.getElementById('modal-close')?.addEventListener('click', () => {
             document.getElementById('word-modal').classList.remove('active');
